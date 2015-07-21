@@ -513,6 +513,8 @@ let mapleader = ","
 		let g:unite_source_history_yank_enable = 1
 		"let g:unite_source_rec_max_cache_files = 50000
 		"call unite#filters#matcher_default#use(['matcher_fuzzy'])
+		"
+		call unite#custom_default_action('source/bookmark/directory' , 'vimfiler') "bookmarkはvimfilerと連携
 	
 		if has("win32") || has("win64")
 			let g:unite_source_find_command = "C:/cygwin/bin/find.exe"

@@ -52,7 +52,7 @@ do
 done
 
 ## 必要な .git* をリンク
-for NAME in (.gitconfig .git-prompt.sh);
+for NAME in .gitconfig .git-prompt.sh;
 do
     DOTFILE=${DOTFILES_DIR}/${NAME}
     if [ -e "$DOTFILE" ]; then
