@@ -990,7 +990,6 @@ nnoremap <f3> :call copy(expand("%:p"))<CR>
 
 "settigs for windows"{{{
 "----------------------------
-
 if has("win32") || has("win64")
 	inoremap <silent> <esc> <esc>:set iminsert=0<CR>
 endif
@@ -1051,4 +1050,8 @@ function! source.gather_candidates(args, context)
 	return candidates
 endfunction"}}}
 
-cd ~/Dropbox/
+
+
+cd ~/
+autocmd MyAutoCmd FileType mkd setlocal fo=qro
+autocmd MyAutoCmd FileType mkd setlocal com=s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,b:-,b:+
