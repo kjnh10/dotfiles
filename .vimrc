@@ -397,7 +397,7 @@ let mapleader = ","
 		"<c-j>をつぶしていたため一旦削除。使う場合はそこを修正してから。
 		"NeoBundle 'git://git.code.sf.net/p/vim-latex/vim-latex'
 		NeoBundle 'davidhalter/jedi-vim'
-		NeoBundle 'vim-scripts/YankRing.vim' 
+		NeoBundle 'LeafCage/yankround.vim'
 		"NeoBundle 'rhysd/clever-f.vim'
 		NeoBundle 'Lokaltog/vim-easymotion'
 		NeoBundle 'kannokanno/vim-helpnew'
@@ -930,12 +930,10 @@ let mapleader = ","
 
 	"quickhlの設定"{{{
 	"""""""""""""""""""""""""""""""
-	nmap <Space>m <Plug>(quickhl-manual-this)
-	xmap <Space>m <Plug>(quickhl-manual-this)
-	nmap <Space>M <Plug>(quickhl-manual-reset)
-	xmap <Space>M <Plug>(quickhl-manual-reset)
-	nmap <Space>j <Plug>(quickhl-cword-toggle)
-	nmap <Space>] <Plug>(quickhl-tag-toggle)
+	nmap <Leader>ht <Plug>(quickhl-manual-this)
+	nmap <Leader>hr <Plug>(quickhl-manual-reset)
+	nmap <Leader>hc <Plug>(quickhl-cword-toggle)
+	nmap <Leader>h] <Plug>(quickhl-tag-toggle)
 	"}}}
 
 	"caw.vimの設定"{{{
@@ -944,12 +942,25 @@ let mapleader = ","
 	nmap <Leader>" <Plug>(caw:i:toggle)
 	vmap <Leader>" <Plug>(caw:i:toggle)
 	"}}}
+
 	"vim-sessionの設定{{{
 	"""""""""""""""""""""""""""""""
 	let g:session_autoload = "yes"
 	let g:session_autosave = "no"
 	let g:session_default_to_last = 0
 	let g:session_command_aliases = 1
+	"}}}
+
+	"yankround setting{{{
+	"""""""""""""""""""""""""""""""
+	nmap p <Plug>(yankround-p)
+	xmap p <Plug>(yankround-p)
+	nmap P <Plug>(yankround-P)
+	nmap gp <Plug>(yankround-gp)
+	xmap gp <Plug>(yankround-gp)
+	nmap gP <Plug>(yankround-gP)
+	nmap <C-p> <Plug>(yankround-prev)
+	nmap <C-n> <Plug>(yankround-next)
 	"}}}
 
 filetype plugin on
@@ -1050,8 +1061,7 @@ function! source.gather_candidates(args, context)
 	return candidates
 endfunction"}}}
 
-
-
 cd ~/
 autocmd MyAutoCmd FileType mkd setlocal fo=qro
 autocmd MyAutoCmd FileType mkd setlocal com=s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,b:-,b:+
+"koji
