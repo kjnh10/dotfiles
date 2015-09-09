@@ -394,6 +394,8 @@ let mapleader = ","
 		NeoBundle 'thinca/vim-ref'
 		NeoBundle 'thinca/vim-quickrun'
 		NeoBundle 'thinca/vim-prettyprint'
+		NeoBundle 'thinca/vim-prettyprint'
+		NeoBundle 'LeafCage/foldCC'
 		"<c-j>をつぶしていたため一旦削除。使う場合はそこを修正してから。
 		"NeoBundle 'git://git.code.sf.net/p/vim-latex/vim-latex'
 		NeoBundle 'davidhalter/jedi-vim'
@@ -1061,7 +1063,10 @@ function! source.gather_candidates(args, context)
 	return candidates
 endfunction"}}}
 
-cd ~/
 autocmd MyAutoCmd FileType mkd setlocal fo=qro
 autocmd MyAutoCmd FileType mkd setlocal com=s1:/*,mb:*,ex:*/,://,b:#,:%,:XCOMM,n:>,b:-,b:+
+
+let g:xml_syntax_folding=1
+au FileType xml setlocal foldmethod=syntax
 "koji
+cd ~/
