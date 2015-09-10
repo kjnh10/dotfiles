@@ -3,3 +3,11 @@ This is a repository with my configuration files, those that in Linux/OS X norma
 # Overview
 
 # Install
+
+'''bash
+git clone git@github.com:kojinho10/dotfiles.git
+cd
+./dotfiles/install.sh
+'''
+
+
