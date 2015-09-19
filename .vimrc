@@ -522,9 +522,6 @@ let mapleader = ","
 			let g:unite_source_find_command = "C:/cygwin/bin/find.exe"
 		endif
 		" Using ag as recursive command.
-		let g:unite_source_rec_async_command =
-					\ 'pt --nocolor --nogroup ""'
-
 	" unite grep に ag(The Silver Searcher) を使う
 		if executable('pt')
 			let g:unite_source_grep_command = 'pt'
