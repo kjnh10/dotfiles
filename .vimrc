@@ -396,10 +396,10 @@ let mapleader = ","
 		NeoBundle 'thinca/vim-prettyprint'
 		NeoBundle 'thinca/vim-prettyprint'
 		NeoBundle 'LeafCage/foldCC'
+		NeoBundle 'LeafCage/yankround.vim'
 		"<c-j>をつぶしていたため一旦削除。使う場合はそこを修正してから。
 		"NeoBundle 'git://git.code.sf.net/p/vim-latex/vim-latex'
 		NeoBundle 'davidhalter/jedi-vim'
-		NeoBundle 'LeafCage/yankround.vim'
 		"NeoBundle 'rhysd/clever-f.vim'
 		NeoBundle 'Lokaltog/vim-easymotion'
 		NeoBundle 'kannokanno/vim-helpnew'
