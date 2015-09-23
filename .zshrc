@@ -98,22 +98,24 @@ alias r=rails
 #alias v=vim
 #alias mvim='/Applications/MacVim.app/Contents/MacOS/vim -g'
 
-
 #zshcompletionの設定
 fpath=(/usr/local/share/zsh $fpath)
 
+#cygwinの設定
+if [[ $OSTYPE == cygwin* ]];then # スペース入れないとエラーになる。
+	export PATH=~/bin:/usr/local/sbin:/usr/local/bin:/sbin:/usr/sbin:/usr/bin:$PATH # findなどがosのものより先に来てしまっているので。
+	#railsの設定
+	#http://shiroibanana.blogspot.jp/2014/08/ruby-on-railshello-world.html
+	alias rails='rails.bat'
+	alias gem='gem.bat'
+	alias rake='rake.bat'
+	alias erb='erb.bat'
+	alias irb='irb.bat'
+	alias rdoc='rdoc.bat'
+	alias ri='ri.bat'
+	alias rspec='rspec.bat'
+	alias cucumber='cucumber.bat'
+	alias bundle='bundle.bat'
+fi
+
 echo "ended source .zshrc"
-
-
-#railsの設定
-#http://shiroibanana.blogspot.jp/2014/08/ruby-on-railshello-world.html
-alias rails='rails.bat'
-alias gem='gem.bat'
-alias rake='rake.bat'
-alias erb='erb.bat'
-alias irb='irb.bat'
-alias rdoc='rdoc.bat'
-alias ri='ri.bat'
-alias rspec='rspec.bat'
-alias cucumber='cucumber.bat'
-alias bundle='bundle.bat'
