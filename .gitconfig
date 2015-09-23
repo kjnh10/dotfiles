@@ -1,3 +1,6 @@
 [user]
 	email = koji07082002@mail.benesse.co.jp
 	name = Koji Watanabe@office
+
+[alias]
+g = log --graph --date=short --format=\"%C(yellow)%h%C(reset) %C(magenta)[%ad]%C(reset)%C(auto)%d%C(reset) %s %C(cyan)@%an%C(reset)\"
