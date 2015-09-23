@@ -387,6 +387,7 @@ let mapleader = ","
 		  \ }
 		NeoBundle 'Shougo/unite.vim'
 		NeoBundle 'Shougo/neomru.vim'
+		NeoBundle 'Shougo/neosnippet'
 		NeoBundle 'Shougo/neosnippet-snippets'
 		NeoBundle 'Shougo/neocomplete'
 		NeoBundle 'Shougo/vimfiler'
@@ -394,7 +395,7 @@ let mapleader = ","
 		NeoBundle 'thinca/vim-ref'
 		NeoBundle 'thinca/vim-quickrun'
 		NeoBundle 'thinca/vim-prettyprint'
-		NeoBundle 'thinca/vim-prettyprint'
+		NeoBundle 'thinca/vim-template'
 		NeoBundle 'LeafCage/foldCC'
 		NeoBundle 'LeafCage/yankround.vim'
 		"<c-j>をつぶしていたため一旦削除。使う場合はそこを修正してから。
@@ -669,6 +670,26 @@ let mapleader = ","
 	let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 	"}}}
 	
+	"neosnippetの設定"{{{
+	" Plugin key-mappings.
+	imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+	smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+	xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+	" SuperTab like snippets behavior.
+	"imap <expr><TAB>
+	" \ pumvisible() ? "\<C-n>" :
+	" \ neosnippet#expandable_or_jumpable() ?
+	" \    "\<TAB>" : "\<Plug>(neosnippet_expand_or_jump)"
+	smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+	\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+	" For conceal markers.
+	if has('conceal')
+	  set conceallevel=2 concealcursor=niv
+	endif
+	"}}}
+
 	"quickrunの設定"{{{
 	""""""""""""""""""""""""""""""
 	" g:quickrun_config の初期化
