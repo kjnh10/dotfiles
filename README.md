@@ -10,4 +10,6 @@ cd
 ./dotfiles/install.sh
 ```
 
-
+# Note
+'find' command used in this script is unix command.
+So make sure shell's 'find' is not windows one. 
