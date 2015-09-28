@@ -97,6 +97,7 @@ if [[ -s ~/.rvm/scripts/rvm ]] ; then source ~/.rvm/scripts/rvm ; fi
 alias r=rails
 #alias v=vim
 #alias mvim='/Applications/MacVim.app/Contents/MacOS/vim -g'
+alias ctags="`brew --prefix`/bin/ctags" #https://gist.github.com/nazgob/1570678
 
 #zshcompletionの設定
 fpath=(/usr/local/share/zsh $fpath)

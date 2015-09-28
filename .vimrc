@@ -305,7 +305,9 @@ NeoBundle 'Shougo/vimproc.vim', {
 			\ }
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/neomru.vim'
+NeoBundle "Shougo/neosnippet"
 NeoBundle 'Shougo/neosnippet-snippets'
+NeoBundle 'honza/vim-snippets'
 NeoBundle 'Shougo/neocomplete'
 NeoBundle 'Shougo/vimfiler'
 NeoBundle 'Shougo/vimshell'
@@ -318,6 +320,17 @@ NeoBundle 'Lokaltog/vim-easymotion'
 NeoBundle 'kannokanno/vim-helpnew'
 NeoBundle 'sjl/gundo.vim'
 NeoBundle 't9md/vim-quickhl'
+NeoBundle 'nathanaelkane/vim-indent-guides'
+
+" コード補完
+NeoBundle 'marcus/rsense'
+NeoBundle 'supermomonga/neocomplete-rsense.vim'
+" 静的解析
+NeoBundle 'scrooloose/syntastic'
+" ドキュメント参照
+NeoBundle 'yuku-t/vim-ref-ri'
+" メソッド定義元へのジャンプ
+NeoBundle 'szw/vim-tags'
 
 "txt_obj => (references) http://qiita.com/rbtnn/items/a47ed6684f1f0bc52906
 NeoBundle 'kana/vim-textobj-user'
@@ -329,6 +342,7 @@ NeoBundle 'sgur/vim-textobj-parameter' "関数の引数 i, a,
 NeoBundle 'tyru/caw.vim' "commnet toggle
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'tpope/vim-surround'
+NeoBundle 'tpope/vim-endwise'
 NeoBundle 'airblade/vim-rooter'
 NeoBundle 'tyru/vim-altercmd' "http://qiita.com/kentaro/items/c3f7fc1d1be0e106735b
 
@@ -343,6 +357,7 @@ NeoBundleLazy "nvie/vim-flake8", {
 
 NeoBundle 'xolox/vim-session'
 NeoBundle 'xolox/vim-misc'
+
 NeoBundle 'kojinho10/mysetting.vim'
 "NeoBundle 'tyru/restart.vim'
 "NeoBundle 'git://git.code.sf.net/p/vim-latex/vim-latex' "<c-j>をつぶしていたため一旦削除。使う場合はそこを修正してから。
@@ -640,7 +655,7 @@ let g:vimshell_right_prompt = 'fnamemodify(getcwd(), ":~")'
 let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~")'
 " vimshell map
 nnoremap <silent> <Leader>s :VimShell<CR>
-nnoremap <silent> <Leader>p :VimShellPop<CR>
+" nnoremap <silent> <Leader>p :VimShellPop<CR>
 "vimshell上でのキーマッピング
 autocmd MyAutoCmd FileType vimshell call s:vimshell_my_settings()
 function! s:vimshell_my_settings()
@@ -859,6 +874,42 @@ nmap gP <Plug>(yankround-gP)
 nmap <C-p> <Plug>(yankround-prev)
 nmap <C-n> <Plug>(yankround-next)
 "}}}
+"ruby plugin setting{{{ http://qiita.com/mogulla3/items/42a7f6c73fa4a90b1df3
+"""""""""""""""""""""""""""""""
+" Rsense
+let g:rsenseHome = '/usr/local/lib/rsense-0.3'
+let g:rsenseUseOmniFunc = 1
+" neocomplete.vim
+if !exists('g:neocomplete#force_omni_input_patterns')
+	let g:neocomplete#force_omni_input_patterns = {}
+endif
+let g:neocomplete#force_omni_input_patterns.ruby = '[^.*\t]\.\w*\|\h\w*::'
+" rubocop
+" syntastic_mode_mapをactiveにするとバッファ保存時にsyntasticが走る
+" active_filetypesに、保存時にsyntasticを走らせるファイルタイプを指定する
+let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': ['ruby'] }
+let g:syntastic_ruby_checkers = ['rubocop']
+" その他
+let g:ref_refe_cmd = $HOME.'/.rbenv/shims/refe' "refeコマンドのパス
+" vim-indent-guides
+let g:indent_guides_auto_colors=0
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd   ctermbg=110
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven  ctermbg=140
+let g:indent_guides_enable_on_vim_startup=1
+let g:indent_guides_guide_size=1
+"}}}
+"snippet setting{{{
+"""""""""""""""""""""""""""""""
+" http://rcmdnk.github.io/blog/2015/01/12/computer-vim/
+if ! empty(neobundle#get("neosnippet"))
+  imap <C-s> <Plug>(neosnippet_expand_or_jump)
+  smap <C-s> <Plug>(neosnippet_expand_or_jump)
+  xmap <C-s> <Plug>(neosnippet_expand_target)
+  let g:neosnippet#enable_snipmate_compatibility = 1
+  let g:neosnippet#disable_runtime_snippets = {'_' : 1}
+  let g:neosnippet#snippets_directory = '~/bundle/neosnippet-snippets/neosnippets, ~/bundle/vim-snippets/snippets'
+endif
+"}}}
 "miscellaneous
 nnoremap <F5> :GundoToggle<CR>
 
@@ -926,6 +977,10 @@ else
 	autocmd MyAutoCmd BufWritePost $MYVIMRC nested source $MYVIMRC| source $MYGVIMRC
 endif
 
+"カスタムコマンドの先頭を小文字にする。
+AlterCommand unite Unite
+AlterCommand gstatus Gstatus
+
 "カーソル下のoptinの値をする
 nnoremap <expr> <f1> ':echo &'.expand(GetOptionUnderCursor()).'<CR>'
 nnoremap <expr> <s-f1> ':VO echo &'.expand(GetOptionUnderCursor()).'<CR>'
@@ -950,6 +1005,7 @@ nnoremap <expr> <f2> ':echo '.expand('<cword>').'<CR>'
 nnoremap yl ^v$y<esc>
 nnoremap yf :let @* = expand("%:p")<CR>
 "何故かpで""が選択されない時がある。
+
 "settigs for windows"{{{
 "----------------------------
 if has("win32") || has("win64")
