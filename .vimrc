@@ -323,7 +323,8 @@ NeoBundle 't9md/vim-quickhl'
 NeoBundle 'nathanaelkane/vim-indent-guides'
 
 " コード補完
-NeoBundle 'marcus/rsense'
+" NeoBundle 'marcus/rsense' :helpが正常動作しない (執筆時点) http://qiita.com/uplus_e10/items/27a3dd9e2586ec0f2c2c
+NeoBundle 'NigoroJr/rsense' 
 NeoBundle 'supermomonga/neocomplete-rsense.vim'
 " 静的解析
 NeoBundle 'scrooloose/syntastic'
@@ -357,6 +358,12 @@ NeoBundleLazy "nvie/vim-flake8", {
 
 NeoBundle 'xolox/vim-session'
 NeoBundle 'xolox/vim-misc'
+NeoBundle 'othree/html5.vim'
+NeoBundle 'hail2u/vim-css3-syntax'
+" NeoBundle 'pangloss/vim-javascript'
+NeoBundleLazy 'jelera/vim-javascript-syntax', {'autoload':{'filetypes':['javascript']}}
+" NeoBundle 'jason0x43/vim-js-indent'
+NeoBundle 'vim-scripts/JavaScript-Indent'
 
 NeoBundle 'kojinho10/mysetting.vim'
 "NeoBundle 'tyru/restart.vim'
@@ -910,6 +917,12 @@ if ! empty(neobundle#get("neosnippet"))
   let g:neosnippet#snippets_directory = '~/bundle/neosnippet-snippets/neosnippets, ~/bundle/vim-snippets/snippets'
 endif
 "}}}
+" vim-indent-guides"{{{
+let g:indent_guides_auto_colors=0
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd   guibg=red
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven  guibg=green
+let g:indent_guides_guide_size=1"}}}
+
 "miscellaneous
 nnoremap <F5> :GundoToggle<CR>
 
@@ -977,9 +990,6 @@ else
 	autocmd MyAutoCmd BufWritePost $MYVIMRC nested source $MYVIMRC| source $MYGVIMRC
 endif
 
-"カスタムコマンドの先頭を小文字にする。
-AlterCommand unite Unite
-AlterCommand gstatus Gstatus
 
 "カーソル下のoptinの値をする
 nnoremap <expr> <f1> ':echo &'.expand(GetOptionUnderCursor()).'<CR>'
@@ -1005,6 +1015,11 @@ nnoremap <expr> <f2> ':echo '.expand('<cword>').'<CR>'
 nnoremap yl ^v$y<esc>
 nnoremap yf :let @* = expand("%:p")<CR>
 "何故かpで""が選択されない時がある。
+
+"カスタムコマンドの先頭を小文字にする。
+call altercmd#load()
+AlterCommand unite Unite
+AlterCommand gstatus Gstatus
 
 "settigs for windows"{{{
 "----------------------------
