@@ -199,7 +199,8 @@ noremap <C-e> <End>
 noremap a <Insert>
 noremap j gj
 noremap k gk
-noremap ev :<C-u>edit $MYVIMRC<CR>
+" noremap ev :<C-u>edit $MYVIMRC<CR>
+noremap ev :<C-u>edit ~/dotfiles/.vimrc<CR>
 noremap gf <C-w>gf
 "noremap <C-j> <C-w>gf
 "autocmd MyAutoCmd FileType help noremap <buffer> <C-j> <C-]>
@@ -330,8 +331,8 @@ NeoBundle 'supermomonga/neocomplete-rsense.vim'
 NeoBundle 'scrooloose/syntastic'
 " ドキュメント参照
 NeoBundle 'yuku-t/vim-ref-ri'
-" メソッド定義元へのジャンプ
-NeoBundle 'szw/vim-tags'
+" メソッド定義元へのジャンプ windowsでコマンドプロンプトのエラーが一瞬出る｡
+" NeoBundle 'szw/vim-tags'
 
 "txt_obj => (references) http://qiita.com/rbtnn/items/a47ed6684f1f0bc52906
 NeoBundle 'kana/vim-textobj-user'
@@ -902,7 +903,7 @@ let g:ref_refe_cmd = $HOME.'/.rbenv/shims/refe' "refeコマンドのパス
 let g:indent_guides_auto_colors=0
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd   ctermbg=110
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven  ctermbg=140
-let g:indent_guides_enable_on_vim_startup=1
+let g:indent_guides_enable_on_vim_startup=0
 let g:indent_guides_guide_size=1
 "}}}
 "snippet setting{{{

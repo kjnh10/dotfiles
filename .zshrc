@@ -97,11 +97,19 @@ if [[ -s ~/.rvm/scripts/rvm ]] ; then source ~/.rvm/scripts/rvm ; fi
 alias r=rails
 #alias v=vim
 #alias mvim='/Applications/MacVim.app/Contents/MacOS/vim -g'
-alias ctags="`brew --prefix`/bin/ctags" #https://gist.github.com/nazgob/1570678
 
 #zshcompletionの設定
 fpath=(/usr/local/share/zsh $fpath)
 
+case ${OSTYPE} in
+    darwin*)
+        #ここにMac向けの設定
+		alias ctags="`brew --prefix`/bin/ctags" #https://gist.github.com/nazgob/1570678
+		;;
+    linux*)
+        #ここにLinux向けの設定
+		;;
+esac
 #cygwinの設定
 if [[ $OSTYPE == cygwin* ]];then # スペース入れないとエラーになる。
 	export PATH=~/bin:/usr/local/sbin:/usr/local/bin:/sbin:/usr/sbin:/usr/bin:$PATH # findなどがosのものより先に来てしまっているので。
@@ -117,6 +125,10 @@ if [[ $OSTYPE == cygwin* ]];then # スペース入れないとエラーになる
 	alias rspec='rspec.bat'
 	alias cucumber='cucumber.bat'
 	alias bundle='bundle.bat'
+
+	#git の文字化け対策 http://d.hatena.ne.jp/Rion778/20091107/1257623615
+	export LANG=ja_JP.UTF-8
+	export PAGER="lv -Ou8"
 fi
 
 echo "ended source .zshrc"
