@@ -15,10 +15,21 @@ case ${OSTYPE} in
 		export PATH=$PATH:/Applications/MacVim.app/Contents/MacOS
 		#pnadoc
 		export PATH=$PATH:$HOME/.cabal/bin
+
 		#python
-		export WORKON_HOME=~/.virtualenvs
-		export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python
-		source /usr/local/bin/virtualenvwrapper.sh
+		### Virtualenvwrapper
+		if [ -f /usr/local/bin/virtualenvwrapper.sh ]; then
+			export WORKON_HOME=~/.virtualenvs
+			export VIRTUALENVWRAPPER_PYTHON=/Users/koji0708/.pyenv/shims/python
+			source /usr/local/bin/virtualenvwrapper.sh
+		fi
+
+		# pyenv
+		export PYENV_ROOT="${HOME}/.pyenv"
+		if [ -d "${PYENV_ROOT}" ]; then
+			export PATH=${PYENV_ROOT}/bin:$PATH
+			eval "$(pyenv init -)"
+		fi
 		;;
 	cygwin*)
 		#python

@@ -1060,3 +1060,24 @@ endfunction"}}}
 "}}}
 cd ~/Dropbox
 "}}}
+
+"copy path
+function! CopyPath()
+  let @*=expand('%:P')
+endfunction
+
+function! CopyFullPath()
+  let @*=expand('%:p')
+endfunction
+
+function! CopyFileName()
+  let @*=expand('%:t')
+endfunction
+
+command! CopyPath     call CopyPath()
+command! CopyFullPath call CopyFullPath()
+command! CopyFileName call CopyFileName()
+
+nnoremap <silent>cp :CopyPath<CR>
+nnoremap <silent>cfp :CopyFullPath<CR>
+nnoremap <silent>cf :CopyFileName<CR>
