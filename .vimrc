@@ -661,6 +661,9 @@ let $USERNAME = 'koji'
 let g:vimshell_prompt = $USERNAME."% "
 let g:vimshell_right_prompt = 'fnamemodify(getcwd(), ":~")'
 let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~")'
+let g:vimshell_interactive_encodings = {
+			\'C:/cygwin64/bin/': 'utf-8',
+			\}
 " vimshell map
 nnoremap <silent> <Leader>s :VimShell<CR>
 " nnoremap <silent> <Leader>p :VimShellPop<CR>
@@ -1074,10 +1077,10 @@ function! CopyFileName()
   let @*=expand('%:t')
 endfunction
 
-command! CopyPath     call CopyPath()
-command! CopyFullPath call CopyFullPath()
-command! CopyFileName call CopyFileName()
+command! Path     call CopyPath()
+command! FullPath call CopyFullPath()
+command! FileName call CopyFileName()
 
-nnoremap <silent>cp :CopyPath<CR>
-nnoremap <silent>cfp :CopyFullPath<CR>
-nnoremap <silent>cf :CopyFileName<CR>
+nnoremap <silent>cp :Path<CR>
+nnoremap <silent>cfp :FullPath<CR>
+nnoremap <silent>cf :FileName<CR>
