@@ -45,7 +45,7 @@ function mklink() {
 }
 
 ## .git* 以外の dotfiles をリンク
-for F in $(find $DOTFILES_DIR -name '.*' -maxdepth 1 | grep -v '\.git');
+for F in $(find $DOTFILES_DIR -name '.*'| grep -v '\.git');
 do
     NAME=$(basename $F)
     mklink $NAME

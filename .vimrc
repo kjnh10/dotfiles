@@ -348,7 +348,7 @@ NeoBundle 'tpope/vim-endwise'
 NeoBundle 'airblade/vim-rooter'
 NeoBundle 'tyru/vim-altercmd' "http://qiita.com/kentaro/items/c3f7fc1d1be0e106735b
 
-NeoBundle 'kannokanno/previm' "markdown 用
+" NeoBundle 'kannokanno/previm' "markdown 用
 NeoBundle 'plasticboy/vim-markdown'
 NeoBundle 'tyru/open-browser.vim'
 NeoBundle 'davidhalter/jedi-vim'
@@ -366,6 +366,7 @@ NeoBundleLazy 'jelera/vim-javascript-syntax', {'autoload':{'filetypes':['javascr
 " NeoBundle 'jason0x43/vim-js-indent'
 NeoBundle 'vim-scripts/JavaScript-Indent'
 
+NeoBundle 'vim-scripts/ViewOutput'
 NeoBundle 'kojinho10/mysetting.vim'
 "NeoBundle 'tyru/restart.vim'
 "NeoBundle 'git://git.code.sf.net/p/vim-latex/vim-latex' "<c-j>をつぶしていたため一旦削除。使う場合はそこを修正してから。
