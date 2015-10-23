@@ -530,90 +530,94 @@ endfunction
 "}}}
 "neocompleteの設定"{{{
 """"""""""""""""""""""""""""""
-"Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
-" Disable AutoComplPop.
-let g:acp_enableAtStartup = 0
-" Use neocomplete.
-let g:neocomplete#enable_at_startup = 1
-" Use smartcase.
-let g:neocomplete#enable_smart_case = 1
-" Set minimum syntax keyword length.
-let g:neocomplete#sources#syntax#min_keyword_length = 3
-"specfying buffers where neocomplete dosen't work.
-let g:neocomplete#lock_buffer_name_pattern = '\*unite\*'
-" Define dictionary.
-let g:neocomplete#sources#dictionary#dictionaries = {
-			\ 'default' : '',
-			\ 'vimshell' : $HOME.'/.vimshell_hist',
-			\ 'scheme' : $HOME.'/.gosh_completions',
-			\ }
+	" Note: This option must set it in .vimrc(_vimrc).
+	" NOT IN .gvimrc(_gvimrc)!
+	" Disable AutoComplPop.
+	let g:acp_enableAtStartup = 0
+	" Use neocomplete.
+	let g:neocomplete#enable_at_startup = 1
+	" Use smartcase.
+	let g:neocomplete#enable_smart_case = 1
+	let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
 
-" Define keyword.
-if !exists('g:neocomplete#keyword_patterns')
-	let g:neocomplete#keyword_patterns = {}
-endif
-let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+	" Define dictionary.
+	let g:neocomplete#sources#dictionary#dictionaries = {
+	    \ 'default' : '',
+	    \ 'vimshell' : $HOME.'/.vimshell_hist',
+	    \ 'scheme' : $HOME.'/.gosh_completions'
+	    \ }
 
-" Plugin key-mappings.
-inoremap <expr><C-g>	 neocomplete#undo_completion()
-inoremap <expr><C-l>	 neocomplete#complete_common_string()
+	" Define keyword.
+	if !exists('g:neocomplete#keyword_patterns')
+	    let g:neocomplete#keyword_patterns = {}
+	endif
+	let g:neocomplete#keyword_patterns['default'] = '\h\w*'
 
-" Recommended key-mappings.
-" <CR>: close popup and save indent.
-"inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function()
-	return neocomplete#smart_close_popup() . "\<CR>"
-	" For no inserting <CR> key.
-	"return pumvisible() ? neocomplete#close_popup() : "\<CR>"
-endfunction
-" <TAB>: completion.
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-" <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr><C-y>  neocomplete#close_popup()
-"inoremap <expr><CR>  neocomplete#close_popup()
-"inoremap <expr><C-e>  neocomplete#cancel_popup()
-" Close popup by <Space>.
-"inoremap <expr><Space> pumvisible() ? neocomplete#close_popup() : "\<Space>"
+	" Plugin key-mappings.
+	inoremap <expr><C-g>     neocomplete#undo_completion()
+	inoremap <expr><C-l>     neocomplete#complete_common_string()
 
-" For cursor moving in insert mode(Not recommended)
-"inoremap <expr><Left>	neocomplete#close_popup() . "\<Left>"
-"inoremap <expr><Right> neocomplete#close_popup() . "\<Right>"
-"inoremap <expr><Up>	neocomplete#close_popup() . "\<Up>"
-"inoremap <expr><Down>	neocomplete#close_popup() . "\<Down>"
-" Or set this.
-"let g:neocomplete#enable_cursor_hold_i = 1
-" Or set this.
-"let g:neocomplete#enable_insert_char_pre = 1
+	" Recommended key-mappings.
+	" <CR>: close popup and save indent.
+	inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+	function! s:my_cr_function()
+	  " return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
+	  " For no inserting <CR> key.
+	  return pumvisible() ? "\<C-y>" : "\<CR>"
+	endfunction
 
-" AutoComplPop like behavior.
-"let g:neocomplete#enable_auto_select = 1
+	" <TAB>: completion.
+	inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+	" <C-h>, <BS>: close popup and delete backword char.
+	inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+	inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+	" Close popup by <Space>.
+	"inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
 
-" Shell like behavior(not recommended).
-"set completeopt+=longest
-"let g:neocomplete#enable_auto_select = 1
-"let g:neocomplete#disable_auto_complete = 1
-"inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
+	" AutoComplPop like behavior.
+	"let g:neocomplete#enable_auto_select = 1
 
-" Enable omni completion.
-autocmd MyAutoCmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd MyAutoCmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd MyAutoCmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd MyAutoCmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd MyAutoCmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+	" Shell like behavior(not recommended).
+	"set completeopt+=longest
+	"let g:neocomplete#enable_auto_select = 1
+	"let g:neocomplete#disable_auto_complete = 1
+	"inoremap <expr><TAB>  pumvisible() ? "\<Down>" :
+	" \ neocomplete#start_manual_complete()
 
-" Enable heavy omni completion.
-if !exists('g:neocomplete#sources#omni#input_patterns')
-	let g:neocomplete#sources#omni#input_patterns = {}
-endif
-"let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-"let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-"let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+	" Enable omni completion.
+	autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+	autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+	autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+	autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+	autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
-" For perlomni.vim setting.
-" https://github.com/c9s/perlomni.vim
-let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+	" Enable heavy omni completion.
+	if !exists('g:neocomplete#sources#omni#input_patterns')
+	  let g:neocomplete#sources#omni#input_patterns = {}
+	endif
+	if !exists('g:neocomplete#force_omni_input_patterns')
+	  let g:neocomplete#force_omni_input_patterns = {}
+	endif
+	"let g:neocomplete#sources#omni#input_patterns.php =
+	"\ '[^. \t]->\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
+	"let g:neocomplete#sources#omni#input_patterns.c =
+	"\ '[^.[:digit:] *\t]\%(\.\|->\)\%(\h\w*\)\?'
+	"let g:neocomplete#sources#omni#input_patterns.cpp =
+	"\ '[^.[:digit:] *\t]\%(\.\|->\)\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
+
+	" For perlomni.vim setting.
+	" https://github.com/c9s/perlomni.vim
+	let g:neocomplete#sources#omni#input_patterns.perl =
+	\ '[^. \t]->\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
+
+	" For smart TAB completion.
+	"inoremap <expr><TAB>  pumvisible() ? "\<C-n>" :
+	"        \ <SID>check_back_space() ? "\<TAB>" :
+	"        \ neocomplete#start_manual_complete()
+	"  function! s:check_back_space() "{{{
+	"    let col = col('.') - 1
+	"    return !col || getline('.')[col - 1]  =~ '\s'
+	"  endfunction"}}}
 "}}}
 "quickrunの設定"{{{
 """"""""""""""""""""""""""""""
@@ -914,13 +918,32 @@ let g:indent_guides_guide_size=1
 """""""""""""""""""""""""""""""
 " http://rcmdnk.github.io/blog/2015/01/12/computer-vim/
 if ! empty(neobundle#get("neosnippet"))
-  imap <C-s> <Plug>(neosnippet_expand_or_jump)
-  smap <C-s> <Plug>(neosnippet_expand_or_jump)
-  xmap <C-s> <Plug>(neosnippet_expand_target)
-  let g:neosnippet#enable_snipmate_compatibility = 1
-  let g:neosnippet#disable_runtime_snippets = {'_' : 1}
-  let g:neosnippet#snippets_directory = '~/bundle/neosnippet-snippets/neosnippets, ~/bundle/vim-snippets/snippets'
+	" Plugin key-mappings.
+	imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+	smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+	xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+	"SuperTab like snippets' behavior.
+	imap <expr><TAB>
+				\ pumvisible() ? "\<C-n>" :
+				\ neosnippet#expandable_or_jumpable() ?
+				\    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+	smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+				\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+	" For conceal markers.
+	if has('conceal')
+	  set conceallevel=2 concealcursor=niv
+	endif
+
+	let g:neosnippet#enable_snipmate_compatibility = 1
+	let g:neosnippet#disable_runtime_snippets = {'_' : 1}
+	let g:neosnippet#snippets_directory = ['~/.vim/bundle/neosnippet-snippets/neosnippets']
+	let g:neosnippet#snippets_directory += ['~/.vim/bundle/vim-snippets/snippets']
+	let g:neosnippet#snippets_directory += ['~/.vim/bundle/mysetting.vim/snippets/']
+
 endif
+
 "}}}
 " vim-indent-guides"{{{
 let g:indent_guides_auto_colors=0
@@ -1032,6 +1055,7 @@ if has("win32") || has("win64")
 	inoremap <silent> <esc> <esc>:set iminsert=0<CR>
 endif
 "}}}
+"
 "experimental settings{{{
 "----------------------------
 
@@ -1062,10 +1086,8 @@ function! source.gather_candidates(args, context)
 	return candidates
 endfunction"}}}
 "}}}
-cd ~/Dropbox
-"}}}
 
-"copy path
+"copy path"{{{
 function! CopyPath()
   let @*=expand('%:P')
 endfunction
@@ -1084,9 +1106,9 @@ command! FileName call CopyFileName()
 
 nnoremap <silent>cp :Path<CR>
 nnoremap <silent>cfp :FullPath<CR>
-nnoremap <silent>cf :FileName<CR>
+nnoremap <silent>cf :FileName<CR>"}}}
 
-"memo機能
+"memo機能"{{{
 "http://tekkoc.tumblr.com/post/41943190314/%E7%A7%92%E9%80%9F%E3%81%A7vim%E3%81%A7%E3%83%A1%E3%83%A2%E3%82%92%E6%9B%B8%E3%81%8F%E6%9D%A1%E4%BB%B6
 function! s:open_memo_file()"
     let l:category = input('Category: ')
@@ -1143,4 +1165,6 @@ nnoremap Mg :MemoGrep
 nnoremap MN :MemoNew
 nnoremap ML :MemoList
 nnoremap MF :MemoFiler
-nnoremap MG :MemoGrep
+nnoremap MG :MemoGrep"}}}"}}}
+
+cd ~/
