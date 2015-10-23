@@ -1084,3 +1084,62 @@ command! FileName call CopyFileName()
 nnoremap <silent>cp :Path<CR>
 nnoremap <silent>cfp :FullPath<CR>
 nnoremap <silent>cf :FileName<CR>
+
+"memo機能
+"http://tekkoc.tumblr.com/post/41943190314/%E7%A7%92%E9%80%9F%E3%81%A7vim%E3%81%A7%E3%83%A1%E3%83%A2%E3%82%92%E6%9B%B8%E3%81%8F%E6%9D%A1%E4%BB%B6
+function! s:open_memo_file()"
+    let l:category = input('Category: ')
+    let l:title = input('Title: ')
+
+    if l:category == ""
+        let l:category = "other"
+    endif
+
+    let l:memo_dir = $HOME . '/Dropbox/Memo/vim/' . l:category
+    if !isdirectory(l:memo_dir)
+        call mkdir(l:memo_dir, 'p')
+    endif
+
+    let l:filename = l:memo_dir . strftime('/%Y-%m-%d_') . l:title . '.txt'
+
+    let l:template = [
+                \'Category: ' . l:category,
+                \'========================================',
+                \'Title: ' . l:title,
+                \'----------------------------------------',
+                \'date: ' . strftime('%Y/%m/%d %T'),
+                \'- - - - - - - - - - - - - - - - - - - - ',
+                \'',
+                \]
+
+    " ファイル生成
+    execute 'tabnew ' . l:filename
+    call setline(1, l:template)
+    execute '999'
+    execute 'write'
+endfunction augroup END"
+
+
+" メモを作成するコマンド
+command! -nargs=0 MemoNew call s:open_memo_file()
+
+" メモ一覧をUniteで呼び出すコマンド
+command! -nargs=0 MemoList :Unite file_rec:~/Dropbox/Memo/ -buffer-name=memo_list
+
+" メモ一覧をUnite grepするコマンド
+command! -nargs=0 MemoGrep :Unite grep:~/Dropbox/Memo/ -no-quit
+
+" メモ一覧をVimFilerで呼び出すコマンド
+command! -nargs=0 MemoFiler :VimFiler ~/Dropbox/Memo
+
+" メモ関連マッピング
+nnoremap Mn :MemoNew
+nnoremap Ml :MemoList
+nnoremap Mf :MemoFiler
+nnoremap Mg :MemoGrep
+
+" シフト押したままでもマッピングが起動するように
+nnoremap MN :MemoNew
+nnoremap ML :MemoList
+nnoremap MF :MemoFiler
+nnoremap MG :MemoGrep
