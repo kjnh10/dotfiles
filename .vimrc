@@ -637,7 +637,7 @@ let g:quickrun_config.python = {
 let g:quickrun_config.applescript= {
 			\ 'command': 'osascript',
 			\}
-let g:quickrun_config.mkd = {
+let g:quickrun_config.markdown = {
 			\ 'outputter' : 'browser',
 			\ 'command' : 'pandoc',
 			\ 'cmdopt' : '-s -f markdown --template=github',
