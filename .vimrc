@@ -662,7 +662,7 @@ let g:vimshell_prompt = $USERNAME."% "
 let g:vimshell_right_prompt = 'fnamemodify(getcwd(), ":~")'
 let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~")'
 " vimshell map
-nnoremap <silent> <Leader>s :VimShell<CR>
+nnoremap <silent> <Leader>s :VimShellCreate<CR>
 " nnoremap <silent> <Leader>p :VimShellPop<CR>
 "vimshell上でのキーマッピング
 autocmd MyAutoCmd FileType vimshell call s:vimshell_my_settings()
