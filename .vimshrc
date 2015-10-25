@@ -1,0 +1,2 @@
+alias git='exe --encoding=utf-8 git'
+alias ls='exe --encoding=utf-8 ls'
