@@ -670,7 +670,7 @@ let g:vimshell_interactive_encodings = {
 			\'C:/cygwin64/bin/': 'utf-8',
 			\}
 " vimshell map
-nnoremap <silent> <Leader>s :VimShellCreate<CR>
+nnoremap <silent> <Leader>s :VimShellBufferDir<CR>
 " nnoremap <silent> <Leader>p :VimShellPop<CR>
 "vimshell上でのキーマッピング
 autocmd MyAutoCmd FileType vimshell call s:vimshell_my_settings()
