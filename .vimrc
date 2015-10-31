@@ -348,9 +348,13 @@ NeoBundle 'tpope/vim-endwise'
 NeoBundle 'airblade/vim-rooter'
 NeoBundle 'tyru/vim-altercmd' "http://qiita.com/kentaro/items/c3f7fc1d1be0e106735b
 
+" Markdown syntax
 " NeoBundle 'kannokanno/previm' "markdown 用
+NeoBundle "godlygeek/tabular"
+NeoBundle "joker1007/vim-markdown-quote-syntax"
 NeoBundle 'plasticboy/vim-markdown'
 NeoBundle 'tyru/open-browser.vim'
+
 NeoBundle 'davidhalter/jedi-vim'
 NeoBundleLazy "nvie/vim-flake8", {
 			\ "autoload": {
