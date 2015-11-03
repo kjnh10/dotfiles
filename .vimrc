@@ -313,9 +313,13 @@ NeoBundle 'tpope/vim-endwise'
 NeoBundle 'airblade/vim-rooter'
 NeoBundle 'tyru/vim-altercmd' "http://qiita.com/kentaro/items/c3f7fc1d1be0e106735b
 
+" Markdown syntax
 " NeoBundle 'kannokanno/previm' "markdown 用
+NeoBundle "godlygeek/tabular"
+NeoBundle "joker1007/vim-markdown-quote-syntax"
 NeoBundle 'plasticboy/vim-markdown'
 NeoBundle 'tyru/open-browser.vim'
+
 NeoBundle 'davidhalter/jedi-vim'
 NeoBundleLazy "nvie/vim-flake8", {
 			\ "autoload": {
@@ -635,7 +639,7 @@ let g:vimshell_interactive_encodings = {
 			\'C:/cygwin64/bin/': 'utf-8',
 			\}
 " vimshell map
-nnoremap <silent> <Leader>s :VimShell<CR>
+nnoremap <silent> <Leader>s :VimShellBufferDir<CR>
 " nnoremap <silent> <Leader>p :VimShellPop<CR>
 "vimshell上でのキーマッピング
 autocmd MyAutoCmd FileType vimshell call s:vimshell_my_settings()
