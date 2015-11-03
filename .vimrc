@@ -178,14 +178,24 @@ for n in range(1, 9)
 	execute 'nnoremap <silent> [Tag]'.n  ':<C-u>tabnext'.n.'<CR>'
 endfor
 
+function! s:newtab()
+	tabnew
+	VimFiler
+endfunction
+command! TABNEW call s:newtab()
 " tn 新しいタブを一番右に作る
-map <silent> [Tag]n :tablast <bar> tabnew<CR>
+" map <silent> [Tag]n :tablast <bar> tabnew<CR>
+map <silent> [Tag]n :TABNEW<CR>
 "tq タブを閉じる
 map <silent> [Tag]q :tabclose<CR>
 "tl 次のタブ
 map <silent> [Tag]l :tabnext<CR>
 "tj 前のタブ
 map <silent> [Tag]h :tabprevious<CR>
+"tl 一番右のタブ
+map <silent> [Tag]L :tablast<CR>
+"tl 一番左のタブ
+map <silent> [Tag]H :tabfirst<CR>
 "}}}
 
 "basic keymapping setting"{{{
@@ -476,11 +486,6 @@ function! s:unite_my_settings()
 	nmap <silent><buffer> <esc> q
 	imap <silent><buffer> <Down> <Plug>(unite_select_next_line)
 	imap <silent><buffer> <Up> <Plug>(unite_select_previous_line)
-	"These dosen't work.why?
-	nnoremap <Left> <c-w>h
-	nnoremap <Right> <c-w>l
-	nnoremap <Up> <c-w>k
-	nnoremap <Down> <c-w>j
 	nnoremap <silent><buffer><expr> vf unite#do_action('vimfiler')
 	nmap <silent><buffer> t [Tag]
 	nmap <silent><buffer> <c-l> :tabnext<cr>
@@ -671,8 +676,6 @@ let g:jedi#popup_on_dot = 1
 let g:neocomplete#force_omni_input_patterns = {}
 let g:neocomplete#force_omni_input_patterns.python = '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
 
-"2だとinitのところでエラー
-let g:jedi#force_py_version = 3
 "}}}
 "vimfilerの設定"{{{
 """"""""""""""""""""""""""""""
@@ -687,20 +690,26 @@ let g:vimfiler_execute_file_list = {
 			\ "xlsm" : "open"}
 
 call vimfiler#custom#profile('default', 'context', {
-     \ 'safe' : 0,
+     \ 'quit' : 0,
+     \ 'safe' : 1,
+     \ 'winwidth' : 23,
+     \ 'toggle' : 1,
+     \ 'simple' : 1,
+     \ 'split' : 1,
      \ })
 
 nnoremap <leader>f :<C-u>VimFilerBufferDir<CR>
-nnoremap <leader>F :<C-u>VimFilerBufferDir -simple -winwidth=30 -toggle -no-quit<CR>
+nnoremap <leader>F :<C-u>VimFiler<CR>
 
 " vimfiler上でのキーマッピング
 autocmd MyAutoCmd FileType vimfiler call s:vimfiler_my_settings()
 function! s:vimfiler_my_settings()
 	"タブ移動,historyとかをつぶしている。
 	nmap <silent><buffer> t [tag]
-	nnoremap <silent><buffer> [tag]n :tabnew<CR>
+	nnoremap <silent><buffer> [tag]n :TABNEW<CR>
 	nnoremap <silent><buffer> [tag]h :tabprevious<CR>
 	nnoremap <silent><buffer> [tag]l :tabnext<CR>
+	nnoremap <silent><buffer> [tag]q :tabclose<CR>
 	nmap <silent><buffer> <c-r> <plug>(vimfiler_redraw_screen)
 	"その他
 	nmap <silent><buffer> <A-Up> <Plug>(vimfiler_smart_h)
@@ -1138,5 +1147,6 @@ AlterCommand unite Unite
 AlterCommand gstatus Gstatus
 AlterCommand path Path
 AlterCommand fpath FullPath
+AlterCommand vo VO
 cd ~/
 

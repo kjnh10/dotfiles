@@ -9,7 +9,6 @@ wrap unite_project,unite project
 wrap umekomi,-a updatemodulesofbook activeworkbook.name
 
 wrap unite_book,unite book
-' ExecuteAsis Msgbox "koji"
 ' AddToInitializeLater Application.Calculation = xlCalculationAutomatic
 
 'mapping
