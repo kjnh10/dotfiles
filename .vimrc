@@ -64,10 +64,10 @@ set smartindent
 "右側にwinowが存在すればsp分割、存在しなければvertical分割するコマンド
 "右側にwidowが存在する場合
 "cursor key でwindowを切り替える。
-nnoremap <Left> <c-w>h
-nnoremap <Right> <c-w>l
-nnoremap <Up> <c-w>k
-nnoremap <Down> <c-w>j
+nnoremap <s-Left> <c-w>h
+nnoremap <s-Right> <c-w>l
+nnoremap <s-Up> <c-w>k
+nnoremap <s-Down> <c-w>j
 "commandline windowではwindow移動はできないため
 autocmd MyAutoCmd CmdwinEnter * nnoremap <buffer> <Right> <Right>
 autocmd MyAutoCmd CmdwinEnter * nnoremap <buffer> <Left> <Left>
@@ -195,8 +195,6 @@ let mapleader = ","
 "移動系
 noremap <C-a> ^
 noremap <C-e> <End>
-" noremap j <lEFT>
-noremap a <Insert>
 noremap j gj
 noremap k gk
 " noremap ev :<C-u>edit $MYVIMRC<CR>
@@ -207,39 +205,6 @@ noremap gf <C-w>gf
 "autocmd MyAutoCmd FileType help noremap <buffer> <ESC> :q<CR>
 "quickfixでenterでジャンプ
 autocmd MyAutoCmd FileType qf noremap <buffer> <Enter> <Enter>
-"texitobjectのために
-"dl"	delete character (alias: "x")		
-"diw"	delete inner word			
-"daw"	delete a word				
-"diW"	delete inner WORD (see |WORD|)		
-"daW"	delete a WORD (see |WORD|)		
-"dgn"	delete the next search pattern match	
-"dd"	delete one line				
-"dis"	delete inner sentence			
-"das"	delete a sentence			
-"dib"	delete inner '(' ')' block		
-"dab"	delete a '(' ')' block			
-"dip"	delete inner paragraph			
-"dap"	delete a paragraph			
-"diB"	delete inner '{' '}' block		
-"daB"	delete a '{' '}' block			
-" ounmap i
-" ounmap j
-" ounmap a
-" ounmap k
-" vunmap a
-" vnoremap iw iw
-" vnoremap i" i"
-" vnoremap i' i'
-" vnoremap i` i`
-" vnoremap i( i(
-" vnoremap i) i)
-" vnoremap i{ i{
-" vnoremap i} i}
-" vnoremap i< i<
-" vnoremap i> i>
-" vnoremap i[ i[
-" vnoremap i] i]
 "以下はプラグインの機能を呼び出すから再帰的
 " nmap ysiw ysaw
 "inormapはインサートモード
@@ -712,7 +677,6 @@ let g:jedi#force_py_version = 3
 "}}}
 "vimfilerの設定"{{{
 """"""""""""""""""""""""""""""
-let g:vimfiler_safe_mode_by_default = 0
 let g:vimfiler_as_default_explorer = 1
 
 "この変数はexecute_vimfiler_associated(enterにmapping)で何をするかコントロールする。
@@ -720,10 +684,16 @@ let g:vimfiler_execute_file_list = {}
 let g:vimfiler_execute_file_list = {
 			\ "_" : "vim",
 			\ "xlsx" : "open",
+			\ "xlam" : "open",
 			\ "xlsm" : "open"}
+
+call vimfiler#custom#profile('default', 'context', {
+     \ 'safe' : 0,
+     \ })
 
 nnoremap <leader>f :<C-u>VimFilerBufferDir<CR>
 nnoremap <leader>F :<C-u>VimFilerBufferDir -simple -winwidth=30 -toggle -no-quit<CR>
+
 " vimfiler上でのキーマッピング
 autocmd MyAutoCmd FileType vimfiler call s:vimfiler_my_settings()
 function! s:vimfiler_my_settings()
@@ -734,16 +704,11 @@ function! s:vimfiler_my_settings()
 	nnoremap <silent><buffer> [tag]l :tabnext<CR>
 	nmap <silent><buffer> <c-r> <plug>(vimfiler_redraw_screen)
 	"その他
-	nnoremap <silent><buffer><expr> <CR> 
 	nmap <silent><buffer> <A-Up> <Plug>(vimfiler_smart_h)
-	nmap <silent><buffer> <ESC> <Plug>(vimfiler_exit)
 	nmap <silent><buffer> f <Plug>(vimfiler_toggle_mark_current_line)
-	vmap <silent><buffer> f <Plug>(vimfiler_toggle_mark_selected_lines)
 	nmap <silent><buffer> F <Plug>(vimfiler_toggle_mark_all_lines)
-	nmap <silent><buffer> dd <Plug>(vimfiler_mark_current_line)<Plug>(vimfiler_delete_file)
 	nmap <silent><buffer> vs <Plug>(vimfiler_mark_current_line)<Plug>(vimfiler_popup_shell)
 	nmap <silent><buffer> to <Plug>(vimfiler_choose_action)tabopen<cr>
-	nmap <silent><buffer> <tab> <Plug>(vimfiler_choose_action)
 	nmap <silent><buffer> du <Plug>(vimfiler_switch_to_another_vimfiler)
 
 	nmap <buffer><expr> <CR> vimfiler#smart_cursor_map(
@@ -1049,10 +1014,6 @@ nnoremap yl ^v$y<esc>
 nnoremap yf :let @* = expand("%:p")<CR>
 "何故かpで""が選択されない時がある。
 
-"カスタムコマンドの先頭を小文字にする。
-call altercmd#load()
-AlterCommand unite Unite
-AlterCommand gstatus Gstatus
 
 "settigs for windows"{{{
 "----------------------------
@@ -1172,4 +1133,11 @@ nnoremap ML :MemoList
 nnoremap MF :MemoFiler
 nnoremap MG :MemoGrep"}}}"}}}
 
+"カスタムコマンドの先頭を小文字にする。"{{{
+call altercmd#load()
+AlterCommand unite Unite
+AlterCommand gstatus Gstatus
+AlterCommand path Path
+AlterCommand fpath FullPath
 cd ~/
+
