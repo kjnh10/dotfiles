@@ -129,6 +129,10 @@ if [[ $OSTYPE == cygwin* ]];then # スペース入れないとエラーになる
 	#git の文字化け対策 http://d.hatena.ne.jp/Rion778/20091107/1257623615
 	export LANG=ja_JP.UTF-8
 	export PAGER="lv -Ou8"
+
+	#ruby
+	export PATH="$HOME/.rbenv/bin:$PATH"
+	eval "$(rbenv init - zsh)"
 fi
 
 echo "ended source .zshrc"
