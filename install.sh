@@ -25,7 +25,7 @@ function mklink() {
     NAME=$1
     ## 既に同名のファイルが存在する場合はリネーム
     if [ -e "$NAME" ]; then
-        mv $NAME ${NAME}.${NOW}
+		mv $NAME "./dotfiles_bak/"${NAME}.${NOW}
     fi
     DOTFILE=${DOTFILES_DIR}/${NAME}
     echo "mklink $DOTFILE"

@@ -8,3 +8,5 @@
 	s = status
 [core]
 	autocrlf = input
+[ghq]
+	root = ~/go/src

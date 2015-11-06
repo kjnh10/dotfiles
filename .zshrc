@@ -130,6 +130,10 @@ if [[ $OSTYPE == cygwin* ]];then # スペース入れないとエラーになる
 	export LANG=ja_JP.UTF-8
 	export PAGER="lv -Ou8"
 
+	#go
+	export GOPATH="C:\Users\bc0074854\go"
+	export PATH=$PATH:$GOPATH/bin
+
 	#ruby
 	export PATH="$HOME/.rbenv/bin:$PATH"
 	eval "$(rbenv init - zsh)"

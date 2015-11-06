@@ -180,7 +180,7 @@ endfor
 
 function! s:newtab()
 	tabnew
-	VimFiler
+	" VimFiler
 endfunction
 command! TABNEW call s:newtab()
 " tn 新しいタブを一番右に作る
@@ -692,7 +692,7 @@ let g:vimfiler_execute_file_list = {
 
 call vimfiler#custom#profile('default', 'context', {
      \ 'quit' : 0,
-     \ 'safe' : 1,
+     \ 'safe' : 0,
      \ 'winwidth' : 23,
      \ 'toggle' : 1,
      \ 'simple' : 1,
@@ -1151,3 +1151,8 @@ AlterCommand fpath FullPath
 AlterCommand vo VO
 cd ~/
 
+"grep
+autocmd QuickFixCmdPost *grep* cwindow
+
+"http://deris.hatenablog.jp/entry/2013/05/15/024932
+nnoremap /  /\v
