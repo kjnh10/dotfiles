@@ -131,7 +131,7 @@ if [[ $OSTYPE == cygwin* ]];then # スペース入れないとエラーになる
 	export PAGER="lv -Ou8"
 
 	#go
-	export GOPATH="C:\Users\bc0074854\go"
+	export GOPATH=${HOME}"/go"
 	export PATH=$PATH:$GOPATH/bin
 
 	#ruby

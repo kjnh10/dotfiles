@@ -298,6 +298,7 @@ NeoBundle 'kannokanno/vim-helpnew'
 NeoBundle 'sjl/gundo.vim'
 NeoBundle 't9md/vim-quickhl'
 NeoBundle 'nathanaelkane/vim-indent-guides'
+NeoBundle 'sorah/unite-ghq'
 
 " コード補完
 " NeoBundle 'marcus/rsense' :helpが正常動作しない (執筆時点) http://qiita.com/uplus_e10/items/27a3dd9e2586ec0f2c2c
@@ -1156,3 +1157,10 @@ autocmd QuickFixCmdPost *grep* cwindow
 
 "http://deris.hatenablog.jp/entry/2013/05/15/024932
 nnoremap /  /\v
+
+
+noremap [unite] <Nop>
+map     <Leader>u [unite]
+
+nnoremap <silent>[unite]p         :<C-u>Unite file_rec/async<CR>
+nnoremap <silent>[unite]g         :<C-u>Unite ghq<CR>
