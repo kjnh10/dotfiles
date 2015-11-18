@@ -105,6 +105,9 @@ case ${OSTYPE} in
     darwin*)
         #ここにMac向けの設定
 		alias ctags="`brew --prefix`/bin/ctags" #https://gist.github.com/nazgob/1570678
+		#go
+		export GOPATH=${HOME}"/go"
+		export PATH=$PATH:$GOPATH/bin
 		;;
     linux*)
         #ここにLinux向けの設定
@@ -130,13 +133,71 @@ if [[ $OSTYPE == cygwin* ]];then # スペース入れないとエラーになる
 	export LANG=ja_JP.UTF-8
 	export PAGER="lv -Ou8"
 
-	#go
-	export GOPATH=${HOME}"/go"
-	export PATH=$PATH:$GOPATH/bin
-
 	#ruby
 	export PATH="$HOME/.rbenv/bin:$PATH"
 	eval "$(rbenv init - zsh)"
 fi
 
+# peco source
+function peco-src () {
+  local selected_dir=$(ghq list -p | peco --query "$LBUFFER")
+  if [ -n "$selected_dir" ]; then
+    BUFFER="cd '${selected_dir}'"
+    zle accept-line
+  fi
+  zle clear-screen
+}
+zle -N peco-src
+bindkey '^]' peco-src
+
+#pecoでhistory検索
+function peco-select-history() {
+  BUFFER=$(\history -n -r 1 | peco --query "$LBUFFER")
+  CURSOR=$#BUFFER
+  zle clear-screen
+}
+zle -N peco-select-history
+bindkey '^r' peco-select-history
+
+# ### search a destination from cdr list
+function peco-get-destination-from-cdr() {
+  cdr -l | \
+  sed -e 's/^[[:digit:]]*[[:blank:]]*//' | \
+  peco --query "$LBUFFER"
+}
+### search a destination from cdr list and cd the destination
+function peco-cdr() {
+  local destination="$(peco-get-destination-from-cdr)"
+  if [ -n "$destination" ]; then
+    BUFFER="cd $destination"
+    zle accept-line
+  else
+    zle reset-prompt
+  fi
+}
+zle -N peco-cdr
+bindkey '^x' peco-cdr
+
+# cdr, add-zsh-hook を有効にする
+autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
+add-zsh-hook chpwd chpwd_recent_dirs
+ 
+# cdr の設定
+zstyle ':completion:*' recent-dirs-insert both
+zstyle ':chpwd:*' recent-dirs-max 500
+zstyle ':chpwd:*' recent-dirs-default true
+zstyle ':chpwd:*' recent-dirs-file "$HOME/.cache/shell/chpwd-recent-dirs"
+zstyle ':chpwd:*' recent-dirs-pushd true
+
+#pecoでkill
+function peco-pkill() {
+  for pid in `ps aux | peco | awk '{ print $2 }'`
+  do
+    kill $pid
+    echo "Killed ${pid}"
+  done
+}
+alias pk="peco-pkill"
+
 echo "ended source .zshrc"
+
