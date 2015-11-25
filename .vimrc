@@ -179,9 +179,11 @@ for n in range(1, 9)
 endfor
 
 function! s:newtab()
+	tablast
 	tabnew
 	" VimFiler
 endfunction
+
 command! TABNEW call s:newtab()
 " tn 新しいタブを一番右に作る
 " map <silent> [Tag]n :tablast <bar> tabnew<CR>
@@ -701,7 +703,7 @@ call vimfiler#custom#profile('default', 'context', {
      \ })
 
 nnoremap <leader>f :<C-u>VimFilerBufferDir<CR>
-nnoremap <leader>F :<C-u>VimFiler<CR>
+nnoremap <leader>F :<C-u>VimFiler -nosimple<CR>
 
 " vimfiler上でのキーマッピング
 autocmd MyAutoCmd FileType vimfiler call s:vimfiler_my_settings()
@@ -883,7 +885,8 @@ let g:neocomplete#force_omni_input_patterns.ruby = '[^.*\t]\.\w*\|\h\w*::'
 " rubocop
 " syntastic_mode_mapをactiveにするとバッファ保存時にsyntasticが走る
 " active_filetypesに、保存時にsyntasticを走らせるファイルタイプを指定する
-let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': ['ruby'] }
+" let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': ['ruby'] }
+let g:syntastic_mode_map = { 'mode': 'passive'}
 let g:syntastic_ruby_checkers = ['rubocop']
 " その他
 let g:ref_refe_cmd = $HOME.'/.rbenv/shims/refe' "refeコマンドのパス
