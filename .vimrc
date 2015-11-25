@@ -172,7 +172,9 @@ set showtabline=2 " 常にタブラインを表示
 "keymapping
 "The prefix key.
 nnoremap [Tag] <Nop>
+nnoremap [MoveTag] <Nop>
 nmap	   t   [Tag]
+nmap	   T   [MoveTag]
 "Tab jump:t1 で1番左のタブ、t2 で1番左から2番目のタブにジャンプ
 for n in range(1, 9)
 	execute 'nnoremap <silent> [Tag]'.n  ':<C-u>tabnext'.n.'<CR>'
@@ -196,6 +198,11 @@ map <silent> [Tag]h :tabprevious<CR>
 map <silent> [Tag]L :tablast<CR>
 "tl 一番左のタブ
 map <silent> [Tag]H :tabfirst<CR>
+
+map <silent> [MoveTag]h :tabm -1<CR>
+map <silent> [MoveTag]l :tabm +1<CR>
+map <silent> [MoveTag]H :tabm 0<CR>
+map <silent> [MoveTag]L :tabm<CR>
 "}}}
 
 "basic keymapping setting"{{{
@@ -258,7 +265,7 @@ nnoremap N Nzz
 vnoremap v $ 
 "}}}
 
-"set plugins{{{
+	"set plugins{{{
 """"""""""""""""""""""""""""""
 "set up neobundle and install plugin"{{{
 """"""""""""""""""""""""""""""
@@ -613,6 +620,7 @@ let g:quickrun_config._ = {
 			\ }
 let g:quickrun_config.python = {
 			\ "hook/eval/template" : "",
+			\ "hook/output_encode/encoding" : "cp932",
 			\ 'command': 'python',
 			\}
 let g:quickrun_config.applescript= {
