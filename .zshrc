@@ -84,7 +84,7 @@ GIT_PS1_SHOWCOLORHINTS=true
 PROMPT2='[%n]> ' 
 #gitのステータスを表示
 #(参考)https://www.udacity.com/course/viewer#!/c-ud775/l-2980038599/m-2955818665
-source .git-prompt.sh 
+source ~/.git-prompt.sh 
 setopt PROMPT_SUBST ; PS1='[%n@%m %c$(__git_ps1 " (%s)")]\$ '
 
 # ------------------------------
