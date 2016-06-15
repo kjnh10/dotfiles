@@ -459,7 +459,7 @@ let g:unite_source_history_yank_enable = 1
 call unite#custom_default_action('source/bookmark/directory' , 'vimfiler') "bookmarkはvimfilerと連携
 
 if has("win32") || has("win64")
-	let g:unite_source_find_command = "C:/cygwin/bin/find.exe"
+	let g:unite_source_find_command = "C:/cygwin64/bin/find.exe"
 endif
 " Using ag as recursive command.
 " unite grep に ag(The Silver Searcher) を使う
@@ -622,7 +622,6 @@ let g:quickrun_config._ = {
 			\ }
 let g:quickrun_config.python = {
 			\ "hook/eval/template" : "",
-			\ "hook/output_encode/encoding" : "cp932",
 			\ 'command': 'python',
 			\}
 let g:quickrun_config.applescript= {
@@ -670,13 +669,13 @@ endfunction
 "jediの設定"{{{
 """"""""""""""""""""""""""""""
 "(参考)http://kozo2.hatenablog.com/entry/2014/01/22/050714
-",g  go to definition
-",d  go to original difinition
-"K	 docstring
-",r  rename variables
-",n  show list of all usage
-":Pyimport (module-name)   module-fileを新しいタブで開く
-"
+" ,g  go to definition
+" ,d  go to original difinition
+" K	 docstring
+" ,r  rename variables
+" ,n  show list of all usage
+" :Pyimport (module-name)   module-fileを新しいタブで開く
+
 autocmd FileType python setlocal omnifunc=jedi#completions
 autocmd FileType python setlocal cot=menu,preview "preview-windowを開かないための設定
 let g:jedi#auto_initialization = 1
@@ -701,13 +700,18 @@ let g:vimfiler_execute_file_list = {
 			\ "xlam" : "open",
 			\ "xlsm" : "open"}
 
+" call vimfiler#custom#profile('default', 'context', {
+"      \ 'quit' : 0,
+"      \ 'safe' : 0,
+"      \ 'winwidth' : 35,
+"      \ 'toggle' : 1,
+"      \ 'simple' : 0,
+"      \ 'split' : 1,
+"      \ })
+"
 call vimfiler#custom#profile('default', 'context', {
-     \ 'quit' : 0,
      \ 'safe' : 0,
-     \ 'winwidth' : 23,
-     \ 'toggle' : 1,
-     \ 'simple' : 1,
-     \ 'split' : 1,
+     \ 'edit_action' : 'tabopen',
      \ })
 
 nnoremap <leader>f :<C-u>VimFilerBufferDir<CR>
@@ -734,6 +738,14 @@ function! s:vimfiler_my_settings()
 	nmap <buffer><expr> <CR> vimfiler#smart_cursor_map(
 				\  "\<Plug>(vimfiler_cd_file)",
 				\  "\<Plug>(vimfiler_edit_file)")
+
+	nmap <buffer> yy
+	\ <Plug>(vimfiler_mark_current_line)<Plug>(vimfiler_clipboard_copy_file)
+	nmap <buffer> p
+	\ <Plug>(vimfiler_mark_current_line)<Plug>(vimfiler_clipboard_paste)
+	nmap <buffer> m
+	\ <Plug>(vimfiler_mark_current_line)<Plug>(vimfiler_clipboard_move_file)
+
 endfunction
 
 "}}}
