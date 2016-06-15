@@ -623,6 +623,7 @@ let g:quickrun_config._ = {
 let g:quickrun_config.python = {
 			\ "hook/eval/template" : "",
 			\ 'command': 'python',
+			\ "hook/output_encode/encoding" : "utf-8",
 			\}
 let g:quickrun_config.applescript= {
 			\ 'command': 'osascript',
@@ -691,6 +692,7 @@ let g:neocomplete#force_omni_input_patterns.python = '\%([^. \t]\.\|^\s*@\|^\s*f
 "vimfilerの設定"{{{
 """"""""""""""""""""""""""""""
 let g:vimfiler_as_default_explorer = 1
+let g:vimfiler_ignore_pattern='\(^\.\|\~$\|\.pyc$\|\.[oad]$\)'
 
 "この変数はexecute_vimfiler_associated(enterにmapping)で何をするかコントロールする。
 let g:vimfiler_execute_file_list = {}
@@ -712,6 +714,10 @@ let g:vimfiler_execute_file_list = {
 call vimfiler#custom#profile('default', 'context', {
      \ 'safe' : 0,
      \ 'edit_action' : 'tabopen',
+     \ 'winwidth' : 45,
+     \ 'toggle' : 1,
+     \ 'simple' : 0,
+     \ 'split' : 1,
      \ })
 
 nnoremap <leader>f :<C-u>VimFilerBufferDir<CR>
@@ -730,6 +736,7 @@ function! s:vimfiler_my_settings()
 	"その他
 	nmap <silent><buffer> <A-Up> <Plug>(vimfiler_smart_h)
 	nmap <silent><buffer> f <Plug>(vimfiler_toggle_mark_current_line)
+	nmap <silent><buffer> i <Plug>(vimfiler_choose_action)
 	nmap <silent><buffer> F <Plug>(vimfiler_toggle_mark_all_lines)
 	nmap <silent><buffer> vs <Plug>(vimfiler_mark_current_line)<Plug>(vimfiler_popup_shell)
 	nmap <silent><buffer> to <Plug>(vimfiler_choose_action)tabopen<cr>
@@ -986,6 +993,25 @@ command! -nargs=+ MYKEY VO verbose <args>
 "filetypeをpythonに
 command! FTP setlocal filetype=python 
 
+"python interfaceの指定
+set pythondll=/Users/koji0708/.pyenv/versions/anaconda-2.1.0/lib/libpython2.7.dylib
+let s:python_path = system('python -', 'import sys;sys.stdout.write(",".join(sys.path))')
+echo s:python_path
+
+python <<EOM
+import sys
+import vim
+
+python_paths = vim.eval('s:python_path').split(',')
+for path in python_paths:
+	if not path in sys.path:
+		sys.path.insert(0, path)
+EOM
+
+let $PATH= $HOME."/.pyenv/shims:" . $PATH
+"quickrunのために設定. 下では解決しなかったので暫定的に
+"http://stackoverflow.com/questions/9853584/how-to-use-correct-ruby-in-vim-how-to-modify-path-in-vim/12146694#12146694
+
 "ファイル名変更コマンドを定義
 command! -nargs=1 -complete=file Rename f <args>|call delete(expand('#')) |w
 
@@ -1144,13 +1170,10 @@ endfunction augroup END"
 
 " メモを作成するコマンド
 command! -nargs=0 MemoNew call s:open_memo_file()
-
 " メモ一覧をUniteで呼び出すコマンド
 command! -nargs=0 MemoList :Unite file_rec:~/Dropbox/Memo/ -buffer-name=memo_list
-
 " メモ一覧をUnite grepするコマンド
 command! -nargs=0 MemoGrep :Unite grep:~/Dropbox/Memo/ -no-quit
-
 " メモ一覧をVimFilerで呼び出すコマンド
 command! -nargs=0 MemoFiler :VimFiler ~/Dropbox/Memo
 

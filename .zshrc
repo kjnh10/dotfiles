@@ -199,5 +199,16 @@ function peco-pkill() {
 }
 alias pk="peco-pkill"
 
+case ${OSTYPE} in
+	darwin*)
+		#python
+		# pyenv
+		export PATH="$HOME/.pyenv/bin:$PATH"
+		eval "$(pyenv init -)"
+		eval "$(pyenv virtualenv-init -)"
+		export LC_ALL='ja_JP.UTF-8' #
+		;;
+esac
+
 echo "ended source .zshrc"
 
