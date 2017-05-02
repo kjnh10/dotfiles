@@ -21,7 +21,7 @@ set mouse=a "マウスをオン"
 "set cursorcolumn "カーソル位置のカラムの背景色を変える
 set foldmethod=marker
 set formatoptions=q "自動で改行を許さない(textwidthを無効？)
-set clipboard& clipboard+=unnamedplus,unnamed "clipboardを共有 "optionを初期化してから
+set clipboard& clipboard^=unnamedplus,unnamed "clipboardを共有 "optionを初期化してから not + but ^ for linux
 set encoding=utf-8
 set number "行番号を表示
 set nobackup "バックアップファイルの設定
@@ -55,8 +55,8 @@ set tabstop=4 "<TAB>を含むファイルの表示において、タブ文字の
 set softtabstop=4 "tab を入力するとこの値の分だけ表示が動く様に自動的にtabか空白が挿入される。常に空白が最小 0に設定するとtabstopは無効
 set shiftwidth=4 "vimが自動でインデントを行った際、設定する空白数
 set autoindent
-set smartindent
-
+"set smartindent "flustrating when commenting in python
+set cindent
 "}}}
 
 "window setting"{{{
@@ -233,6 +233,7 @@ inoremap <C-e> <End>
 inoremap <C-d> <ESC>xi
 inoremap <C-h> <Backspace>
 inoremap <C-k> <esc>d$<insert>
+
 "nnormapはノーマルモード
 nnoremap <Enter> i<Enter><ESC>
 "ジャンプ系のコマンド
@@ -304,7 +305,6 @@ NeoBundle 'LeafCage/foldCC'
 NeoBundle 'LeafCage/yankround.vim'
 NeoBundle 'Lokaltog/vim-easymotion'
 NeoBundle 'kannokanno/vim-helpnew'
-NeoBundle 'sjl/gundo.vim'
 NeoBundle 't9md/vim-quickhl'
 NeoBundle 'nathanaelkane/vim-indent-guides'
 NeoBundle 'sorah/unite-ghq'
@@ -312,9 +312,10 @@ NeoBundle 'sorah/unite-ghq'
 " コード補完
 " NeoBundle 'marcus/rsense' :helpが正常動作しない (執筆時点) http://qiita.com/uplus_e10/items/27a3dd9e2586ec0f2c2c
 NeoBundle 'NigoroJr/rsense' 
-NeoBundle 'supermomonga/neocomplete-rsense.vim'
+"NeoBundle 'supermomonga/neocomplete-rsense.vim'
 " 静的解析
-NeoBundle 'scrooloose/syntastic'
+" NeoBundle 'scrooloose/syntastic'
+NeoBundle 'neomake/neomake'
 " ドキュメント参照
 NeoBundle 'yuku-t/vim-ref-ri'
 " メソッド定義元へのジャンプ windowsでコマンドプロンプトのエラーが一瞬出る｡
@@ -323,6 +324,7 @@ NeoBundle 'yuku-t/vim-ref-ri'
 "txt_obj => (references) http://qiita.com/rbtnn/items/a47ed6684f1f0bc52906
 NeoBundle 'kana/vim-textobj-user'
 NeoBundle 'kana/vim-operator-user'
+NeoBundle 'kana/vim-operator-replace'
 NeoBundle 'osyo-manga/vim-textobj-multiblock' " i(, i[, i{などをisbで扱える。(一番近いとろこを探す。) aも同様
 NeoBundle 'osyo-manga/vim-textobj-multitextobj'
 NeoBundle 'sgur/vim-textobj-parameter' "関数の引数 i, a,
@@ -358,7 +360,7 @@ NeoBundle 'vim-scripts/JavaScript-Indent'
 
 NeoBundle 'vim-scripts/ViewOutput'
 NeoBundle 'kojinho10/mysetting.vim'
-"NeoBundle 'tyru/restart.vim'
+NeoBundle 'tyru/restart.vim'
 "NeoBundle 'git://git.code.sf.net/p/vim-latex/vim-latex' "<c-j>をつぶしていたため一旦削除。使う場合はそこを修正してから。
 "NeoBundle 'rhysd/clever-f.vim'
 
@@ -380,6 +382,7 @@ NeoBundle 'Lokaltog/vim-distinguished' "distinguishd
 "}}}
 
 call neobundle#end()
+syntax on
 NeoBundleCheck
 "}}}
 
@@ -573,7 +576,6 @@ endfunction
 	autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 	autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 	autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-	autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 	autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
 	" Enable heavy omni completion.
@@ -616,10 +618,13 @@ endif
 " エラー : quickfix
 " 成功	 : buffer
 let g:quickrun_config._ = {
-			\ "outputter/buffer/split" : ":rightbelow 8sp",
-			\ "runner" : "vimproc",
-			\ "runner/vimproc/updatetime" : 10,
-			\ }
+      \ 'runner'    : 'vimproc',
+      \ 'runner/vimproc/updatetime' : 60,
+      \ 'outputter' : 'error',
+      \ 'outputter/error/success' : 'buffer',
+      \ 'outputter/error/error'   : 'quickfix',
+      \ 'outputter/buffer/close_on_empty' : 1,
+      \ }
 let g:quickrun_config.python = {
 			\ "hook/eval/template" : "",
 			\ 'command': 'python',
@@ -638,12 +643,8 @@ let g:quickrun_config.py = {
 command! -nargs=0 Pyver let g:quickrun_config.python.command = "python"
 command! -nargs=0 Pyver3 let g:quickrun_config.python.command = "python3"
 
-nnoremap <Leader>ll :QuickRun -mode n<CR>
+nnoremap <Leader>ll :write<CR>:cclose<CR>:QuickRun -mode n<CR>
 vnoremap <Leader>ll :QuickRun -mode v<CR>	
-
-"pythonとvimrcでquickrunのキーマップを設定
-autocmd MyAutoCmd FileType python,vim nnoremap <buffer> <Leader>ll :QuickRun -mode n<CR>
-autocmd MyAutoCmd FileType python,vim vnoremap <buffer> <Leader>ll :QuickRun -mode v<CR>
 "}}}
 "vimshellの設定"{{{
 """"""""""""""""""""""""""""""
@@ -678,15 +679,16 @@ endfunction
 " :Pyimport (module-name)   module-fileを新しいタブで開く
 
 autocmd FileType python setlocal omnifunc=jedi#completions
-autocmd FileType python setlocal cot=menu,preview "preview-windowを開かないための設定
-let g:jedi#auto_initialization = 1
-"let g:jedi#popup_select_first = 0
-let g:jedi#completions_enabled = 0
-let g:jedi#auto_vim_configuration = 0
-let g:jedi#show_call_signatures = 0
+" autocmd FileType python setlocal cot=menu,preview "preview-windowを開かないための設定
+" let g:jedi#auto_initialization = 1
+" let g:jedi#popup_select_first = 0
+" let g:jedi#completions_enabled = 0
+" let g:jedi#auto_vim_configuration = 0
+" let g:jedi#show_call_signatures = 0
+let g:jedi#completions_command = "<C-p>"
 let g:jedi#popup_on_dot = 1
-let g:neocomplete#force_omni_input_patterns = {}
-let g:neocomplete#force_omni_input_patterns.python = '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
+" let g:neocomplete#force_omni_input_patterns = {}
+" let g:neocomplete#force_omni_input_patterns.python = '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
 
 "}}}
 "vimfilerの設定"{{{
@@ -713,11 +715,10 @@ let g:vimfiler_execute_file_list = {
 "
 call vimfiler#custom#profile('default', 'context', {
      \ 'safe' : 0,
-     \ 'edit_action' : 'tabopen',
-     \ 'winwidth' : 45,
-     \ 'toggle' : 1,
+     \ 'toggle' : 0,
      \ 'simple' : 0,
-     \ 'split' : 1,
+     \ 'split' : 0,
+     \ 'quit' : 1,
      \ })
 
 nnoremap <leader>f :<C-u>VimFilerBufferDir<CR>
@@ -739,7 +740,7 @@ function! s:vimfiler_my_settings()
 	nmap <silent><buffer> i <Plug>(vimfiler_choose_action)
 	nmap <silent><buffer> F <Plug>(vimfiler_toggle_mark_all_lines)
 	nmap <silent><buffer> vs <Plug>(vimfiler_mark_current_line)<Plug>(vimfiler_popup_shell)
-	nmap <silent><buffer> to <Plug>(vimfiler_choose_action)tabopen<cr>
+	nmap <silent><buffer> <C-CR> <Plug>(vimfiler_choose_action)tabopen<cr>
 	nmap <silent><buffer> du <Plug>(vimfiler_switch_to_another_vimfiler)
 
 	nmap <buffer><expr> <CR> vimfiler#smart_cursor_map(
@@ -899,39 +900,22 @@ nmap gP <Plug>(yankround-gP)
 nmap <C-p> <Plug>(yankround-prev)
 nmap <C-n> <Plug>(yankround-next)
 "}}}
-"ruby plugin setting{{{ http://qiita.com/mogulla3/items/42a7f6c73fa4a90b1df3
-"""""""""""""""""""""""""""""""
-" Rsense
-let g:rsenseHome = '/usr/local/lib/rsense-0.3'
-let g:rsenseUseOmniFunc = 1
-" neocomplete.vim
-if !exists('g:neocomplete#force_omni_input_patterns')
-	let g:neocomplete#force_omni_input_patterns = {}
-endif
-let g:neocomplete#force_omni_input_patterns.ruby = '[^.*\t]\.\w*\|\h\w*::'
-" rubocop
-" syntastic_mode_mapをactiveにするとバッファ保存時にsyntasticが走る
-" active_filetypesに、保存時にsyntasticを走らせるファイルタイプを指定する
-" let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': ['ruby'] }
-let g:syntastic_mode_map = { 'mode': 'passive'}
-let g:syntastic_ruby_checkers = ['rubocop']
-" その他
-let g:ref_refe_cmd = $HOME.'/.rbenv/shims/refe' "refeコマンドのパス
-" vim-indent-guides
-let g:indent_guides_auto_colors=0
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd   ctermbg=110
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven  ctermbg=140
-let g:indent_guides_enable_on_vim_startup=0
-let g:indent_guides_guide_size=1
-"}}}
+"syntastic setting"{{{
+	" syntastic_mode_mapをactiveにするとバッファ保存時にsyntasticが走る
+	" active_filetypesに、保存時にsyntasticを走らせるファイルタイプを指定する
+	" let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': ['ruby'] }
+	" let g:syntastic_mode_map = { 'mode': 'passive'}
+	" let g:syntastic_python_checkers = ['flake8']"}}}
+	autocmd! BufWritePost,BufEnter * Neomake
+	let g:neomake_python_enabled_makers = ['flake8']
 "snippet setting{{{
 """""""""""""""""""""""""""""""
 " http://rcmdnk.github.io/blog/2015/01/12/computer-vim/
 if ! empty(neobundle#get("neosnippet"))
 	" Plugin key-mappings.
-	imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-	smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-	xmap <C-k>     <Plug>(neosnippet_expand_target)
+	imap <C-k> <Plug>(neosnippet_expand_or_jump)
+	smap <C-k> <Plug>(neosnippet_expand_or_jump)
+	xmap <C-k> <Plug>(neosnippet_expand_target)
 
 	"SuperTab like snippets' behavior.
 	imap <expr><TAB>
@@ -961,9 +945,6 @@ autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd   guibg=red
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven  guibg=green
 let g:indent_guides_guide_size=1"}}}
 
-"miscellaneous
-nnoremap <F5> :GundoToggle<CR>
-
 filetype plugin on
 filetype indent on
 "}}}
@@ -989,24 +970,6 @@ command! -nargs=+ MYKEY VO verbose <args>
 "imap		  yes	  -		 -
 "cmap		   -	 yes	 -
 "lmap		  yes*	 yes*		yes*
-
-"filetypeをpythonに
-command! FTP setlocal filetype=python 
-
-"python interfaceの指定
-set pythondll=/Users/koji0708/.pyenv/versions/anaconda-2.1.0/lib/libpython2.7.dylib
-let s:python_path = system('python -', 'import sys;sys.stdout.write(",".join(sys.path))')
-echo s:python_path
-
-python <<EOM
-import sys
-import vim
-
-python_paths = vim.eval('s:python_path').split(',')
-for path in python_paths:
-	if not path in sys.path:
-		sys.path.insert(0, path)
-EOM
 
 let $PATH= $HOME."/.pyenv/shims:" . $PATH
 "quickrunのために設定. 下では解決しなかったので暫定的に
@@ -1047,7 +1010,6 @@ else
 	autocmd MyAutoCmd BufWritePost $MYVIMRC nested source $MYVIMRC| source $MYGVIMRC
 endif
 
-
 "カーソル下のoptinの値をする
 nnoremap <expr> <f1> ':echo &'.expand(GetOptionUnderCursor()).'<CR>'
 nnoremap <expr> <s-f1> ':VO echo &'.expand(GetOptionUnderCursor()).'<CR>'
@@ -1072,7 +1034,6 @@ nnoremap <expr> <f2> ':echo '.expand('<cword>').'<CR>'
 nnoremap yl ^v$y<esc>
 nnoremap yf :let @* = expand("%:p")<CR>
 "何故かpで""が選択されない時がある。
-
 
 "settigs for windows"{{{
 "----------------------------
@@ -1204,9 +1165,18 @@ autocmd QuickFixCmdPost *grep* cwindow
 "http://deris.hatenablog.jp/entry/2013/05/15/024932
 nnoremap /  /\v
 
-
 noremap [unite] <Nop>
 map     <Leader>u [unite]
 
 nnoremap <silent>[unite]p         :<C-u>Unite file_rec/async<CR>
 nnoremap <silent>[unite]g         :<C-u>Unite ghq<CR>
+
+" " for syntastic
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
+"
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 1
+" let g:syntastic_check_on_open = 1
+" let g:syntastic_check_on_wq = 0
