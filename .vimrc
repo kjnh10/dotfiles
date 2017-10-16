@@ -400,8 +400,8 @@ let gvim_scheme = 'hybrid'
 autocmd MyAutoCmd GUIEnter * execute 'colorscheme' gvim_scheme
 "cuiのcolorscheme
 if !has('gui_running')
-	" let scheme = 'mrkn256'
-	let scheme = 'hybrid'
+	let scheme = 'mrkn256'
+	" let scheme = 'hybrid'
 	execute 'colorscheme' scheme
 endif
 "preview_command
