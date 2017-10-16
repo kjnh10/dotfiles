@@ -10,3 +10,6 @@
 	autocrlf = input
 [ghq]
 	root = ~/go/src
+[user]
+	email = kojinho10@gmail.com
+	name = kjnh10
