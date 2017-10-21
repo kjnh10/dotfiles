@@ -315,7 +315,10 @@ NeoBundle 'NigoroJr/rsense'
 "NeoBundle 'supermomonga/neocomplete-rsense.vim'
 " 静的解析
 " NeoBundle 'scrooloose/syntastic'
-NeoBundle 'neomake/neomake'
+" NeoBundle 'neomake/neomake'
+NeoBundle 'w0rp/ale'
+"
+"
 " ドキュメント参照
 NeoBundle 'yuku-t/vim-ref-ri'
 " メソッド定義元へのジャンプ windowsでコマンドプロンプトのエラーが一瞬出る｡
@@ -340,7 +343,7 @@ NeoBundle 'tyru/vim-altercmd' "http://qiita.com/kentaro/items/c3f7fc1d1be0e10673
 " NeoBundle 'kannokanno/previm' "markdown 用
 NeoBundle "godlygeek/tabular"
 NeoBundle "joker1007/vim-markdown-quote-syntax"
-NeoBundle 'plasticboy/vim-markdown'
+" NeoBundle 'plasticboy/vim-markdown'
 NeoBundle 'tyru/open-browser.vim'
 
 NeoBundle 'davidhalter/jedi-vim'
@@ -400,8 +403,8 @@ let gvim_scheme = 'hybrid'
 autocmd MyAutoCmd GUIEnter * execute 'colorscheme' gvim_scheme
 "cuiのcolorscheme
 if !has('gui_running')
-	let scheme = 'mrkn256'
-	" let scheme = 'hybrid'
+	" let scheme = 'mrkn256'
+	let scheme = 'hybrid'
 	execute 'colorscheme' scheme
 endif
 "preview_command
@@ -462,7 +465,7 @@ let g:unite_source_history_yank_enable = 1
 call unite#custom_default_action('source/bookmark/directory' , 'vimfiler') "bookmarkはvimfilerと連携
 
 if has("win32") || has("win64")
-	let g:unite_source_find_command = "C:/cygwin64/bin/find.exe"
+	" let g:unite_source_find_command = "C:/cygwin64/bin/find.exe"
 endif
 " Using ag as recursive command.
 " unite grep に ag(The Silver Searcher) を使う
@@ -636,7 +639,7 @@ let g:quickrun_config.applescript= {
 let g:quickrun_config.markdown = {
 			\ 'outputter' : 'browser',
 			\ 'command' : 'pandoc',
-			\ 'cmdopt' : '-s -f markdown --template=github',
+			\ 'cmdopt' : '-s -f markdown',
 			\ }
 let g:quickrun_config.py = {
 			\ }
@@ -906,8 +909,12 @@ nmap <C-n> <Plug>(yankround-next)
 	" let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': ['ruby'] }
 	" let g:syntastic_mode_map = { 'mode': 'passive'}
 	" let g:syntastic_python_checkers = ['flake8']"}}}
-	autocmd! BufWritePost,BufEnter * Neomake
-	let g:neomake_python_enabled_makers = ['flake8']
+	" autocmd! BufWritePost,BufEnter * Neomake
+	" let g:neomake_python_enabled_makers = ['flake8']
+	let g:ale_linters = {
+			\   'python': ['flake8'],
+			\}
+
 "snippet setting{{{
 """""""""""""""""""""""""""""""
 " http://rcmdnk.github.io/blog/2015/01/12/computer-vim/
