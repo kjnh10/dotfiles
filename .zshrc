@@ -1,15 +1,15 @@
 echo "start source .zshrc"
 #default on
+#
+# ohmyzsh
+	export ZSH=/home/koji0708/.oh-my-zsh
+	ZSH_THEME="robbyrussell"
+	plugins=(git)
+	source $ZSH/oh-my-zsh.sh
 
 # ------------------------------
 # General Settings
 # ------------------------------
-#macvimkaoriyaの設定
-#export EDITOR=/Applications/MacVim.app/Contents/MacOS/Vim
-#alias vi='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
-#alias mvim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim -g"$@"' 
-export VMAIL_VIM="/Applications/MacVim.app/Contents/MacOS/Vim"
-
 
 export EDITOR=vim        # エディタをvimに設定
 export LANG=ja_JP.UTF-8  # 文字コードをUTF-8に設定
@@ -57,35 +57,35 @@ zle -N history-beginning-search-backward-end history-search-end
 zle -N history-beginning-search-forward-end history-search-end
 bindkey "^P" history-beginning-search-backward-end
 bindkey "^N" history-beginning-search-forward-end
-
+	
 # すべてのヒストリを表示する
 function history-all { history -E 1 }
 
 # ------------------------------
 # Look And Feel Settings
 # ------------------------------
-### Ls Color ###
-# 色の設定
-export LSCOLORS=Exfxcxdxbxegedabagacad
-# 補完時の色の設定
-export LS_COLORS='di=01;34:ln=01;35:so=01;32:ex=01;31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
-# ZLS_COLORSとは？
-export ZLS_COLORS=$LS_COLORS
-# lsコマンド時、自動で色がつく(ls -Gのようなもの？)
-export CLICOLOR=true
-# 補完候補に色を付ける
-zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
-
-### Prompt ###
-# プロンプトに色を付ける
-autoload -U colors; colors
-
-GIT_PS1_SHOWCOLORHINTS=true
-PROMPT2='[%n]> ' 
-#gitのステータスを表示
-#(参考)https://www.udacity.com/course/viewer#!/c-ud775/l-2980038599/m-2955818665
-source ~/.git-prompt.sh 
-setopt PROMPT_SUBST ; PS1='[%n@%m %c$(__git_ps1 " (%s)")]\$ '
+# ### Ls Color ###
+# # 色の設定
+# export LSCOLORS=Exfxcxdxbxegedabagacad
+# # 補完時の色の設定
+# export LS_COLORS='di=01;34:ln=01;35:so=01;32:ex=01;31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
+# # ZLS_COLORSとは？
+# export ZLS_COLORS=$LS_COLORS
+# # lsコマンド時、自動で色がつく(ls -Gのようなもの？)
+# export CLICOLOR=true
+# # 補完候補に色を付ける
+# zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+#
+# ### Prompt ###
+# # プロンプトに色を付ける
+# autoload -U colors; colors
+#
+# GIT_PS1_SHOWCOLORHINTS=true
+# PROMPT2='[%n]> ' 
+# #gitのステータスを表示
+# #(参考)https://www.udacity.com/course/viewer#!/c-ud775/l-2980038599/m-2955818665
+# source ~/.git-prompt.sh 
+# setopt PROMPT_SUBST ; PS1='[%n@%m %c$(__git_ps1 " (%s)")]\$ '
 
 # ------------------------------
 # Other Settings
@@ -110,7 +110,6 @@ case ${OSTYPE} in
 		export PATH=$PATH:$GOPATH/bin
 		;;
     linux*)
-        #ここにLinux向けの設定
 		;;
 esac
 #cygwinの設定
@@ -135,7 +134,6 @@ if [[ $OSTYPE == cygwin* ]];then # スペース入れないとエラーになる
 
 	#ruby
 	export PATH="$HOME/.rbenv/bin:$PATH"
-	eval "$(rbenv init - zsh)"
 fi
 
 # peco source
@@ -208,7 +206,18 @@ case ${OSTYPE} in
 		eval "$(pyenv virtualenv-init -)"
 		export LC_ALL='ja_JP.UTF-8' #
 		;;
+    linux*)
+		export PYENV_ROOT="$HOME/.pyenv"
+		export PATH="$PYENV_ROOT/bin:$PATH"
+		eval "$(pyenv init -)"
+		alias activate="source $PYENV_ROOT/versions/anaconda3-4.3.0/bin/activate"
+		;;
+esac
+
+case ${OSTYPE} in
+    linux*)
+		export PATH=$HOME/.nodebrew/current/bin:$PATH
+		;;
 esac
 
 echo "ended source .zshrc"
-
