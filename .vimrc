@@ -309,6 +309,9 @@ NeoBundle 't9md/vim-quickhl'
 NeoBundle 'nathanaelkane/vim-indent-guides'
 NeoBundle 'sorah/unite-ghq'
 
+imap <Nul> <C-Space>
+NeoBundle 'anekos/felis-cat-igirisu-toast-express'
+
 " コード補完
 " NeoBundle 'marcus/rsense' :helpが正常動作しない (執筆時点) http://qiita.com/uplus_e10/items/27a3dd9e2586ec0f2c2c
 NeoBundle 'NigoroJr/rsense' 
@@ -351,6 +354,8 @@ NeoBundleLazy "nvie/vim-flake8", {
 			\ "autoload": {
 			\	"filetypes": ["python", "python3", "djangohtml"]
 			\ }}
+NeoBundle 'Vimjas/vim-python-pep8-indent'
+
 
 NeoBundle 'xolox/vim-session'
 NeoBundle 'xolox/vim-misc'
@@ -911,8 +916,13 @@ nmap <C-n> <Plug>(yankround-next)
 	" let g:syntastic_python_checkers = ['flake8']"}}}
 	" autocmd! BufWritePost,BufEnter * Neomake
 	" let g:neomake_python_enabled_makers = ['flake8']
+
+	let g:ale_sign_column_always = 1
+	let g:ale_lint_on_save = 1
+	let g:ale_lint_on_text_changed = 0
+	" flake8はうるさいのでpyflake8にしておく。
 	let g:ale_linters = {
-			\   'python': ['flake8'],
+			\   'python': ['pyflakes'],
 			\}
 
 "snippet setting{{{
@@ -1187,3 +1197,4 @@ nnoremap <silent>[unite]g         :<C-u>Unite ghq<CR>
 " let g:syntastic_auto_loc_list = 1
 " let g:syntastic_check_on_open = 1
 " let g:syntastic_check_on_wq = 0
+"
