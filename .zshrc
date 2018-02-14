@@ -101,6 +101,8 @@ alias r=rails
 #zshcompletionの設定
 fpath=(/usr/local/share/zsh $fpath)
 
+# SET PATH
+export PATH=~/bin:$PATH
 case ${OSTYPE} in
     darwin*)
         #ここにMac向けの設定
@@ -108,13 +110,24 @@ case ${OSTYPE} in
 		#go
 		export GOPATH=${HOME}"/go"
 		export PATH=$PATH:$GOPATH/bin
+
+		# pyenv
+		export PATH="$HOME/.pyenv/bin:$PATH"
+		eval "$(pyenv init -)"
+		eval "$(pyenv virtualenv-init -)"
+		export LC_ALL='ja_JP.UTF-8' #
 		;;
     linux*)
+		export PYENV_ROOT="$HOME/.pyenv"
+		export PATH="$PYENV_ROOT/bin:$PATH"
+		eval "$(pyenv init -)"
+		alias activate="source $PYENV_ROOT/versions/anaconda3-4.3.0/bin/activate"
+		export PATH=$HOME/.nodebrew/current/bin:$PATH
 		;;
 esac
 #cygwinの設定
 if [[ $OSTYPE == cygwin* ]];then # スペース入れないとエラーになる。
-	export PATH=~/bin:/usr/local/sbin:/usr/local/bin:/sbin:/usr/sbin:/usr/bin:$PATH # findなどがosのものより先に来てしまっているので。
+	export PATH=usr/local/sbin:/usr/local/bin:/sbin:/usr/sbin:/usr/bin:$PATH # findなどがosのものより先に来てしまっているので。
 	#railsの設定
 	#http://shiroibanana.blogspot.jp/2014/08/ruby-on-railshello-world.html
 	alias rails='rails.bat'
@@ -136,6 +149,7 @@ if [[ $OSTYPE == cygwin* ]];then # スペース入れないとエラーになる
 	export PATH="$HOME/.rbenv/bin:$PATH"
 fi
 
+# peco setting # {{{
 # peco source
 function peco-src () {
   local selected_dir=$(ghq list -p | peco --query "$LBUFFER")
@@ -196,28 +210,6 @@ function peco-pkill() {
   done
 }
 alias pk="peco-pkill"
-
-case ${OSTYPE} in
-	darwin*)
-		#python
-		# pyenv
-		export PATH="$HOME/.pyenv/bin:$PATH"
-		eval "$(pyenv init -)"
-		eval "$(pyenv virtualenv-init -)"
-		export LC_ALL='ja_JP.UTF-8' #
-		;;
-    linux*)
-		export PYENV_ROOT="$HOME/.pyenv"
-		export PATH="$PYENV_ROOT/bin:$PATH"
-		eval "$(pyenv init -)"
-		alias activate="source $PYENV_ROOT/versions/anaconda3-4.3.0/bin/activate"
-		;;
-esac
-
-case ${OSTYPE} in
-    linux*)
-		export PATH=$HOME/.nodebrew/current/bin:$PATH
-		;;
-esac
+# }}}
 
 echo "ended source .zshrc"
