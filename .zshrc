@@ -106,47 +106,53 @@ export PATH=~/bin:$PATH
 case ${OSTYPE} in
     darwin*)
         #ここにMac向けの設定
-		alias ctags="`brew --prefix`/bin/ctags" #https://gist.github.com/nazgob/1570678
-		#go
-		export GOPATH=${HOME}"/go"
-		export PATH=$PATH:$GOPATH/bin
+      alias ctags="`brew --prefix`/bin/ctags" #https://gist.github.com/nazgob/1570678
+      #go
+      export GOPATH=${HOME}"/go"
+      export PATH=$PATH:$GOPATH/bin
 
-		# pyenv
-		export PATH="$HOME/.pyenv/bin:$PATH"
-		eval "$(pyenv init -)"
-		eval "$(pyenv virtualenv-init -)"
-		export LC_ALL='ja_JP.UTF-8' #
-		;;
+      # pyenv
+      export PATH="$HOME/.pyenv/bin:$PATH"
+      eval "$(pyenv init -)"
+      eval "$(pyenv virtualenv-init -)"
+      export LC_ALL='ja_JP.UTF-8' #
+      ;;
+
     linux*)
-		export PYENV_ROOT="$HOME/.pyenv"
-		export PATH="$PYENV_ROOT/bin:$PATH"
-		eval "$(pyenv init -)"
-		alias activate="source $PYENV_ROOT/versions/anaconda3-4.3.0/bin/activate"
-		export PATH=$HOME/.nodebrew/current/bin:$PATH
-		;;
+      export PYENV_ROOT="$HOME/.pyenv"
+      export PATH="$PYENV_ROOT/bin:$PATH"
+      eval "$(pyenv init -)"
+      export PATH=$HOME/.nodebrew/current/bin:$PATH
+      export PATH=$HOME/bin/node-v8.9.4-linux-x64/bin:$PATH
+      #ruby
+      export RBENV_ROOT="$HOME/.rbenv"
+      export PATH="$HOME/.rbenv/bin:$PATH"
+      eval "$(rbenv init -)"
+      ;;
 esac
+
 #cygwinの設定
 if [[ $OSTYPE == cygwin* ]];then # スペース入れないとエラーになる。
-	export PATH=usr/local/sbin:/usr/local/bin:/sbin:/usr/sbin:/usr/bin:$PATH # findなどがosのものより先に来てしまっているので。
-	#railsの設定
-	#http://shiroibanana.blogspot.jp/2014/08/ruby-on-railshello-world.html
-	alias rails='rails.bat'
-	alias gem='gem.bat'
-	alias rake='rake.bat'
-	alias erb='erb.bat'
-	alias irb='irb.bat'
-	alias rdoc='rdoc.bat'
-	alias ri='ri.bat'
-	alias rspec='rspec.bat'
-	alias cucumber='cucumber.bat'
-	alias bundle='bundle.bat'
+    export PATH=usr/local/sbin:/usr/local/bin:/sbin:/usr/sbin:/usr/bin:$PATH # findなどがosのものより先に来てしまっているので。
+    #railsの設定
+    #http://shiroibanana.blogspot.jp/2014/08/ruby-on-railshello-world.html
+    alias rails='rails.bat'
+    alias gem='gem.bat'
+    alias rake='rake.bat'
+    alias erb='erb.bat'
+    alias irb='irb.bat'
+    alias rdoc='rdoc.bat'
+    alias ri='ri.bat'
+    alias rspec='rspec.bat'
+    alias cucumber='cucumber.bat'
+    alias bundle='bundle.bat'
 
-	#git の文字化け対策 http://d.hatena.ne.jp/Rion778/20091107/1257623615
-	export LANG=ja_JP.UTF-8
-	export PAGER="lv -Ou8"
+    #git の文字化け対策 http://d.hatena.ne.jp/Rion778/20091107/1257623615
+    export LANG=ja_JP.UTF-8
+    export PAGER="lv -Ou8"
 
-	#ruby
-	export PATH="$HOME/.rbenv/bin:$PATH"
+    #ruby
+    export PATH="$HOME/.rbenv/bin:$PATH"
 fi
 
 # peco setting # {{{
@@ -211,5 +217,4 @@ function peco-pkill() {
 }
 alias pk="peco-pkill"
 # }}}
-
 echo "ended source .zshrc"

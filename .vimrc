@@ -473,7 +473,7 @@ if has("win32") || has("win64")
 	" let g:unite_source_find_command = "C:/cygwin64/bin/find.exe"
 endif
 " Using ag as recursive command.
-" unite grep に ag(The Silver Searcher) を使う
+" unite grep に pt(The Silver Searcher) を使う
 if executable('pt')
 	let g:unite_source_grep_command = 'pt'
 	let g:unite_source_grep_default_opts = '--nogroup --nocolor --smart-case'
