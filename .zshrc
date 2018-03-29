@@ -2,7 +2,7 @@ echo "start source .zshrc"
 #default on
 #
 # ohmyzsh
-	export ZSH=/home/koji0708/.oh-my-zsh
+	export ZSH=$HOME/.oh-my-zsh
 	ZSH_THEME="robbyrussell"
 	plugins=(git)
 	source $ZSH/oh-my-zsh.sh
