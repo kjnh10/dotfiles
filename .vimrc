@@ -1165,9 +1165,9 @@ nnoremap Mg :MemoGrep
 nnoremap MN :MemoNew
 nnoremap ML :MemoList
 nnoremap MF :MemoFiler
-nnoremap MG :MemoGrep"}}}"}}}
+nnoremap MG :MemoGrep"}}}
 
-"カスタムコマンドの先頭を小文字にする。"{{{
+"カスタムコマンドの先頭を小文字にする。
 call altercmd#load()
 AlterCommand unite Unite
 AlterCommand gstatus Gstatus
@@ -1196,5 +1196,9 @@ nnoremap <silent>[unite]g         :<C-u>Unite ghq<CR>
 " let g:syntastic_always_populate_loc_list = 1
 " let g:syntastic_auto_loc_list = 1
 " let g:syntastic_check_on_open = 1
-" let g:syntastic_check_on_wq = 0
-"
+" let g:syntastic_check_on_wq = 0"}}}
+
+"neovim setting
+if has('nvim')
+  tnoremap <ESC> <C-\><C-n>
+endif
