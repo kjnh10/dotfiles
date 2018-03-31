@@ -1092,15 +1092,21 @@ endfunction"}}}
 
 "copy path"{{{
 function! CopyPath()
-  let @*=expand('%:P')
+  let res = expand('%:P')
+  let @*=res
+  let @+=res
 endfunction
 
 function! CopyFullPath()
-  let @*=expand('%:p')
+  let res = expand('%:p')
+  let @*=res
+  let @+=res
 endfunction
 
 function! CopyFileName()
-  let @*=expand('%:t')
+  let res = expand('%:t')
+  let @*=res
+  let @+=res
 endfunction
 
 command! Path     call CopyPath()
