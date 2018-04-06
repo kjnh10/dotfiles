@@ -1160,6 +1160,6 @@ nnoremap <silent>[unite]g         :<C-u>Unite ghq<CR>
 
 "neovim setting
 if has('nvim')
-  tnoremap <ESC> <C-\><C-n>
+  " tnoremap <ESC> <C-\><C-n>
   set guicursor=  "ref: https://github.com/neovim/neovim/issues/6691
 endif
