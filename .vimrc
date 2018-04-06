@@ -420,7 +420,6 @@ NeoBundleCheck
 
     " You can specify revision/branch/tag.
     " call dein#add('Shougo/deol.nvim', { 'rev': 'a1b5108fd' })
-    let g:deoplete#enable_at_startup = 1
 
     " Required:
     call dein#end()
@@ -437,6 +436,7 @@ NeoBundleCheck
   endif
 
   "End dein Scripts-------------------------}}}
+  let g:deoplete#enable_at_startup = 1
 
 "colorscheme"{{{
 """"""""""""""""""""""""""""""
