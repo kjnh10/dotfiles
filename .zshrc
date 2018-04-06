@@ -128,6 +128,10 @@ case ${OSTYPE} in
       export RBENV_ROOT="$HOME/.rbenv"
       export PATH="$HOME/.rbenv/bin:$PATH"
       eval "$(rbenv init -)"
+      #go
+      export GOROOT=/usr/local/go
+      export GOPATH=$HOME/Projects/Golang
+      export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
       ;;
 esac
 
