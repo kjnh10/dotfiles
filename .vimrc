@@ -291,9 +291,6 @@ NeoBundle 'Shougo/vimproc.vim', {
 			\ }
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/neomru.vim'
-NeoBundle "Shougo/neosnippet"
-NeoBundle 'Shougo/neosnippet-snippets'
-NeoBundle 'honza/vim-snippets'
 " NeoBundle 'Shougo/neocomplete'
 NeoBundle 'Shougo/vimfiler'
 NeoBundle 'Shougo/vimshell'
@@ -415,12 +412,15 @@ NeoBundleCheck
       call dein#add('roxma/nvim-yarp')
       call dein#add('roxma/vim-hug-neovim-rpc')
     endif
-    let g:deoplete#enable_at_startup = 1
     call dein#add('zchee/deoplete-jedi')
     call dein#add('kassio/neoterm')
+    call dein#add('Shougo/neosnippet')
+    call dein#add('Shougo/neosnippet-snippets')
+    call dein#add('honza/vim-snippets')
 
     " You can specify revision/branch/tag.
-    call dein#add('Shougo/deol.nvim', { 'rev': 'a1b5108fd' })
+    " call dein#add('Shougo/deol.nvim', { 'rev': 'a1b5108fd' })
+    let g:deoplete#enable_at_startup = 1
 
     " Required:
     call dein#end()
@@ -1157,6 +1157,7 @@ nnoremap <silent>[unite]g         :<C-u>Unite ghq<CR>
 " let g:syntastic_auto_loc_list = 1
 " let g:syntastic_check_on_open = 1
 " let g:syntastic_check_on_wq = 0"}}}
+set statusline+=%{fugitive#statusline()}
 
 "neovim setting
 if has('nvim')
