@@ -4,6 +4,12 @@ augroup END
 
 "basic setting"{{{
 """"""""""""""""""""""""""""""
+"neovim setting
+if has('nvim')
+  " tnoremap <ESC> <C-\><C-n>
+  set guicursor=  "ref: https://github.com/neovim/neovim/issues/6691 for terminator
+endif
+
 set nocompatible
 set modeline
 set modelines =3
@@ -209,7 +215,7 @@ noremap <C-e> <End>
 noremap j gj
 noremap k gk
 " noremap ev :<C-u>edit $MYVIMRC<CR>
-noremap ev :<C-u>edit ~/dotfiles/.vimrc<CR>
+noremap ev :<C-u>edit ~/dotfiles/nvim/init.vim<CR>
 noremap gf <C-w>gf
 "noremap <C-j> <C-w>gf
 "autocmd MyAutoCmd FileType help noremap <buffer> <C-j> <C-]>
@@ -258,661 +264,42 @@ nnoremap n nzz
 nnoremap N Nzz
 "vvで行末まで選択
 vnoremap v $ 
-"}}}
-
-	"set plugins{{{
-""""""""""""""""""""""""""""""
-"set up neobundle and install plugin"{{{
-""""""""""""""""""""""""""""""
-filetype off 
-if has('vim_starting')
-	set runtimepath+=~/.vim/bundle/neobundle.vim
-endif
-"neobundleの初期化
-call neobundle#begin(expand('~/.vim/bundle/'))
-NeoBundleFetch 'Shougo/neobundle.vim'
-" originalrepos on github
-NeoBundle 'Shougo/neobundle.vim'
-NeoBundle 'Shougo/vimproc.vim', {
-			\ 'build' : {
-			\		'windows' : 'tools\\update-dll-mingw',
-			\		'cygwin' : 'make -f make_cygwin.mak',
-			\		'mac' : 'make -f make_mac.mak',
-			\		'unix' : 'make -f make_unix.mak',
-			\    },
-			\ }
-NeoBundle 'Shougo/unite.vim'
-NeoBundle 'Shougo/neomru.vim'
-" NeoBundle 'Shougo/neocomplete'
-NeoBundle 'Shougo/vimfiler'
-NeoBundle 'Shougo/vimshell'
-NeoBundle 'thinca/vim-ref'
-NeoBundle 'thinca/vim-quickrun'
-NeoBundle 'thinca/vim-prettyprint'
-NeoBundle 'thinca/vim-qfreplace'
-NeoBundle 'LeafCage/foldCC'
-NeoBundle 'LeafCage/yankround.vim'
-NeoBundle 'Lokaltog/vim-easymotion'
-NeoBundle 'kannokanno/vim-helpnew'
-NeoBundle 't9md/vim-quickhl'
-NeoBundle 'nathanaelkane/vim-indent-guides'
-NeoBundle 'sorah/unite-ghq'
 
 imap <Nul> <C-Space>
-NeoBundle 'anekos/felis-cat-igirisu-toast-express'
-
-" コード補完
-" NeoBundle 'marcus/rsense' :helpが正常動作しない (執筆時点) http://qiita.com/uplus_e10/items/27a3dd9e2586ec0f2c2c
-NeoBundle 'NigoroJr/rsense' 
-"NeoBundle 'supermomonga/neocomplete-rsense.vim'
-" 静的解析
-" NeoBundle 'scrooloose/syntastic'
-" NeoBundle 'neomake/neomake'
-NeoBundle 'w0rp/ale'
-"
-"
-" ドキュメント参照
-NeoBundle 'yuku-t/vim-ref-ri'
-" メソッド定義元へのジャンプ windowsでコマンドプロンプトのエラーが一瞬出る｡
-" NeoBundle 'szw/vim-tags'
-
-"txt_obj => (references) http://qiita.com/rbtnn/items/a47ed6684f1f0bc52906
-NeoBundle 'kana/vim-textobj-user'
-NeoBundle 'kana/vim-operator-user'
-NeoBundle 'kana/vim-operator-replace'
-NeoBundle 'osyo-manga/vim-textobj-multiblock' " i(, i[, i{などをisbで扱える。(一番近いとろこを探す。) aも同様
-NeoBundle 'osyo-manga/vim-textobj-multitextobj'
-NeoBundle 'sgur/vim-textobj-parameter' "関数の引数 i, a,
-
-NeoBundle 'tyru/caw.vim' "commnet toggle
-NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'tpope/vim-surround'
-NeoBundle 'tpope/vim-endwise'
-NeoBundle 'airblade/vim-rooter'
-NeoBundle 'tyru/vim-altercmd' "http://qiita.com/kentaro/items/c3f7fc1d1be0e106735b
-
-" Markdown syntax
-" NeoBundle 'kannokanno/previm' "markdown 用
-NeoBundle "godlygeek/tabular"
-NeoBundle "joker1007/vim-markdown-quote-syntax"
-" NeoBundle 'plasticboy/vim-markdown'
-NeoBundle 'tyru/open-browser.vim'
-
-NeoBundle 'davidhalter/jedi-vim'
-NeoBundleLazy "nvie/vim-flake8", {
-			\ "autoload": {
-			\	"filetypes": ["python", "python3", "djangohtml"]
-			\ }}
-NeoBundle 'Vimjas/vim-python-pep8-indent'
-
-
-NeoBundle 'xolox/vim-session'
-NeoBundle 'xolox/vim-misc'
-NeoBundle 'othree/html5.vim'
-NeoBundle 'hail2u/vim-css3-syntax'
-" NeoBundle 'pangloss/vim-javascript'
-NeoBundleLazy 'jelera/vim-javascript-syntax', {'autoload':{'filetypes':['javascript']}}
-" NeoBundle 'jason0x43/vim-js-indent'
-NeoBundle 'vim-scripts/JavaScript-Indent'
-
-NeoBundle 'vim-scripts/ViewOutput'
-NeoBundle 'kojinho10/mysetting.vim'
-NeoBundle 'tyru/restart.vim'
-"NeoBundle 'git://git.code.sf.net/p/vim-latex/vim-latex' "<c-j>をつぶしていたため一旦削除。使う場合はそこを修正してから。
-"NeoBundle 'rhysd/clever-f.vim'
-
-"カラースキームを取得"{{{
-NeoBundle 'ujihisa/unite-colorscheme' " カラースキーム一覧表示に Unite.vim を使う
-NeoBundle 'altercation/vim-colors-solarized' " solarized カラースキーム
-NeoBundle 'croaker/mustang-vim' " mustang カラースキーム
-NeoBundle 'jeffreyiacono/vim-colors-wombat' " wombat カラースキーム
-NeoBundle 'nanotech/jellybeans.vim' " jellybeans カラースキーム
-NeoBundle 'vim-scripts/Lucius' " lucius カラースキーム
-NeoBundle 'vim-scripts/Zenburn' " zenburn カラースキーム
-NeoBundle 'mrkn/mrkn256.vim' " mrkn256 カラースキーム
-NeoBundle 'jpo/vim-railscasts-theme' " railscasts カラースキーム
-NeoBundle 'therubymug/vim-pyte' " pyte カラースキーム
-NeoBundle 'tomasr/molokai' " molokai カラースキーム
-NeoBundle 'w0ng/vim-hybrid' " hybrid カラースキーム
-NeoBundle 'daylerees/colour-schemes' "daylerees カラースキーム
-NeoBundle 'Lokaltog/vim-distinguished' "distinguishd
 "}}}
 
-call neobundle#end()
-syntax on
-NeoBundleCheck
-"}}}
+"set plugins{{{
+""""""""""""""""""""""""""""""
 "dein Scripts-----------------------------{{{
-  if &compatible
-    set nocompatible               " Be iMproved
+  " dein自体の自動インストール
+  let s:cache_home = empty($XDG_CACHE_HOME) ? expand('~/.cache') : $XDG_CACHE_HOME
+  let s:dein_dir = s:cache_home . '/dein'
+  let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
+  if !isdirectory(s:dein_repo_dir)
+    call system('git clone https://github.com/Shougo/dein.vim ' . shellescape(s:dein_repo_dir))
   endif
-
-  " Required:
-  set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
-
-  " Required:
-  if dein#load_state('~/.cache/dein')
-    call dein#begin('~/.cache/dein')
-
-    " Let dein manage dein
-    " Required:
-    call dein#add('~/.cache/dein/repos/github.com/Shougo/dein.vim')
-
-    " Add or remove your plugins here:
-    call dein#add('Shougo/deoplete.nvim')
-    if !has('nvim')
-      call dein#add('roxma/nvim-yarp')
-      call dein#add('roxma/vim-hug-neovim-rpc')
-    endif
-    call dein#add('zchee/deoplete-jedi')
-    call dein#add('kassio/neoterm')
-    call dein#add('Shougo/neosnippet')
-    call dein#add('Shougo/neosnippet-snippets')
-    call dein#add('honza/vim-snippets')
-
-    " You can specify revision/branch/tag.
-    " call dein#add('Shougo/deol.nvim', { 'rev': 'a1b5108fd' })
-
-    " Required:
+  let &runtimepath = s:dein_repo_dir .",". &runtimepath
+  " プラグイン読み込み＆キャッシュ作成
+  let s:toml_file = fnamemodify(expand('<sfile>'), ':h').'/dein.toml'
+  "if dein#load_state(s:dein_dir)
+    call dein#begin(s:dein_dir)
+    call dein#load_toml(s:toml_file)
     call dein#end()
     call dein#save_state()
-  endif
+  "endif
 
   " Required:
   filetype plugin indent on
   syntax enable
 
-  " If you want to install not installed plugins on startup.
-  if dein#check_install()
-   call dein#install()
+  " 不足プラグインの自動インストール
+  if has('vim_starting') && dein#check_install()
+    call dein#install()
   endif
+"End dein Scripts-------------------------}}}
+let g:deoplete#enable_at_startup = 1"}}}
 
-  "End dein Scripts-------------------------}}}
-  let g:deoplete#enable_at_startup = 1
-
-"colorscheme"{{{
-""""""""""""""""""""""""""""""
-" 以下のコマンドは :colorscheme の前に設定します
-"Searchを変更する。
-autocmd MyAutoCmd ColorScheme * highlight Search guibg=#ffffe0 guisp=Red guifg=#DA4939
-
-"guiのcolorscheme
-"let gvim_scheme = 'railscasts'
-" let gvim_scheme = 'desert'
-let gvim_scheme = 'hybrid'
-"macvimのgvimrcが邪魔するので.これを書かないと初期画面がrailsにならない。
-autocmd MyAutoCmd GUIEnter * execute 'colorscheme' gvim_scheme
-"cuiのcolorscheme
-if !has('gui_running')
-	let scheme = 'mrkn256'
-	" let scheme = 'hybrid'
-	execute 'colorscheme' scheme
-endif
-"preview_command
-command! PC Unite -auto-preview colorscheme
-"command Syntax infoの定義"{{{
-function! s:get_syn_id(transparent)
-	let synid = synID(line("."), col("."), 1)
-	if a:transparent
-		return synIDtrans(synid)
-	else
-		return synid
-	endif
-endfunction
-function! s:get_syn_attr(synid)
-	let name = synIDattr(a:synid, "name")
-	let ctermfg = synIDattr(a:synid, "fg", "cterm")
-	let ctermbg = synIDattr(a:synid, "bg", "cterm")
-	let guifg = synIDattr(a:synid, "fg", "gui")
-	let guibg = synIDattr(a:synid, "bg", "gui")
-	return {
-				\ "name": name,
-				\ "ctermfg": ctermfg,
-				\ "ctermbg": ctermbg,
-				\ "guifg": guifg,
-				\ "guibg": guibg}
-endfunction
-function! s:get_syn_info()
-	let baseSyn = s:get_syn_attr(s:get_syn_id(0))
-	echo "name: " . baseSyn.name .
-				\ " ctermfg: " . baseSyn.ctermfg .
-				\ " ctermbg: " . baseSyn.ctermbg .
-				\ " guifg: " . baseSyn.guifg .
-				\ " guibg: " . baseSyn.guibg
-	let linkedSyn = s:get_syn_attr(s:get_syn_id(1))
-	echo "link to"
-	echo "name: " . linkedSyn.name .
-				\ " ctermfg: " . linkedSyn.ctermfg .
-				\ " ctermbg: " . linkedSyn.ctermbg .
-				\ " guifg: " . linkedSyn.guifg .
-				\ " guibg: " . linkedSyn.guibg
-endfunction
-command! SyntaxInfo call s:get_syn_info()"}}}
-
-"}}}
-"Uniteの設定"{{{
-""""""""""""""""""""""""""""""
-"基本的な設定
-let g:unite_source_file_mru_long_limit = 3000
-let g:unite_source_directory_mru_long_limit = 3000
-let g:unite_source_file_mru_limit = 250
-let g:unite_enable_start_insert = 1
-let g:unite_enable_ignore_case = 1
-let g:unite_enable_smart_case = 1
-let g:unite_source_history_yank_enable = 1
-"let g:unite_source_rec_max_cache_files = 50000
-"call unite#filters#matcher_default#use(['matcher_fuzzy'])
-"
-call unite#custom_default_action('source/bookmark/directory' , 'vimfiler') "bookmarkはvimfilerと連携
-
-if has("win32") || has("win64")
-	" let g:unite_source_find_command = "C:/cygwin64/bin/find.exe"
-endif
-" Using ag as recursive command.
-" unite grep に pt(The Silver Searcher) を使う
-if executable('pt')
-	let g:unite_source_grep_command = 'pt'
-	let g:unite_source_grep_default_opts = '--nogroup --nocolor --smart-case'
-	let g:unite_source_grep_recursive_opt = ''
-	let g:unite_source_grep_encoding = 'utf-8'
-endif
-" grep検索
-nnoremap <silent> <Leader>ug  :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
-" カーソル位置の単語をgrep検索
-nnoremap <silent> <Leader>cg :<C-u>Unite grep:. -buffer-name=search-buffer<CR><C-R><C-W>
-" grep検索結果の再呼出
-nnoremap <silent> <Leader>urg  :<C-u>UniteResume search-buffer<CR>
-
-"開始キーの設定
-nnoremap <leader>uf :<C-u>Unite -start-insert file<CR>
-nnoremap <leader>ur :<C-u>Unite -start-insert file_rec<CR>
-nnoremap <leader>m :<C-u>Unite -start-insert file_mru bookmark file<CR>
-nnoremap <leader>p :<C-u>Unite file_rec/async<CR>
-nnoremap <leader>c :<C-u>Unite history/yank<CR>
-nnoremap <leader>t :<C-u>Unite -start-insert tab<CR>
-nnoremap <silent> <leader>b :<C-u>Unite bookmark -start-insert<CR>
-"nnoremap <silent> <leader>bp :<C-u>Unite bookmark:project<CR>
-
-
-" unite.vim上でのキーマッピング
-autocmd MyAutoCmd FileType unite call s:unite_my_settings()
-function! s:unite_my_settings()
-	"buffer local map は優先度が高いので、<buffer>を付けないとunite defualt mappingを上書き出来ない事に注意
-	" nmap <silent><buffer> i <Plug>(unite_loop_cursor_up)
-	" nmap <silent><buffer> k <Plug>(unite_loop_cursor_down)
-	nmap <silent><buffer> a <Plug>(unite_insert_enter)
-	nmap <silent><buffer> <esc> q
-	imap <silent><buffer> <Down> <Plug>(unite_select_next_line)
-	imap <silent><buffer> <Up> <Plug>(unite_select_previous_line)
-	nnoremap <silent><buffer><expr> vf unite#do_action('vimfiler')
-	nmap <silent><buffer> t [Tag]
-	nmap <silent><buffer> <c-l> :tabnext<cr>
-
-	"unmapしようとするとマップがないと言われる。>> unmap <buffer>でglobalに設定されているmapを削除する事は出来ない
-	"これでは改善できない。なぜ？
-	"let s:loaded_unmap_escesc = 0
-	"if s:loaded_unmap_escesc != 1
-	"	 nunmap <buffer> <ESC><ESC>
-	"	 let s:loaded_unmap_escesc = 1
-	"endif
-endfunction
-"au MyAutoCmd BufEnter *[unite]* nunmap <esc><esc>
-"au MyAutoCmd BufLeave *[unite]* nmap <esc><esc> :nohlsearch<CR>
-"au MyAutoCmd BufEnter *.py nunmap <esc><esc>
-"}}}
-"quickrunの設定"{{{
-""""""""""""""""""""""""""""""
-" g:quickrun_config の初期化
-if !exists("g:quickrun_config")
-	let g:quickrun_config={}
-endif
-" デフォルトの設定
-" 非同期で実行
-" 出力先
-" エラー : quickfix
-" 成功	 : buffer
-let g:quickrun_config._ = {
-      \ 'runner'    : 'vimproc',
-      \ 'runner/vimproc/updatetime' : 60,
-      \ 'outputter' : 'error',
-      \ 'outputter/error/success' : 'buffer',
-      \ 'outputter/error/error'   : 'quickfix',
-      \ 'outputter/buffer/close_on_empty' : 1,
-      \ }
-let g:quickrun_config.python = {
-			\ "hook/eval/template" : "",
-			\ 'command': 'python',
-			\ "hook/output_encode/encoding" : "utf-8",
-			\}
-let g:quickrun_config.applescript= {
-			\ 'command': 'osascript',
-			\}
-let g:quickrun_config.markdown = {
-			\ 'outputter' : 'browser',
-			\ 'command' : 'pandoc',
-			\ 'cmdopt' : '-s -f markdown',
-			\ }
-let g:quickrun_config.py = {
-			\ }
-command! -nargs=0 Pyver let g:quickrun_config.python.command = "python"
-command! -nargs=0 Pyver3 let g:quickrun_config.python.command = "python3"
-
-nnoremap <Leader>ll :write<CR>:cclose<CR>:QuickRun -mode n<CR>
-vnoremap <Leader>ll :QuickRun -mode v<CR>	
-"}}}
-"vimshellの設定"{{{
-""""""""""""""""""""""""""""""
-let g:vimshell_interactive_update_time = 10
-let $USERNAME = 'koji'
-let g:vimshell_prompt = $USERNAME."% "
-let g:vimshell_right_prompt = 'fnamemodify(getcwd(), ":~")'
-let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~")'
-let g:vimshell_interactive_encodings = {
-			\'C:/cygwin64/bin/': 'utf-8',
-			\}
-" vimshell map
-nnoremap <silent><expr> <Leader>sp ':VimShellPop '.expand("%:h").'<CR>'
-" nnoremap <silent> <Leader>p :VimShellPop<CR>
-"vimshell上でのキーマッピング
-autocmd MyAutoCmd FileType vimshell call s:vimshell_my_settings()
-function! s:vimshell_my_settings()
-	" nnoremap <silent><buffer>i k
-	nmap <silent><buffer> <c-j> :tabprevious<CR>
-	nmap <silent><buffer> <c-l> :tabnext<CR>
-	imap <silent><buffer> <c-l> <esc><plug>(vimshell_clear)<Plug>(vimshell_insert_enter)
-endfunction 
-"}}}
-"jediの設定"{{{
-""""""""""""""""""""""""""""""
-"(参考)http://kozo2.hatenablog.com/entry/2014/01/22/050714
-" ,g  go to definition
-" ,d  go to original difinition
-" K	 docstring
-" ,r  rename variables
-" ,n  show list of all usage
-" :Pyimport (module-name)   module-fileを新しいタブで開く
-
-autocmd FileType python setlocal omnifunc=jedi#completions
-" autocmd FileType python setlocal cot=menu,preview "preview-windowを開かないための設定
-" let g:jedi#auto_initialization = 1
-" let g:jedi#popup_select_first = 0
-" let g:jedi#completions_enabled = 0
-" let g:jedi#auto_vim_configuration = 0
-" let g:jedi#show_call_signatures = 0
-let g:jedi#completions_command = "<C-p>"
-let g:jedi#popup_on_dot = 1
-" let g:neocomplete#force_omni_input_patterns = {}
-" let g:neocomplete#force_omni_input_patterns.python = '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
-
-"}}}
-"vimfilerの設定"{{{
-""""""""""""""""""""""""""""""
-let g:vimfiler_as_default_explorer = 1
-let g:vimfiler_ignore_pattern='\(^\.\|\~$\|\.pyc$\|\.[oad]$\)'
-
-"この変数はexecute_vimfiler_associated(enterにmapping)で何をするかコントロールする。
-let g:vimfiler_execute_file_list = {}
-let g:vimfiler_execute_file_list = {
-			\ "_" : "vim",
-			\ "xlsx" : "open",
-			\ "xlam" : "open",
-			\ "xlsm" : "open"}
-
-" call vimfiler#custom#profile('default', 'context', {
-"      \ 'quit' : 0,
-"      \ 'safe' : 0,
-"      \ 'winwidth' : 35,
-"      \ 'toggle' : 1,
-"      \ 'simple' : 0,
-"      \ 'split' : 1,
-"      \ })
-"
-call vimfiler#custom#profile('default', 'context', {
-     \ 'safe' : 0,
-     \ 'toggle' : 0,
-     \ 'simple' : 0,
-     \ 'split' : 0,
-     \ 'quit' : 1,
-     \ })
-
-nnoremap <leader>f :<C-u>VimFilerBufferDir<CR>
-nnoremap <leader>F :<C-u>VimFiler -nosimple<CR>
-
-" vimfiler上でのキーマッピング
-autocmd MyAutoCmd FileType vimfiler call s:vimfiler_my_settings()
-function! s:vimfiler_my_settings()
-	"タブ移動,historyとかをつぶしている。
-	nmap <silent><buffer> t [tag]
-	nnoremap <silent><buffer> [tag]n :TABNEW<CR>
-	nnoremap <silent><buffer> [tag]h :tabprevious<CR>
-	nnoremap <silent><buffer> [tag]l :tabnext<CR>
-	nnoremap <silent><buffer> [tag]q :tabclose<CR>
-	nmap <silent><buffer> <c-r> <plug>(vimfiler_redraw_screen)
-	"その他
-	nmap <silent><buffer> <A-Up> <Plug>(vimfiler_smart_h)
-	nmap <silent><buffer> f <Plug>(vimfiler_toggle_mark_current_line)
-	nmap <silent><buffer> i <Plug>(vimfiler_choose_action)
-	nmap <silent><buffer> F <Plug>(vimfiler_toggle_mark_all_lines)
-	nmap <silent><buffer> vs <Plug>(vimfiler_mark_current_line)<Plug>(vimfiler_popup_shell)
-	nmap <silent><buffer> <C-CR> <Plug>(vimfiler_choose_action)tabopen<cr>
-	nmap <silent><buffer> du <Plug>(vimfiler_switch_to_another_vimfiler)
-
-	nmap <buffer><expr> <CR> vimfiler#smart_cursor_map(
-				\  "\<Plug>(vimfiler_cd_file)",
-				\  "\<Plug>(vimfiler_edit_file)")
-
-	nmap <buffer> yy
-	\ <Plug>(vimfiler_mark_current_line)<Plug>(vimfiler_clipboard_copy_file)
-	nmap <buffer> p
-	\ <Plug>(vimfiler_mark_current_line)<Plug>(vimfiler_clipboard_paste)
-	nmap <buffer> m
-	\ <Plug>(vimfiler_mark_current_line)<Plug>(vimfiler_clipboard_move_file)
-
-endfunction
-
-"}}}
-"clever-fの設定"{{{
-""""""""""""""""""""""""""""""
-"let g:clever_f_smart_case = 1
-"let g:clever_f_use_migemo = 1
-"let g:clever_f_across_no_line = 1
-"let g:clever_f_show_prompt = 0
-"let g:clever_f_not_overwrites_standard_mappings = 1
-"map f <Plug>(clever-f-f)
-"map F <Plug>(clever-f-F)
-"}}}
-"easymotionの設定"{{{
-""""""""""""""""""""""""""""""
-map s <Plug>(easymotion-s2)
-map S <Plug>(easymotion-sn)
-"map / <Plug>(easymotion-sn)
-let g:EasyMotion_keys = 'asdghklweriofj'
-let g:EasyMotion_do_shade = 1
-let g:EasyMotion_smartcase = 1
-let g:EasyMotion_use_migemo = 0
-hi link EasyMotionTarget2First Comment
-hi link EasyMotionTarget2Second Comment
-"}}}
-"evervimの設定"{{{
-""""""""""""""""""""""""""""""
-let g:evervim_devtoken = 'S=s12:U=4ebdc3:E=14bf25d788f:C=1449aac4c91:P=1cd:A=en-devtoken:V=2:H=f2fbb78124254141d2f75370f451021e'
-" * evervim 
-nnoremap <silent> ,el :<C-u>EvervimNotebookList<CR>
-nnoremap <silent> ,en :<C-u>EvervimCreateNote<CR>
-nnoremap <silent> ,eb :<C-u>EvervimOpenBrowser<CR>
-nnoremap ,e/ :<C-u>EvervimSearchByQuery<SPACE>
-nnoremap <silent> ,et :<C-u>EvervimSearchByQuery<SPACE>tag:todo -tag:done -tag:someday<CR>
-nnoremap <silent> ,eta :<C-u>EvervimSearchByQuery<SPACE>tag:todo -tag:done<CR>
-let g:evervim_splitoption=''
-let g:evervim_asyncupdate = 1
-"}}}
-"Vim-LaTeXの設定"{{{
-""""""""""""""""""""""""""""""
-set shellslash
-set grepprg=grep\ -nH\ $*
-let g:tex_flavor='latex'
-let g:Imap_UsePlaceHolders = 1
-let g:Imap_DeleteEmptyPlaceHolders = 1
-let g:Imap_StickyPlaceHolders = 0
-let g:Tex_DefaultTargetFormat = 'pdf'
-let g:Tex_FormatDependency_ps = 'dvi,ps'
-" place holderを停止
-let g:Imap_UsePlaceHolders = 0
-let g:Tex_IgnoredWarnings =
-			\'Underfull'."\n".
-			\'Overfull'."\n".
-			\'specifier changed to'."\n".
-			\'You have requested'."\n".
-			\'Missing number, treated as zero.'."\n".
-			\'There were undefined references'."\n".
-			\'Citation %.%# undefined'."\n".
-			\"Font shape \`JT1/gt/m/it\' undefined"."\n".
-			\"Font shape \`JY1/gt/m/it\' undefined"."\n".
-			\"Font shape \`JT1/mc/m/it\' undefined"."\n".
-			\"Font shape \`JY1/mc/m/it\' undefined"."\n".
-			\'LaTeX Font Warning: Some font shapes were not available, defaults substituted.'
-let g:Tex_IgnoreLevel = 12
-let g:Tex_FormatDependency_pdf = 'dvi,pdf'
-let g:Tex_AutoFolding = 0
-"let g:Tex_FormatDependency_pdf = 'dvi,ps,pdf'
-"let g:Tex_FormatDependency_pdf = 'pdf'
-let g:Tex_CompileRule_dvi = 'platex -synctex=1 -interaction=nonstopmode $*'
-"let g:Tex_CompileRule_dvi = 'uplatex -synctex=1 -interaction=nonstopmode $*'
-let g:Tex_CompileRule_ps = 'dvips -Ppdf -o $*.ps $*.dvi'
-let g:Tex_CompileRule_pdf = 'dvipdfmx $*.dvi'
-"let g:Tex_CompileRule_pdf = 'ps2pdf $*.ps'
-"let g:Tex_CompileRule_pdf = 'pdflatex -synctex=1 -interaction=nonstopmode $*'
-"let g:Tex_CompileRule_pdf = 'lualatex -synctex=1 -interaction=nonstopmode $*'
-"let g:Tex_CompileRule_pdf = 'luajitlatex -synctex=1 -interaction=nonstopmode $*'
-"let g:Tex_CompileRule_pdf = 'xelatex -synctex=1 -interaction=nonstopmode $*'
-let g:Tex_BibtexFlavor = 'pbibtex'
-"let g:Tex_BibtexFlavor = 'upbibtex'
-let g:Tex_MakeIndexFlavor = 'mendex $*.idx'
-let g:Tex_UseEditorSettingInDVIViewer = 1
-let g:Tex_ViewRule_dvi = 'pxdvi -watchfile 1'
-"let g:Tex_ViewRule_dvi = 'advi -watch-file 1'
-"let g:Tex_ViewRule_dvi = 'evince'
-"let g:Tex_ViewRule_dvi = 'okular --unique'
-"let g:Tex_ViewRule_dvi = 'wine ~/.wine/drive_c/w32tex/dviout/dviout.exe -1'
-let g:Tex_ViewRule_ps = 'gv --watch'
-"let g:Tex_ViewRule_ps = 'evince'
-"let g:Tex_ViewRule_ps = 'okular --unique'
-"let g:Tex_ViewRule_ps = 'zathura'
-"let g:Tex_ViewRule_pdf = 'texworks'
-"let g:Tex_ViewRule_pdf = 'evince'
-"let g:Tex_ViewRule_pdf = 'okular --unique'
-"let g:Tex_ViewRule_pdf = 'zathura -s -x "vim --servername synctex -n --remote-silent +\%{line} \%{input}"'
-"let g:Tex_ViewRule_pdf = 'qpdfview --unique'
-"let g:Tex_ViewRule_pdf = 'pdfviewer'
-let g:Tex_ViewRule_pdf = '/usr/bin/open -a Preview.app'
-"let g:Tex_ViewRule_pdf = 'gv --watch'
-"let g:Tex_ViewRule_pdf = 'acroread'
-"let g:Tex_ViewRule_pdf = 'pdfopen -viewer ar9-tab'exの設定
-"let g:Tex_ViewRule_pdf = '/Applications/Adobe\ Reader.app'"}}}
-"openbrowserの設定"{{{
-""""""""""""""""""""""""""""""
-" My setting.
-let g:netrw_nogx = 1 " disable netrw's gx mapping.
-nmap gx <Plug>(openbrowser-smart-search)
-vmap gx <Plug>(openbrowser-smart-search)
-"}}}
-"newhelp.vimの設定"{{{
-"""""""""""""""""""""""""""""""
-"My setting
-let g:helpnew_config = {}
-"let g:helpnew_config.command = ''
-let g:helpnew_config.command = 'vertical help'
-"}}}
-"quickhlの設定"{{{
-"""""""""""""""""""""""""""""""
-nmap <Leader>ht <Plug>(quickhl-manual-this)
-nmap <Leader>hr <Plug>(quickhl-manual-reset)
-nmap <Leader>hc <Plug>(quickhl-cword-toggle)
-nmap <Leader>h] <Plug>(quickhl-tag-toggle)
-"}}}
-"caw.vimの設定"{{{
-"""""""""""""""""""""""""""""""
-" \cで行の先頭にコメントをつけたり外したりできる
-nmap <Leader>" <Plug>(caw:i:toggle)
-vmap <Leader>" <Plug>(caw:i:toggle)
-"}}}
-"vim-sessionの設定{{{
-"""""""""""""""""""""""""""""""
-let g:session_autoload = "yes"
-let g:session_autosave = "no"
-let g:session_default_to_last = 0
-let g:session_command_aliases = 1
-"}}}
-"yankround setting{{{
-"""""""""""""""""""""""""""""""
-nmap p <Plug>(yankround-p)
-xmap p <Plug>(yankround-p)
-nmap P <Plug>(yankround-P)
-nmap gp <Plug>(yankround-gp)
-xmap gp <Plug>(yankround-gp)
-nmap gP <Plug>(yankround-gP)
-nmap <C-p> <Plug>(yankround-prev)
-nmap <C-n> <Plug>(yankround-next)
-"}}}
-"syntastic setting"{{{
-	" syntastic_mode_mapをactiveにするとバッファ保存時にsyntasticが走る
-	" active_filetypesに、保存時にsyntasticを走らせるファイルタイプを指定する
-	" let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': ['ruby'] }
-	" let g:syntastic_mode_map = { 'mode': 'passive'}
-	" let g:syntastic_python_checkers = ['flake8']"}}}
-	" autocmd! BufWritePost,BufEnter * Neomake
-	" let g:neomake_python_enabled_makers = ['flake8']
-
-	let g:ale_sign_column_always = 1
-	let g:ale_lint_on_save = 1
-	let g:ale_lint_on_text_changed = 0
-	" flake8はうるさいのでpyflake8にしておく。
-	let g:ale_linters = {
-			\   'python': ['pyflakes'],
-			\}
-
-"snippet setting{{{
-"""""""""""""""""""""""""""""""
-" http://rcmdnk.github.io/blog/2015/01/12/computer-vim/
-if ! empty(neobundle#get("neosnippet"))
-	" Plugin key-mappings.
-	imap <C-k> <Plug>(neosnippet_expand_or_jump)
-	smap <C-k> <Plug>(neosnippet_expand_or_jump)
-	xmap <C-k> <Plug>(neosnippet_expand_target)
-
-	"SuperTab like snippets' behavior.
-	imap <expr><TAB>
-				\ pumvisible() ? "\<C-n>" :
-				\ neosnippet#expandable_or_jumpable() ?
-				\    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-	smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-				\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-
-	" For conceal markers.
-	if has('conceal')
-	  set conceallevel=2 concealcursor=niv
-	endif
-
-	let g:neosnippet#enable_snipmate_compatibility = 1
-	let g:neosnippet#disable_runtime_snippets = {'_' : 1}
-	let g:neosnippet#snippets_directory = ['~/.vim/bundle/neosnippet-snippets/neosnippets']
-	let g:neosnippet#snippets_directory += ['~/.vim/bundle/vim-snippets/snippets']
-	let g:neosnippet#snippets_directory += ['~/.vim/bundle/mysetting.vim/snippets/']
-
-endif
-
-"}}}
-" vim-indent-guides"{{{
-let g:indent_guides_auto_colors=0
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd   guibg=red
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven  guibg=green
-let g:indent_guides_guide_size=1"}}}
-
-filetype plugin on
-filetype indent on
-"}}}
-
-"My Scripts"{{{
+"My Scripts{{{
 """"""""""""""""""""""""""""""
 "自分のキーマップを調べるコマンドMYKEYの設定
 command! -nargs=+ MYKEY VO verbose <args>
@@ -1121,11 +508,11 @@ nnoremap MG :MemoGrep"}}}
 
 "カスタムコマンドの先頭を小文字にする。
 call altercmd#load()
-AlterCommand unite Unite
-AlterCommand gstatus Gstatus
-AlterCommand path Path
-AlterCommand fpath FullPath
-AlterCommand vo VO
+  AlterCommand unite Unite
+  AlterCommand gstatus Gstatus
+  AlterCommand path Path
+  AlterCommand fpath FullPath
+  AlterCommand vo VO
 cd ~/
 
 "grep
@@ -1148,11 +535,6 @@ nnoremap <silent>[unite]g         :<C-u>Unite ghq<CR>
 " let g:syntastic_always_populate_loc_list = 1
 " let g:syntastic_auto_loc_list = 1
 " let g:syntastic_check_on_open = 1
-" let g:syntastic_check_on_wq = 0"}}}
+" let g:syntastic_check_on_wq = 0
 set statusline+=%{fugitive#statusline()}
 
-"neovim setting
-if has('nvim')
-  " tnoremap <ESC> <C-\><C-n>
-  set guicursor=  "ref: https://github.com/neovim/neovim/issues/6691
-endif

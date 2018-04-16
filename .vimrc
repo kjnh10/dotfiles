@@ -356,7 +356,7 @@ NeoBundleLazy "nvie/vim-flake8", {
 			\ }}
 NeoBundle 'Vimjas/vim-python-pep8-indent'
 
-
+NeoBundle 'cespare/vim-toml'
 NeoBundle 'xolox/vim-session'
 NeoBundle 'xolox/vim-misc'
 NeoBundle 'othree/html5.vim'
