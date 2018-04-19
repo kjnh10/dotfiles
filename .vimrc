@@ -887,8 +887,8 @@ nmap <Leader>h] <Plug>(quickhl-tag-toggle)
 "caw.vimの設定"{{{
 """""""""""""""""""""""""""""""
 " \cで行の先頭にコメントをつけたり外したりできる
-nmap <Leader>" <Plug>(caw:i:toggle)
-vmap <Leader>" <Plug>(caw:i:toggle)
+nmap <Leader>" <Plug>(caw:hatpos:toggle)
+vmap <Leader>" <Plug>(caw:hatpos:toggle)
 "}}}
 "vim-sessionの設定{{{
 """""""""""""""""""""""""""""""
