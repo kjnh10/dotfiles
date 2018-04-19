@@ -103,35 +103,38 @@ fpath=(/usr/local/share/zsh $fpath)
 
 # SET PATH
 export PATH=~/bin:$PATH
+
+#go
+export GOPATH=$HOME/Projects/Golang
+export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+
 case ${OSTYPE} in
     darwin*)
-        #ここにMac向けの設定
+      #ここにMac向けの設定
+      export PATH=/usr/local/bin:$PATH
       alias ctags="`brew --prefix`/bin/ctags" #https://gist.github.com/nazgob/1570678
       #go
       export GOPATH=${HOME}"/go"
       export PATH=$PATH:$GOPATH/bin
 
       # pyenv
-      export PATH="$HOME/.pyenv/bin:$PATH"
       eval "$(pyenv init -)"
-      eval "$(pyenv virtualenv-init -)"
       export LC_ALL='ja_JP.UTF-8' #
       ;;
 
     linux*)
+      # pyenv
       export PYENV_ROOT="$HOME/.pyenv"
       export PATH="$PYENV_ROOT/bin:$PATH"
       eval "$(pyenv init -)"
+
       export PATH=$HOME/.nodebrew/current/bin:$PATH
       export PATH=$HOME/bin/node-v8.9.4-linux-x64/bin:$PATH
+
       #ruby
       export RBENV_ROOT="$HOME/.rbenv"
       export PATH="$HOME/.rbenv/bin:$PATH"
       eval "$(rbenv init -)"
-      #go
-      export GOROOT=/usr/local/go
-      export GOPATH=$HOME/Projects/Golang
-      export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
       ;;
 esac
 
