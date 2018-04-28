@@ -105,17 +105,14 @@ fpath=(/usr/local/share/zsh $fpath)
 export PATH=~/bin:$PATH
 
 #go
-export GOPATH=$HOME/Projects/Golang
-export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+export GOPATH=${HOME}"/go"
+export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
 
 case ${OSTYPE} in
     darwin*)
       #ここにMac向けの設定
       export PATH=/usr/local/bin:$PATH
       alias ctags="`brew --prefix`/bin/ctags" #https://gist.github.com/nazgob/1570678
-      #go
-      export GOPATH=${HOME}"/go"
-      export PATH=$PATH:$GOPATH/bin
 
       # pyenv
       eval "$(pyenv init -)"
