@@ -308,6 +308,7 @@ NeoBundle 'kannokanno/vim-helpnew'
 NeoBundle 't9md/vim-quickhl'
 NeoBundle 'nathanaelkane/vim-indent-guides'
 NeoBundle 'sorah/unite-ghq'
+NeoBundle 'tmhedberg/SimpylFold.git'
 
 imap <Nul> <C-Space>
 NeoBundle 'anekos/felis-cat-igirisu-toast-express'

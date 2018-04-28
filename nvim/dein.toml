@@ -240,13 +240,19 @@ repo = 'kjnh10/mysetting.vim'  # snippetファイルは今のところ動いて�
 [[plugins]]
 repo = 'w0rp/ale'
 hook_source = '''
-let g:ale_sign_column_always = 1
-let g:ale_lint_on_save = 1
-let g:ale_lint_on_text_changed = 0
-" flake8はうるさいのでpyflake8にしておく。
-let g:ale_linters = {
+  let g:ale_sign_column_always = 1
+  let g:ale_lint_on_save = 1
+  let g:ale_lint_on_text_changed = 0
+  " flake8はうるさいのでpyflake8にしておく。
+  let g:ale_linters = {
       \   'python': ['pyflakes'],
       \}
+'''
+
+[[plugins]]
+repo =  'tmhedberg/SimpylFold.git'
+hook_source = '''
+  let g:SimpylFold_docstring_preview = 1
 '''
 
 # other plugins
