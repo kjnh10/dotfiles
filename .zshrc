@@ -102,11 +102,23 @@ alias r=rails
 fpath=(/usr/local/share/zsh $fpath)
 
 # SET PATH
-export PATH=~/bin:$PATH
+  case ${OSTYPE} in
+      darwin*)
+        #ここにMac向けの設定
+        export PATH=/usr/local/bin:$PATH  # homebrew path
+        alias ctags="`brew --prefix`/bin/ctags" #https://gist.github.com/nazgob/1570678
+        ;;
 
+      linux*)
+        export PATH=$HOME/.nodebrew/current/bin:$PATH
+        export PATH=$HOME/bin/node-v8.9.4-linux-x64/bin:$PATH
+        ;;
+  esac
+
+  export PATH=~/bin:$PATH
   #go
   export GOPATH=${HOME}"/go"
-  export PATH=$PATH:$GOPATH/bin
+  export PATH=/usr/local/go/bin:$GOPATH/bin:$PATH
 
   # pyenv
   export PYENV_ROOT="$HOME/.pyenv"
@@ -117,19 +129,6 @@ export PATH=~/bin:$PATH
   export RBENV_ROOT="$HOME/.rbenv"
   export PATH="$HOME/.rbenv/bin:$PATH"
   eval "$(rbenv init -)"
-
-case ${OSTYPE} in
-    darwin*)
-      #ここにMac向けの設定
-      export PATH=/usr/local/bin:$PATH  # homebrew path
-      alias ctags="`brew --prefix`/bin/ctags" #https://gist.github.com/nazgob/1570678
-      ;;
-
-    linux*)
-      export PATH=$HOME/.nodebrew/current/bin:$PATH
-      export PATH=$HOME/bin/node-v8.9.4-linux-x64/bin:$PATH
-      ;;
-esac
 
 #cygwinの設定
 if [[ $OSTYPE == cygwin* ]];then # スペース入れないとエラーになる。
