@@ -181,7 +181,7 @@ for n in range(1, 9)
 endfor
 
 function! s:newtab()
-	tablast
+  cd %:h
 	tabnew
 	" VimFiler
 endfunction
