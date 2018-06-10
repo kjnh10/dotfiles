@@ -1207,4 +1207,11 @@ nnoremap <silent>[unite]g         :<C-u>Unite ghq<CR>
 " let g:syntastic_auto_loc_list = 1
 " let g:syntastic_check_on_open = 1
 " let g:syntastic_check_on_wq = 0
-"
+
+" 括弧の補完
+inoremap { {}<Left>
+inoremap {} {}
+inoremap {<Enter> {}<Left><CR><ESC><S-o>
+inoremap ( ()<ESC>i
+inoremap () ()
+inoremap (<Enter> ()<Left><CR><ESC><S-o>
