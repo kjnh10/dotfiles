@@ -1211,7 +1211,10 @@ nnoremap <silent>[unite]g         :<C-u>Unite ghq<CR>
 " 括弧の補完
 inoremap { {}<Left>
 inoremap {} {}
+inoremap {<right> {
 inoremap {<Enter> {}<Left><CR><ESC><S-o>
+
 inoremap ( ()<ESC>i
 inoremap () ()
+inoremap (<right> (
 inoremap (<Enter> ()<Left><CR><ESC><S-o>
