@@ -181,7 +181,10 @@ for n in range(1, 9)
 endfor
 
 function! s:newtab()
-  cd %:h
+  try
+    cd %:h
+  catch
+  endtry
 	tabnew
 	" VimFiler
 endfunction
@@ -341,7 +344,7 @@ NeoBundle 'tyru/caw.vim' "commnet toggle
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'tpope/vim-endwise'
-NeoBundle 'airblade/vim-rooter'
+" NeoBundle 'airblade/vim-rooter'
 NeoBundle 'tyru/vim-altercmd' "http://qiita.com/kentaro/items/c3f7fc1d1be0e106735b
 
 " Markdown syntax
@@ -1182,7 +1185,6 @@ AlterCommand gstatus Gstatus
 AlterCommand path Path
 AlterCommand fpath FullPath
 AlterCommand vo VO
-cd ~/
 
 "grep
 autocmd QuickFixCmdPost *grep* cwindow
