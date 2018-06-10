@@ -1218,3 +1218,5 @@ inoremap ( ()<ESC>i
 inoremap () ()
 inoremap (<right> (
 inoremap (<Enter> ()<Left><CR><ESC><S-o>
+
+noremap <Leader>to :vertical terminal<CR>	
