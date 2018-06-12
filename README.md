@@ -5,7 +5,7 @@ This is a repository with my configuration files, those that in Linux/OS X norma
 # Install
 
 ```bash
-git clone git@github.com:kojinho10/dotfiles.git
+git clone https://github.com/kjnh10/dotfiles.git
 cd
 ./dotfiles/install.sh
 ```
