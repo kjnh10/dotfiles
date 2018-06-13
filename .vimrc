@@ -1197,10 +1197,10 @@ nnoremap <silent>[unite]p         :<C-u>Unite file_rec/async<CR>
 nnoremap <silent>[unite]g         :<C-u>Unite ghq<CR>
 
 " 括弧の補完
-inoremap {<Enter> {}<Left><CR><ESC><S-o>
-inoremap (<Enter> ()<Left><CR><ESC><S-o>
+" inoremap {<Enter> {}<Left><CR><ESC><Up>$
+" inoremap (<Enter> ()<Left><CR><ESC><S-o>
 
-noremap <Leader>to :vertical terminal<CR>	
+noremap <Leader>to :vertical terminal<CR>
 
 " tagsジャンプの時に複数ある時は一覧表示                                        
 nnoremap <C-]> g<C-]> "}}}
