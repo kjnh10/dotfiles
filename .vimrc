@@ -971,8 +971,8 @@ filetype plugin on
 filetype indent on
 "}}}
 
-"My Scripts"{{{
-""""""""""""""""""""""""""""""
+"My Scripts
+"""""""""""""""""""""""""""""""{{{
 "自分のキーマップを調べるコマンドMYKEYの設定
 command! -nargs=+ MYKEY VO verbose <args>
 "usage
@@ -1055,44 +1055,13 @@ nnoremap <expr> <f2> ':echo '.expand('<cword>').'<CR>'
 "コピー
 nnoremap yl ^v$y<esc>
 nnoremap yf :let @* = expand("%:p")<CR>
-"何故かpで""が選択されない時がある。
+"何故かpで""が選択されない時がある。"}}}
 
 "settigs for windows"{{{
 "----------------------------
 if has("win32") || has("win64")
 	inoremap <silent> <esc> <esc>:set iminsert=0<CR>
 endif
-"}}}
-"
-"experimental settings{{{
-"----------------------------
-
-"text-object-sample:a fold
-vnoremap af :<C-U>silent! normal! [zV]z<CR>
-omap af :normal Vaf<CR>
-
-"command range test-setting
-command! -nargs=0 -range=0 -range=% Rangetest :echo <count> <line1> <line2>
-command! -nargs=0 -count=0 Counttest :echo <count> <line1> <line2>
-
-
-"unite source created by own"{{{
-"----------------------------------------------
-let source = {
-			\ 'name' : 'sample',
-			\ 'description' : 'this is sample source',
-			\ 'action_table' : {},
-			\ 'max_candidates' : 1000,
-			\ }
-
-call unite#define_source(source)
-
-function! source.gather_candidates(args, context)
-	let candidates = []
-	"write the code that gather candidates.
-	"
-	return candidates
-endfunction"}}}
 "}}}
 
 "copy path"{{{
@@ -1176,15 +1145,44 @@ nnoremap Mg :MemoGrep
 nnoremap MN :MemoNew
 nnoremap ML :MemoList
 nnoremap MF :MemoFiler
-nnoremap MG :MemoGrep"}}}"}}}
+nnoremap MG :MemoGrep"}}}
 
-"カスタムコマンドの先頭を小文字にする。"{{{
+"カスタムコマンドの先頭を小文字にする。{{{
 call altercmd#load()
 AlterCommand unite Unite
 AlterCommand gstatus Gstatus
 AlterCommand path Path
 AlterCommand fpath FullPath
-AlterCommand vo VO
+AlterCommand vo VO"}}}
+
+"experimental settings{{{
+"----------------------------
+"text-object-sample:a fold
+vnoremap af :<C-U>silent! normal! [zV]z<CR>
+omap af :normal Vaf<CR>
+
+"command range test-setting
+command! -nargs=0 -range=0 -range=% Rangetest :echo <count> <line1> <line2>
+command! -nargs=0 -count=0 Counttest :echo <count> <line1> <line2>
+
+
+"unite source created by own"{{{
+"----------------------------------------------
+let source = {
+			\ 'name' : 'sample',
+			\ 'description' : 'this is sample source',
+			\ 'action_table' : {},
+			\ 'max_candidates' : 1000,
+			\ }
+
+call unite#define_source(source)
+
+function! source.gather_candidates(args, context)
+	let candidates = []
+	"write the code that gather candidates.
+	"
+	return candidates
+endfunction"}}}
 
 "grep
 autocmd QuickFixCmdPost *grep* cwindow
@@ -1198,25 +1196,11 @@ map     <Leader>u [unite]
 nnoremap <silent>[unite]p         :<C-u>Unite file_rec/async<CR>
 nnoremap <silent>[unite]g         :<C-u>Unite ghq<CR>
 
-" " for syntastic
-" set statusline+=%#warningmsg#
-" set statusline+=%{SyntasticStatuslineFlag()}
-" set statusline+=%*
-"
-" let g:syntastic_always_populate_loc_list = 1
-" let g:syntastic_auto_loc_list = 1
-" let g:syntastic_check_on_open = 1
-" let g:syntastic_check_on_wq = 0
-
 " 括弧の補完
-inoremap { {}<Left>
-inoremap {} {}
-inoremap {<right> {
 inoremap {<Enter> {}<Left><CR><ESC><S-o>
-
-inoremap ( ()<ESC>i
-inoremap () ()
-inoremap (<right> (
 inoremap (<Enter> ()<Left><CR><ESC><S-o>
 
 noremap <Leader>to :vertical terminal<CR>	
+
+" tagsジャンプの時に複数ある時は一覧表示                                        
+nnoremap <C-]> g<C-]> "}}}
