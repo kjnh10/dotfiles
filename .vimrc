@@ -1200,6 +1200,7 @@ nnoremap <silent>[unite]g         :<C-u>Unite ghq<CR>
 " inoremap {<Enter> {}<Left><CR><ESC><Up>$
 " inoremap (<Enter> ()<Left><CR><ESC><S-o>
 
+autocmd BufEnter * silent! lcd %:p:h  "https://vi.stackexchange.com/questions/14519/how-to-run-internal-vim-terminal-at-current-files-dir
 noremap <Leader>to :vertical terminal<CR>
 
 " tagsジャンプの時に複数ある時は一覧表示                                        
