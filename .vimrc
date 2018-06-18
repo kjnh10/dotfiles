@@ -86,14 +86,14 @@ command! -nargs=? -complete=help RH vertical help <args>
 command! -nargs=? -complete=help FH help <args>| only
 command! -nargs=? -complete=help TH tab help <args>
 "helpをすぐに引くためのコマンド
-nnoremap - :HelpNew 
-nnoremap <S-_> :TH 
-nnoremap <c-_> :MYKEY 
+nnoremap - :HelpNew
+nnoremap <S-_> :TH
+nnoremap <c-_> :MYKEY
 "Hでhelpをひく
 nnoremap <expr>H ':HelpNew '.expand('<cword>').'<CR>'
 vnoremap <expr>H '"vy:HelpNew <C-r>"<CR>'
 "Kで実行されるコマンドをhelpにする。ただしKは現在remappされている事に注意
-set keywordprg=:help 
+set keywordprg=:help
 "on help files
 "Enterでタグジャンプ
 autocmd MyAutoCmd FileType help nnoremap <buffer> <Enter> <C-]>
@@ -104,7 +104,7 @@ autocmd MyAutoCmd FileType help setlocal tabstop=4
 
 "statusLine"{{{
 """"""""""""""""""""""""""""""
-set laststatus=2 "ステータス行を常に表示 
+set laststatus=2 "ステータス行を常に表示
 set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [filetype=%Y]\ [POS=%04l,%04v]\ [%p%%]\ [amount=%L行]\ [cwd\ %{fnamemodify(getcwd(),':~')}]
 "change statusline color while insert mode"{{{
 """"""""""""""""""""""""""""""
@@ -147,7 +147,7 @@ function! s:SID_PREFIX()
 endfunction
 
 "タブラインの表示(tablineオプション)設定
-function! s:my_tabline()  
+function! s:my_tabline()
 	let s = ''
 	for i in range(1, tabpagenr('$'))
 		let bufnrs = tabpagebuflist(i)
@@ -164,7 +164,7 @@ function! s:my_tabline()
 	endfor
 	let s .= '%#TabLineFill#%T%=%#TabLine#'
 	return s
-endfunction 
+endfunction
 "tablineが使われるのはCUIだけ
 let &tabline = '%!'. s:SID_PREFIX() . 'my_tabline()'
 set showtabline=2 " 常にタブラインを表示
@@ -268,14 +268,14 @@ nnoremap q: q:k
 nnoremap n nzz
 nnoremap N Nzz
 "vvで行末まで選択
-vnoremap v $ 
+vnoremap v $
 "}}}
 
 	"set plugins{{{
 """"""""""""""""""""""""""""""
 "set up neobundle and install plugin"{{{
 """"""""""""""""""""""""""""""
-filetype off 
+filetype off
 if has('vim_starting')
 	set runtimepath+=~/.vim/bundle/neobundle.vim
 endif
@@ -313,13 +313,14 @@ NeoBundle 'nathanaelkane/vim-indent-guides'
 NeoBundle 'sorah/unite-ghq'
 NeoBundle 'tmhedberg/SimpylFold.git'
 NeoBundle 'airblade/vim-gitgutter'
+NeoBundle 'ntpeters/vim-better-whitespace.git'
 
 imap <Nul> <C-Space>
 NeoBundle 'anekos/felis-cat-igirisu-toast-express'
 
 " コード補完
 " NeoBundle 'marcus/rsense' :helpが正常動作しない (執筆時点) http://qiita.com/uplus_e10/items/27a3dd9e2586ec0f2c2c
-NeoBundle 'NigoroJr/rsense' 
+NeoBundle 'NigoroJr/rsense'
 "NeoBundle 'supermomonga/neocomplete-rsense.vim'
 " 静的解析
 " NeoBundle 'scrooloose/syntastic'
@@ -374,7 +375,6 @@ NeoBundle 'vim-scripts/JavaScript-Indent'
 NeoBundle 'vim-scripts/ViewOutput'
 NeoBundle 'kojinho10/mysetting.vim'
 NeoBundle 'tyru/restart.vim'
-"NeoBundle 'git://git.code.sf.net/p/vim-latex/vim-latex' "<c-j>をつぶしていたため一旦削除。使う場合はそこを修正してから。
 "NeoBundle 'rhysd/clever-f.vim'
 
 "カラースキームを取得"{{{
@@ -657,7 +657,7 @@ command! -nargs=0 Pyver let g:quickrun_config.python.command = "python"
 command! -nargs=0 Pyver3 let g:quickrun_config.python.command = "python3"
 
 nnoremap <Leader>ll :write<CR>:cclose<CR>:QuickRun -mode n<CR>
-vnoremap <Leader>ll :QuickRun -mode v<CR>	
+vnoremap <Leader>ll :QuickRun -mode v<CR>
 "}}}
 "vimshellの設定"{{{
 """"""""""""""""""""""""""""""
@@ -679,7 +679,7 @@ function! s:vimshell_my_settings()
 	nmap <silent><buffer> <c-j> :tabprevious<CR>
 	nmap <silent><buffer> <c-l> :tabnext<CR>
 	imap <silent><buffer> <c-l> <esc><plug>(vimshell_clear)<Plug>(vimshell_insert_enter)
-endfunction 
+endfunction
 "}}}
 "jediの設定"{{{
 """"""""""""""""""""""""""""""
@@ -795,7 +795,7 @@ hi link EasyMotionTarget2Second Comment
 "evervimの設定"{{{
 """"""""""""""""""""""""""""""
 let g:evervim_devtoken = 'S=s12:U=4ebdc3:E=14bf25d788f:C=1449aac4c91:P=1cd:A=en-devtoken:V=2:H=f2fbb78124254141d2f75370f451021e'
-" * evervim 
+" * evervim
 nnoremap <silent> ,el :<C-u>EvervimNotebookList<CR>
 nnoremap <silent> ,en :<C-u>EvervimCreateNote<CR>
 nnoremap <silent> ,eb :<C-u>EvervimOpenBrowser<CR>
@@ -895,6 +895,11 @@ nmap <Leader>h] <Plug>(quickhl-tag-toggle)
 nmap <Leader>" <Plug>(caw:hatpos:toggle)
 vmap <Leader>" <Plug>(caw:hatpos:toggle)
 "}}}
+"vim-better-whitespaceの設定"{{{
+"""""""""""""""""""""""""""""""
+let g:better_whitespace_enabled=1
+let g:strip_whitespace_on_save=1
+"}}}
 "vim-sessionの設定{{{
 """""""""""""""""""""""""""""""
 let g:session_autoload = "yes"
@@ -918,7 +923,7 @@ nmap <C-n> <Plug>(yankround-next)
 	" active_filetypesに、保存時にsyntasticを走らせるファイルタイプを指定する
 	" let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': ['ruby'] }
 	" let g:syntastic_mode_map = { 'mode': 'passive'}
-	" let g:syntastic_python_checkers = ['flake8']"}}}
+	" let g:syntastic_python_checkers = ['flake8']"
 	" autocmd! BufWritePost,BufEnter * Neomake
 	" let g:neomake_python_enabled_makers = ['flake8']
 
@@ -928,8 +933,7 @@ nmap <C-n> <Plug>(yankround-next)
 	" flake8はうるさいのでpyflake8にしておく。
 	let g:ale_linters = {
 			\   'python': ['pyflakes'],
-			\}
-
+			\}"}}}
 "snippet setting{{{
 """""""""""""""""""""""""""""""
 " http://rcmdnk.github.io/blog/2015/01/12/computer-vim/
@@ -982,12 +986,12 @@ command! -nargs=+ MYKEY VO verbose <args>
 "nmap	   yes		   -	  -
 "vmap		-	  yes		  -
 "omap		-	   -		 yes
-"		 ビジュアル  選択 
+"		 ビジュアル  選択
 "vmap		  yes	 yes
 "xmap		  yes	  -
 "smap		   -	 yes
 "
-"		  挿入	コマンドライン Lang-Arg 
+"		  挿入	コマンドライン Lang-Arg
 "map!		  yes	 yes	 -
 "imap		  yes	  -		 -
 "cmap		   -	 yes	 -
@@ -1010,7 +1014,7 @@ nmap <silent> <ESC><ESC> :nohlsearch<CR>
 autocmd MyAutoCmd FileType help,QuickFix nnoremap <buffer> Q <C-w>c
 
 "カレントディレクトリを編集中のファイルの存在するディレクトリに変更するコマンドCD
-command! -nargs=? -complete=dir -bang CD  call s:ChangeCurrentDir('<args>', '<bang>') 
+command! -nargs=? -complete=dir -bang CD  call s:ChangeCurrentDir('<args>', '<bang>')
 function! s:ChangeCurrentDir(directory, bang)
 	if a:directory == ''
 		lcd %:p:h
@@ -1203,5 +1207,5 @@ nnoremap <silent>[unite]g         :<C-u>Unite ghq<CR>
 autocmd BufEnter * silent! lcd %:p:h  "https://vi.stackexchange.com/questions/14519/how-to-run-internal-vim-terminal-at-current-files-dir
 noremap <Leader>to :vertical terminal<CR>
 
-" tagsジャンプの時に複数ある時は一覧表示                                        
+" tagsジャンプの時に複数ある時は一覧表示
 nnoremap <C-]> g<C-]> "}}}
