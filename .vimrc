@@ -314,6 +314,7 @@ NeoBundle 'sorah/unite-ghq'
 NeoBundle 'tmhedberg/SimpylFold.git'
 NeoBundle 'airblade/vim-gitgutter'
 NeoBundle 'ntpeters/vim-better-whitespace.git'
+NeoBundle 'ehafib/gcc-syntax-highlight.git'
 
 imap <Nul> <C-Space>
 NeoBundle 'anekos/felis-cat-igirisu-toast-express'
@@ -897,7 +898,7 @@ vmap <Leader>" <Plug>(caw:hatpos:toggle)
 "}}}
 "vim-better-whitespaceの設定"{{{
 """""""""""""""""""""""""""""""
-let g:better_whitespace_enabled=1
+let g:better_whitespace_enabled=0
 let g:strip_whitespace_on_save=1
 "}}}
 "vim-sessionの設定{{{
@@ -958,9 +959,9 @@ if ! empty(neobundle#get("neosnippet"))
 
 	let g:neosnippet#enable_snipmate_compatibility = 1
 	let g:neosnippet#disable_runtime_snippets = {'_' : 1}
-	let g:neosnippet#snippets_directory = ['~/.vim/bundle/neosnippet-snippets/neosnippets']
-	let g:neosnippet#snippets_directory += ['~/.vim/bundle/vim-snippets/snippets']
-	let g:neosnippet#snippets_directory += ['~/.vim/bundle/mysetting.vim/snippets/']
+	" let g:neosnippet#snippets_directory = ['~/.vim/bundle/neosnippet-snippets/neosnippets']
+	" let g:neosnippet#snippets_directory += ['~/.vim/bundle/vim-snippets/snippets']
+	let g:neosnippet#snippets_directory = ['~/.vim/bundle/mysetting.vim/snippets/']
 
 endif
 
