@@ -640,20 +640,24 @@ let g:quickrun_config._ = {
       \ 'outputter/buffer/close_on_empty' : 1,
       \ }
 let g:quickrun_config.python = {
-			\ "hook/eval/template" : "",
-			\ 'command': 'python',
-			\ "hook/output_encode/encoding" : "utf-8",
-			\}
+      \ "hook/eval/template" : "",
+      \ 'command': 'python',
+      \ "hook/output_encode/encoding" : "utf-8",
+      \}
+let g:quickrun_config.cpp = {
+      \ 'command': 'g++',
+      \ 'cmdopt' : "-std=c++14",
+      \}
 let g:quickrun_config.applescript= {
-			\ 'command': 'osascript',
-			\}
+      \ 'command': 'osascript',
+      \}
 let g:quickrun_config.markdown = {
-			\ 'outputter' : 'browser',
-			\ 'command' : 'pandoc',
-			\ 'cmdopt' : '-s -f markdown',
-			\ }
+      \ 'outputter' : 'browser',
+      \ 'command' : 'pandoc',
+      \ 'cmdopt' : '-s -f markdown',
+      \ }
 let g:quickrun_config.py = {
-			\ }
+      \ }
 command! -nargs=0 Pyver let g:quickrun_config.python.command = "python"
 command! -nargs=0 Pyver3 let g:quickrun_config.python.command = "python3"
 
