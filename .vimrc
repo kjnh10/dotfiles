@@ -646,7 +646,7 @@ let g:quickrun_config.python = {
       \}
 let g:quickrun_config.cpp = {
       \ 'command': 'g++',
-      \ 'cmdopt' : "-std=c++14",
+      \ 'cmdopt' : "-std=c++14 -DINPUT_FROM_FILE",
       \}
 let g:quickrun_config.applescript= {
       \ 'command': 'osascript',
