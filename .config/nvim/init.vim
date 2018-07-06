@@ -215,7 +215,7 @@ noremap <C-e> <End>
 noremap j gj
 noremap k gk
 " noremap ev :<C-u>edit $MYVIMRC<CR>
-noremap ev :<C-u>edit ~/dotfiles/nvim/init.vim<CR>
+noremap ev :<C-u>edit ~/.config/nvim/init.vim<CR>
 noremap gf <C-w>gf
 "noremap <C-j> <C-w>gf
 "autocmd MyAutoCmd FileType help noremap <buffer> <C-j> <C-]>
@@ -537,4 +537,3 @@ nnoremap <silent>[unite]g         :<C-u>Unite ghq<CR>
 " let g:syntastic_check_on_open = 1
 " let g:syntastic_check_on_wq = 0
 set statusline+=%{fugitive#statusline()}
-
