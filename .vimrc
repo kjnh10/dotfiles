@@ -30,7 +30,7 @@ set undodir =~/.vimundo~,.
 set cmdheight=2
 set showmatch
 set list
-set listchars=tab:▸\ ,eol:↲,extends:❯,precedes:❮
+set listchars=tab:¦_,eol:↲,extends:❯,precedes:❮
 set backspace=indent,eol,start "Backspaceキーの影響範囲に制限を設けない
 "set scrolloff=8		"上下8行の視界を確保
 set sidescrolloff=16		   " 左右スクロール時の視界を確保
@@ -45,6 +45,7 @@ set undofile "undo履歴を保存
 set splitright "右に画面を開く
 set splitbelow "右に画面を開く
 set visualbell t_vb = "ビープ音を消す
+set guicursor= "文字化けを直す。https://qiita.com/n_kats_/items/c55741fe0f7805454ce0
 "}}}
 
 "tab option"{{{
@@ -203,11 +204,15 @@ map <silent> [Tag]h :tabprevious<CR>
 map <silent> [Tag]L :tablast<CR>
 "tl 一番左のタブ
 map <silent> [Tag]H :tabfirst<CR>
-
 map <silent> [MoveTag]h :tabm -1<CR>
 map <silent> [MoveTag]l :tabm +1<CR>
 map <silent> [MoveTag]H :tabm 0<CR>
 map <silent> [MoveTag]L :tabm<CR>
+
+noremap <silent> <C-Right> :tabnext<CR>
+tnoremap <silent> <C-Right> <C-w>N:tabnext<CR>
+noremap <silent> <C-Left> :tabprevious<CR>
+tnoremap <silent> <C-Left> <C-w>N:tabprevious<CR>
 "}}}
 
 "basic keymapping setting"{{{
