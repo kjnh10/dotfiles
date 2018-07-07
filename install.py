@@ -40,7 +40,10 @@ if __name__ == '__main__':
         print("----------------------")
         print("installing: " + filepath + " .....")
         src = os.path.join(script_dir, filepath)
+
         target = os.path.join(os.environ['HOME'], filepath)
+        target_dir = target[:target.rfind("/")+1]
+        os.makedirs(target_dir, exist_ok=True)
         target_backup = os.path.join(backup_dir, filename + "_" + now)
         if os.path.exists(target):
             shutil.move( target, target_backup,)
