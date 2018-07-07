@@ -15,8 +15,6 @@ set modeline
 set modelines =3
 set ruler "画面右下にカーソル位置表示
 set mouse=a "マウスをオン"
-"set cursorline "カーソル行の背景色を変える
-"set cursorcolumn "カーソル位置のカラムの背景色を変える
 set foldmethod=marker
 set formatoptions=q "自動で改行を許さない(textwidthを無効？)
 set clipboard& clipboard^=unnamedplus,unnamed "clipboardを共有 "optionを初期化してから not + but ^ for linux
@@ -28,16 +26,14 @@ set undodir =~/.vimundo~,.
 set cmdheight=2
 set showmatch
 set list
-set listchars=tab:▸\ ,eol:↲,extends:❯,precedes:❮
+set listchars=tab:¦_,eol:↲,extends:❯,precedes:❮
 set backspace=indent,eol,start "Backspaceキーの影響範囲に制限を設けない
-"set scrolloff=8		"上下8行の視界を確保
 set sidescrolloff=16		   " 左右スクロール時の視界を確保
 set sidescroll=1		  " 左右スクロールは一文字づつ行う
 set hlsearch "検索文字列をハイライトする
 set incsearch "インクリメンタルサーチを行う
 set ignorecase "大文字と小文字を区別しない
 set smartcase "文字と小文字が混在した言葉で検索を行った場合に限り、大文字と小文字を区別する
-"set gdefault "置換の時 g オプションをデフォルトで有効にする
 set wrapscan "最後尾まで検索を終えたら次の検索で先頭に移る
 set undofile "undo履歴を保存
 set splitright "右に画面を開く
@@ -179,7 +175,10 @@ for n in range(1, 9)
 endfor
 
 function! s:newtab()
-	tablast
+  try
+    cd %:h
+  catch
+  endtry
 	tabnew
 	" VimFiler
 endfunction
@@ -203,6 +202,11 @@ map <silent> [MoveTag]h :tabm -1<CR>
 map <silent> [MoveTag]l :tabm +1<CR>
 map <silent> [MoveTag]H :tabm 0<CR>
 map <silent> [MoveTag]L :tabm<CR>
+
+noremap <silent> <C-Right> :tabnext<CR>
+tnoremap <silent> <C-Right> <C-w>N:tabnext<CR>
+noremap <silent> <C-Left> :tabprevious<CR>
+tnoremap <silent> <C-Left> <C-w>N:tabprevious<CR>
 "}}}
 
 "basic keymapping setting"{{{
@@ -527,13 +531,10 @@ map     <Leader>u [unite]
 nnoremap <silent>[unite]p         :<C-u>Unite file_rec/async<CR>
 nnoremap <silent>[unite]g         :<C-u>Unite ghq<CR>
 
-" " for syntastic
-" set statusline+=%#warningmsg#
-" set statusline+=%{SyntasticStatuslineFlag()}
-" set statusline+=%*
-"
-" let g:syntastic_always_populate_loc_list = 1
-" let g:syntastic_auto_loc_list = 1
-" let g:syntastic_check_on_open = 1
-" let g:syntastic_check_on_wq = 0
 set statusline+=%{fugitive#statusline()}
+
+autocmd BufEnter * silent! lcd %:p:h  "https://vi.stackexchange.com/questions/14519/how-to-run-internal-vim-terminal-at-current-files-dir
+noremap <Leader>to :vertical terminal<CR>
+
+" tagsジャンプの時に複数ある時は一覧表示
+nnoremap <C-]> g<C-]>
