@@ -944,6 +944,7 @@ nmap <C-n> <Plug>(yankround-next)
 	let g:ale_linters = {
 			\   'python': ['pyflakes'],
 			\}"}}}
+  let g:ale_cpp_gcc_options = "-std=c++14 -Wall -DPCM"
 "snippet setting{{{
 """""""""""""""""""""""""""""""
 " http://rcmdnk.github.io/blog/2015/01/12/computer-vim/
