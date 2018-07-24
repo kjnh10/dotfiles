@@ -6,7 +6,8 @@ augroup END
 """"""""""""""""""""""""""""""
 "neovim setting
 if has('nvim')
-  " tnoremap <ESC> <C-\><C-n>
+  tnoremap <C-n> <C-\><C-n>
+  tnoremap <C-w> <C-\><C-n><C-w>
   set guicursor=  "ref: https://github.com/neovim/neovim/issues/6691 for terminator
 endif
 
@@ -80,14 +81,14 @@ command! -nargs=? -complete=help RH vertical help <args>
 command! -nargs=? -complete=help FH help <args>| only
 command! -nargs=? -complete=help TH tab help <args>
 "helpをすぐに引くためのコマンド
-nnoremap - :HelpNew 
-nnoremap <S-_> :TH 
-nnoremap <c-_> :MYKEY 
+nnoremap - :HelpNew
+nnoremap <S-_> :TH
+nnoremap <c-_> :MYKEY
 "Hでhelpをひく
 nnoremap <expr>H ':HelpNew '.expand('<cword>').'<CR>'
 vnoremap <expr>H '"vy:HelpNew <C-r>"<CR>'
 "Kで実行されるコマンドをhelpにする。ただしKは現在remappされている事に注意
-set keywordprg=:help 
+set keywordprg=:help
 "on help files
 "Enterでタグジャンプ
 autocmd MyAutoCmd FileType help nnoremap <buffer> <Enter> <C-]>
@@ -98,7 +99,7 @@ autocmd MyAutoCmd FileType help setlocal tabstop=4
 
 "statusLine"{{{
 """"""""""""""""""""""""""""""
-set laststatus=2 "ステータス行を常に表示 
+set laststatus=2 "ステータス行を常に表示
 set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [filetype=%Y]\ [POS=%04l,%04v]\ [%p%%]\ [amount=%L行]\ [cwd\ %{fnamemodify(getcwd(),':~')}]
 "change statusline color while insert mode"{{{
 """"""""""""""""""""""""""""""
@@ -141,7 +142,7 @@ function! s:SID_PREFIX()
 endfunction
 
 "タブラインの表示(tablineオプション)設定
-function! s:my_tabline()  
+function! s:my_tabline()
 	let s = ''
 	for i in range(1, tabpagenr('$'))
 		let bufnrs = tabpagebuflist(i)
@@ -158,7 +159,7 @@ function! s:my_tabline()
 	endfor
 	let s .= '%#TabLineFill#%T%=%#TabLine#'
 	return s
-endfunction 
+endfunction
 "tablineが使われるのはCUIだけ
 let &tabline = '%!'. s:SID_PREFIX() . 'my_tabline()'
 set showtabline=2 " 常にタブラインを表示
@@ -204,9 +205,9 @@ map <silent> [MoveTag]H :tabm 0<CR>
 map <silent> [MoveTag]L :tabm<CR>
 
 noremap <silent> <C-Right> :tabnext<CR>
-tnoremap <silent> <C-Right> <C-w>N:tabnext<CR>
+tnoremap <silent> <C-Right> <C-\><C-n>:tabnext<CR>
 noremap <silent> <C-Left> :tabprevious<CR>
-tnoremap <silent> <C-Left> <C-w>N:tabprevious<CR>
+tnoremap <silent> <C-Left> <C-\><C-n>:tabprevious<CR>
 "}}}
 
 "basic keymapping setting"{{{
@@ -267,7 +268,7 @@ nnoremap q: q:k
 nnoremap n nzz
 nnoremap N Nzz
 "vvで行末まで選択
-vnoremap v $ 
+vnoremap v $
 
 imap <Nul> <C-Space>
 "}}}
@@ -314,12 +315,12 @@ command! -nargs=+ MYKEY VO verbose <args>
 "nmap	   yes		   -	  -
 "vmap		-	  yes		  -
 "omap		-	   -		 yes
-"		 ビジュアル  選択 
+"		 ビジュアル  選択
 "vmap		  yes	 yes
 "xmap		  yes	  -
 "smap		   -	 yes
 "
-"		  挿入	コマンドライン Lang-Arg 
+"		  挿入	コマンドライン Lang-Arg
 "map!		  yes	 yes	 -
 "imap		  yes	  -		 -
 "cmap		   -	 yes	 -
@@ -342,7 +343,7 @@ nmap <silent> <ESC><ESC> :nohlsearch<CR>
 autocmd MyAutoCmd FileType help,QuickFix nnoremap <buffer> Q <C-w>c
 
 "カレントディレクトリを編集中のファイルの存在するディレクトリに変更するコマンドCD
-command! -nargs=? -complete=dir -bang CD  call s:ChangeCurrentDir('<args>', '<bang>') 
+command! -nargs=? -complete=dir -bang CD  call s:ChangeCurrentDir('<args>', '<bang>')
 function! s:ChangeCurrentDir(directory, bang)
 	if a:directory == ''
 		lcd %:p:h
@@ -534,7 +535,18 @@ nnoremap <silent>[unite]g         :<C-u>Unite ghq<CR>
 set statusline+=%{fugitive#statusline()}
 
 autocmd BufEnter * silent! lcd %:p:h  "https://vi.stackexchange.com/questions/14519/how-to-run-internal-vim-terminal-at-current-files-dir
-noremap <Leader>to :vertical terminal<CR>
+noremap <Leader>to :vertical :Tnew<CR>
 
 " tagsジャンプの時に複数ある時は一覧表示
 nnoremap <C-]> g<C-]>
+"}}}
+
+
+" terminal setting
+if has('nvim')
+  " Neovim 用
+  autocmd WinEnter * if &buftype ==# 'terminal' | startinsert | endif
+else
+  " Vim 用
+  autocmd WinEnter * if &buftype ==# 'terminal' | normal i | endif
+endif
