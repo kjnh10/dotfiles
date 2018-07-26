@@ -95,8 +95,7 @@ if [[ -s ~/.rvm/scripts/rvm ]] ; then source ~/.rvm/scripts/rvm ; fi
 
 ### Aliases ###
 alias r=rails
-#alias v=vim
-#alias mvim='/Applications/MacVim.app/Contents/MacOS/vim -g'
+alias vim='nvim'
 
 #zshcompletionの設定
 fpath=(/usr/local/share/zsh $fpath)
