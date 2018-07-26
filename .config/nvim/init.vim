@@ -4,17 +4,9 @@ augroup END
 
 "basic setting"{{{
 """"""""""""""""""""""""""""""
-"neovim setting
-if has('nvim')
-  tnoremap <C-n> <C-\><C-n>
-  tnoremap <C-w> <C-\><C-n><C-w>
-  set guicursor=  "ref: https://github.com/neovim/neovim/issues/6691 for terminator
-endif
-
 set nocompatible
 set modeline
 set modelines =3
-set ruler "画面右下にカーソル位置表示
 set mouse=a "マウスをオン"
 set foldmethod=marker
 set formatoptions=q "自動で改行を許さない(textwidthを無効？)
@@ -35,7 +27,6 @@ set hlsearch "検索文字列をハイライトする
 set incsearch "インクリメンタルサーチを行う
 set ignorecase "大文字と小文字を区別しない
 set smartcase "文字と小文字が混在した言葉で検索を行った場合に限り、大文字と小文字を区別する
-set wrapscan "最後尾まで検索を終えたら次の検索で先頭に移る
 set undofile "undo履歴を保存
 set splitright "右に画面を開く
 set splitbelow "右に画面を開く
@@ -56,13 +47,6 @@ set cindent
 
 "window setting"{{{
 """"""""""""""""""""""""""""""
-"右側にwinowが存在すればsp分割、存在しなければvertical分割するコマンド
-"右側にwidowが存在する場合
-"cursor key でwindowを切り替える。
-nnoremap <s-Left> <c-w>h
-nnoremap <s-Right> <c-w>l
-nnoremap <s-Up> <c-w>k
-nnoremap <s-Down> <c-w>j
 "commandline windowではwindow移動はできないため
 autocmd MyAutoCmd CmdwinEnter * nnoremap <buffer> <Right> <Right>
 autocmd MyAutoCmd CmdwinEnter * nnoremap <buffer> <Left> <Left>
@@ -84,6 +68,25 @@ command! -nargs=? -complete=help TH tab help <args>
 nnoremap - :HelpNew
 nnoremap <S-_> :TH
 nnoremap <c-_> :MYKEY
+command! -nargs=+ MYKEY VO verbose <args> "自分のキーマップを調べるコマンドMYKEYの設定
+  "usage
+  "<args> is [n v s x o ! i l c]map [{lhs}].
+  "	  ノーマル	ビジュアル+選択  演算待ち状態~
+  "map	   yes		  yes	 yes
+  "nmap	   yes		   -	  -
+  "vmap		-	  yes		  -
+  "omap		-	   -		 yes
+  "		 ビジュアル  選択
+  "vmap		  yes	 yes
+  "xmap		  yes	  -
+  "smap		   -	 yes
+  "
+  "		  挿入	コマンドライン Lang-Arg
+  "map!		  yes	 yes	 -
+  "imap		  yes	  -		 -
+  "cmap		   -	 yes	 -
+  "lmap		  yes*	 yes*		yes*
+
 "Hでhelpをひく
 nnoremap <expr>H ':HelpNew '.expand('<cword>').'<CR>'
 vnoremap <expr>H '"vy:HelpNew <C-r>"<CR>'
@@ -100,7 +103,7 @@ autocmd MyAutoCmd FileType help setlocal tabstop=4
 "statusLine"{{{
 """"""""""""""""""""""""""""""
 set laststatus=2 "ステータス行を常に表示
-set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [filetype=%Y]\ [POS=%04l,%04v]\ [%p%%]\ [amount=%L行]\ [cwd\ %{fnamemodify(getcwd(),':~')}]
+set statusline=%F%m%r%h%w\ [cwd\ %{fnamemodify(getcwd(),':~')}]\ [filetype=%Y]\ [FORMAT=%{&ff}]
 "change statusline color while insert mode"{{{
 """"""""""""""""""""""""""""""
 let g:hi_insert = 'highlight StatusLine guifg=darkblue guibg=darkyellow gui=none ctermfg=blue ctermbg=yellow cterm=none'
@@ -222,42 +225,15 @@ noremap k gk
 " noremap ev :<C-u>edit $MYVIMRC<CR>
 noremap ev :<C-u>edit ~/.config/nvim/init.vim<CR>
 noremap gf <C-w>gf
-"noremap <C-j> <C-w>gf
-"autocmd MyAutoCmd FileType help noremap <buffer> <C-j> <C-]>
-"autocmd MyAutoCmd FileType help noremap <buffer> <ESC> :q<CR>
+
 "quickfixでenterでジャンプ
 autocmd MyAutoCmd FileType qf noremap <buffer> <Enter> <Enter>
-"以下はプラグインの機能を呼び出すから再帰的
-" nmap ysiw ysaw
-"inormapはインサートモード
-"移動系
-inoremap <C-a> <Home>
-inoremap <C-e> <End>
-inoremap <C-d> <ESC>xi
-inoremap <C-h> <Backspace>
-inoremap <C-k> <esc>d$<insert>
 
-"nnormapはノーマルモード
-nnoremap <Enter> i<Enter><ESC>
-"ジャンプ系のコマンド
-"noremap ( '
-"nnoremap ' <c-o>
-"nnoremap ) <c-i>
-nnoremap <c-h> <c-o>
-nnoremap <c-f> <c-i>
 "enterとtabはノーマルモードでも挿入できる様に
+nnoremap <Enter> i<Enter><ESC>
 nnoremap <C-m> i<return><ESC>
 nnoremap <TAB> i<TAB><ESC>l
-"nnoremap Q :q<return>
-"K,Iで上下にスクロール
-" nnoremap K <C-e>
-" nnoremap I <C-y>
-"K,Iで最上行に飛ぶ
-"nnoremap K L
-"nnoremap I H
-"Lで行頭に挿入
-"nnoremap L I
-"vmapはヴィジュアルモード
+
 "選択しているwordを検索
 vnoremap <silent> * "vy/\V<C-r>=substitute(escape(@v,'\/'),"\n",'\\n','g')<CR><CR>
 
@@ -267,8 +243,6 @@ nnoremap q: q:k
 "検索後の移動を自然に
 nnoremap n nzz
 nnoremap N Nzz
-"vvで行末まで選択
-vnoremap v $
 
 imap <Nul> <C-Space>
 "}}}
@@ -306,33 +280,6 @@ let g:deoplete#enable_at_startup = 1"}}}
 
 "My Scripts{{{
 """"""""""""""""""""""""""""""
-"自分のキーマップを調べるコマンドMYKEYの設定
-command! -nargs=+ MYKEY VO verbose <args>
-"usage
-"<args> is [n v s x o ! i l c]map [{lhs}].
-"	  ノーマル	ビジュアル+選択  演算待ち状態~
-"map	   yes		  yes	 yes
-"nmap	   yes		   -	  -
-"vmap		-	  yes		  -
-"omap		-	   -		 yes
-"		 ビジュアル  選択
-"vmap		  yes	 yes
-"xmap		  yes	  -
-"smap		   -	 yes
-"
-"		  挿入	コマンドライン Lang-Arg
-"map!		  yes	 yes	 -
-"imap		  yes	  -		 -
-"cmap		   -	 yes	 -
-"lmap		  yes*	 yes*		yes*
-
-let $PATH= $HOME."/.pyenv/shims:" . $PATH
-"quickrunのために設定. 下では解決しなかったので暫定的に
-"http://stackoverflow.com/questions/9853584/how-to-use-correct-ruby-in-vim-how-to-modify-path-in-vim/12146694#12146694
-
-"ファイル名変更コマンドを定義
-command! -nargs=1 -complete=file Rename f <args>|call delete(expand('#')) |w
-
 "%で対応するタグに移動
 source $VIMRUNTIME/macros/matchit.vim
 
@@ -365,7 +312,7 @@ else
 	autocmd MyAutoCmd BufWritePost $MYVIMRC nested source $MYVIMRC| source $MYGVIMRC
 endif
 
-"カーソル下のoptinの値をする
+"カーソル下のoptinの値を取得する
 nnoremap <expr> <f1> ':echo &'.expand(GetOptionUnderCursor()).'<CR>'
 nnoremap <expr> <s-f1> ':VO echo &'.expand(GetOptionUnderCursor()).'<CR>'
 function! GetOptionUnderCursor()
@@ -385,18 +332,13 @@ endfunction
 "カーソル下の変数の値を取得する
 nnoremap <expr> <f2> ':echo '.expand('<cword>').'<CR>'
 
-"コピー
-nnoremap yl ^v$y<esc>
-nnoremap yf :let @* = expand("%:p")<CR>
-"何故かpで""が選択されない時がある。
-
 "settigs for windows"{{{
 "----------------------------
 if has("win32") || has("win64")
 	inoremap <silent> <esc> <esc>:set iminsert=0<CR>
 endif
 "}}}
-"
+
 "experimental settings{{{
 "----------------------------
 
@@ -511,38 +453,19 @@ nnoremap ML :MemoList
 nnoremap MF :MemoFiler
 nnoremap MG :MemoGrep"}}}
 
-"カスタムコマンドの先頭を小文字にする。
-call altercmd#load()
-  AlterCommand unite Unite
-  AlterCommand gstatus Gstatus
-  AlterCommand path Path
-  AlterCommand fpath FullPath
-  AlterCommand vo VO
-cd ~/
-
 "grep
 autocmd QuickFixCmdPost *grep* cwindow
 
 "http://deris.hatenablog.jp/entry/2013/05/15/024932
 nnoremap /  /\v
 
-noremap [unite] <Nop>
-map     <Leader>u [unite]
-
-nnoremap <silent>[unite]p         :<C-u>Unite file_rec/async<CR>
-nnoremap <silent>[unite]g         :<C-u>Unite ghq<CR>
-
-set statusline+=%{fugitive#statusline()}
-
 autocmd BufEnter * silent! lcd %:p:h  "https://vi.stackexchange.com/questions/14519/how-to-run-internal-vim-terminal-at-current-files-dir
-noremap <Leader>to :vertical :Tnew<CR>
 
 " tagsジャンプの時に複数ある時は一覧表示
 nnoremap <C-]> g<C-]>
-"}}}
-
 
 " terminal setting
+noremap <Leader>to :vertical :T cd %:h<CR>
 if has('nvim')
   " Neovim 用
   autocmd WinEnter * if &buftype ==# 'terminal' | startinsert | endif
@@ -550,3 +473,12 @@ else
   " Vim 用
   autocmd WinEnter * if &buftype ==# 'terminal' | normal i | endif
 endif
+
+"neovim setting
+if has('nvim')
+  tnoremap <C-n> <C-\><C-n>
+  tnoremap <C-w> <C-\><C-n><C-w>
+  set guicursor=  "ref: https://github.com/neovim/neovim/issues/6691 for terminator
+endif
+
+"}}}
