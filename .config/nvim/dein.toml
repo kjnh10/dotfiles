@@ -250,7 +250,7 @@ hook_add = '''
 '''
 
 [[plugins]]
-repo = 'kjnh10/mysetting.vim'  # snippetファイルは今のところ動いていない。
+repo = 'kjnh10/mysetting.vim'
 
 [[plugins]]
 repo = 'w0rp/ale'
