@@ -18,6 +18,7 @@ set directory =~/.vimswp//,. "mac以外でも使えるようにdotを追加
 set undodir =~/.vimundo~,.
 set cmdheight=2
 set showmatch
+let g:loaded_matchparen=1
 set list
 set listchars=tab:¦_,eol:↲,extends:❯,precedes:❮
 set backspace=indent,eol,start "Backspaceキーの影響範囲に制限を設けない
@@ -478,7 +479,9 @@ endif
 if has('nvim')
   tnoremap <C-n> <C-\><C-n>
   tnoremap <C-w> <C-\><C-n><C-w>
-  "set guicursor=  "ref: https://github.com/neovim/neovim/issues/6691 for terminator
+  set guicursor=  "ref: https://github.com/neovim/neovim/issues/6691 for terminator
 endif
 
 "}}}
+"}}}
+
