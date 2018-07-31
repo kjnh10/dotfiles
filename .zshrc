@@ -215,4 +215,10 @@ function peco-pkill() {
 }
 alias pk="peco-pkill"
 # }}}
+
+if [[ $(uname -a) == Linux*Microsoft* ]]; then
+# if [[ `uname -a` =~ Linux && `uname -a` =~ Microsoft ]]; then
+  export DISPLAY=localhost:0.0 ;
+fi
+
 echo "ended source .zshrc"
