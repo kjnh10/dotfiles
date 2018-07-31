@@ -45,8 +45,8 @@ if __name__ == '__main__':
         target_dir = target[:target.rfind("/")+1]
         os.makedirs(target_dir, exist_ok=True)
         target_backup = os.path.join(backup_dir, filename + "_" + now)
-        if os.path.exists(target):
-            shutil.move( target, target_backup,)
+        if os.path.lexists(target):
+            shutil.move(target, target_backup,)
             print("backuped: " + target_backup)
 
         os.symlink(src, target)
