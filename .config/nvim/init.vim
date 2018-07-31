@@ -464,7 +464,8 @@ autocmd BufEnter * silent! lcd %:p:h  "https://vi.stackexchange.com/questions/14
 nnoremap <C-]> g<C-]>
 
 " terminal setting
-noremap <Leader>to :vertical :T cd %:h<CR>
+set shell=zsh
+noremap <Leader>to :vertical :Tnew<CR>
 if has('nvim')
   " Neovim 用
   autocmd WinEnter * if &buftype ==# 'terminal' | startinsert | endif
@@ -477,7 +478,7 @@ endif
 if has('nvim')
   tnoremap <C-n> <C-\><C-n>
   tnoremap <C-w> <C-\><C-n><C-w>
-  set guicursor=  "ref: https://github.com/neovim/neovim/issues/6691 for terminator
+  "set guicursor=  "ref: https://github.com/neovim/neovim/issues/6691 for terminator
 endif
 
 "}}}
