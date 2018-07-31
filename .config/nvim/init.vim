@@ -32,7 +32,28 @@ set undofile "undo履歴を保存
 set splitright "右に画面を開く
 set splitbelow "右に画面を開く
 set visualbell t_vb = "ビープ音を消す
+"%で対応するタグに移動
+source $VIMRUNTIME/macros/matchit.vim
+
+"ESCを二回押す事でハイライトを消す
+nmap <silent> <ESC><ESC> :nohlsearch<CR>
+" tagsジャンプの時に複数ある時は一覧表示
+nnoremap <C-]> g<C-]>
+"grep
+autocmd QuickFixCmdPost *grep* cwindow
+"正規表現を￥前置なしで使えるようにする（http://deris.hatenablog.jp/entry/2013/05/15/024932）
+nnoremap /  /\v
 "}}}
+
+"vimrcの変更を自動で反映(.gvimrcも参照){{{
+  if !has('gui_running') && !(has('win32') || has('win64'))
+    "terminalの場合
+    autocmd MyAutoCmd BufWritePost $MYVIMRC nested source $MYVIMRC
+  else
+    "mac_vimかwindowsのgvimの場合
+    autocmd MyAutoCmd BufWritePost $MYVIMRC nested source $MYVIMRC| source $MYGVIMRC
+  endif
+  "}}}
 
 "tab option"{{{
 """"""""""""""""""""""""""""""
@@ -142,27 +163,27 @@ endfunction
 """"""""""""""""""""""""""""""
 "Anywhere SID.
 function! s:SID_PREFIX()
-	return matchstr(expand('<sfile>'), '<SNR>\d\+_\zeSID_PREFIX$')
+  return matchstr(expand('<sfile>'), '<SNR>\d\+_\zeSID_PREFIX$')
 endfunction
 
 "タブラインの表示(tablineオプション)設定
 function! s:my_tabline()
-	let s = ''
-	for i in range(1, tabpagenr('$'))
-		let bufnrs = tabpagebuflist(i)
-		let bufnr = bufnrs[tabpagewinnr(i) - 1]  " first window, first appears
-		let no = i	" display 0-origin tabpagenr.
-		let mod = getbufvar(bufnr, '&modified') ? '!' : ' '
-		let title = fnamemodify(bufname(bufnr), ':t')
-		let title = '[' . title . ']'
-		let s .= '%'.i.'T'
-		let s .= '%#' . (i == tabpagenr() ? 'TabLineSel' : 'TabLine') . '#'
-		let s .= no		. ':' . title
-		let s .= mod
-		let s .= '%#TabLineFill# '
-	endfor
-	let s .= '%#TabLineFill#%T%=%#TabLine#'
-	return s
+  let s = ''
+  for i in range(1, tabpagenr('$'))
+    let bufnrs = tabpagebuflist(i)
+    let bufnr = bufnrs[tabpagewinnr(i) - 1]  " first window, first appears
+    let no = i	" display 0-origin tabpagenr.
+    let mod = getbufvar(bufnr, '&modified') ? '!' : ' '
+    let title = fnamemodify(bufname(bufnr), ':t')
+    let title = '[' . title . ']'
+    let s .= '%'.i.'T'
+    let s .= '%#' . (i == tabpagenr() ? 'TabLineSel' : 'TabLine') . '#'
+    let s .= no		. ':' . title
+    let s .= mod
+    let s .= '%#TabLineFill# '
+  endfor
+  let s .= '%#TabLineFill#%T%=%#TabLine#'
+  return s
 endfunction
 "tablineが使われるのはCUIだけ
 let &tabline = '%!'. s:SID_PREFIX() . 'my_tabline()'
@@ -172,11 +193,11 @@ set showtabline=2 " 常にタブラインを表示
 "The prefix key.
 nnoremap [Tag] <Nop>
 nnoremap [MoveTag] <Nop>
-nmap	   t   [Tag]
-nmap	   T   [MoveTag]
+nmap     t   [Tag]
+nmap     T   [MoveTag]
 "Tab jump:t1 で1番左のタブ、t2 で1番左から2番目のタブにジャンプ
 for n in range(1, 9)
-	execute 'nnoremap <silent> [Tag]'.n  ':<C-u>tabnext'.n.'<CR>'
+  execute 'nnoremap <silent> [Tag]'.n  ':<C-u>tabnext'.n.'<CR>'
 endfor
 
 function! s:newtab()
@@ -184,8 +205,8 @@ function! s:newtab()
     cd %:h
   catch
   endtry
-	tabnew
-	" VimFiler
+  tabnew
+  " VimFiler
 endfunction
 
 command! TABNEW call s:newtab()
@@ -250,7 +271,7 @@ imap <Nul> <C-Space>
 
 "set plugins{{{
 """"""""""""""""""""""""""""""
-"dein Scripts-----------------------------{{{
+"dein Scripts-----------------------------
   " dein自体の自動インストール
   let s:cache_home = empty($XDG_CACHE_HOME) ? expand('~/.cache') : $XDG_CACHE_HOME
   let s:dein_dir = s:cache_home . '/dein'
@@ -276,99 +297,44 @@ imap <Nul> <C-Space>
   if has('vim_starting') && dein#check_install()
     call dein#install()
   endif
-"End dein Scripts-------------------------}}}
+"End dein Scripts-------------------------
+"}}}
 
 "My Scripts{{{
 """"""""""""""""""""""""""""""
-"%で対応するタグに移動
-source $VIMRUNTIME/macros/matchit.vim
+"ローカルカレントディレクトリを編集中のファイルの存在するディレクトリに変更するコマンドCD{{{
+  command! -nargs=? -complete=dir -bang CD  call s:ChangeCurrentDir('<args>', '<bang>')
+  function! s:ChangeCurrentDir(directory, bang)
+    if a:directory == ''
+      lcd %:p:h
+    else
+      execute 'lcd' . a:directory
+    endif
+    if a:bang == ''
+      pwd
+    endif
+  endfunction
+  "}}}
 
-"ESCを二回押す事でハイライトを消す
-nmap <silent> <ESC><ESC> :nohlsearch<CR>
-
-"QuickFix及びHelpではQでバッファを閉じる
-autocmd MyAutoCmd FileType help,QuickFix nnoremap <buffer> Q <C-w>c
-
-"カレントディレクトリを編集中のファイルの存在するディレクトリに変更するコマンドCD
-command! -nargs=? -complete=dir -bang CD  call s:ChangeCurrentDir('<args>', '<bang>')
-function! s:ChangeCurrentDir(directory, bang)
-	if a:directory == ''
-		lcd %:p:h
-	else
-		execute 'lcd' . a:directory
-	endif
-	if a:bang == ''
-		pwd
-	endif
-endfunction
-" Change current directory.
-
-"vimrcの変更を自動で反映(.gvimrcも参照)
-if !has('gui_running') && !(has('win32') || has('win64'))
-	"terminalの場合
-	autocmd MyAutoCmd BufWritePost $MYVIMRC nested source $MYVIMRC
-else
-	"mac_vimかwindowsのgvimの場合
-	autocmd MyAutoCmd BufWritePost $MYVIMRC nested source $MYVIMRC| source $MYGVIMRC
-endif
-
-"カーソル下のoptinの値を取得する
-nnoremap <expr> <f1> ':echo &'.expand(GetOptionUnderCursor()).'<CR>'
-nnoremap <expr> <s-f1> ':VO echo &'.expand(GetOptionUnderCursor()).'<CR>'
-function! GetOptionUnderCursor()
-	let l:line = getline('.')
-	let l:col_pos_in_line = getpos('.')[2]
-	let l:start = strridx(l:line,"'",l:col_pos_in_line)
-	let l:end = stridx(l:line,"'",l:col_pos_in_line)
-	if l:start != -1 && l:end != -1
-		let l:string = l:line[l:start+1 : l:end-1]
-		echo l:string
-		return l:string
-	else
-		echo "カーソル下がoptionではありません!"
-	endif
-endfunction
-
+"カーソル下のoptinの値を取得する{{{
+  nnoremap <expr> <f1> ':echo &'.expand(GetOptionUnderCursor()).'<CR>'
+  nnoremap <expr> <s-f1> ':VO echo &'.expand(GetOptionUnderCursor()).'<CR>'
+  function! GetOptionUnderCursor()
+    let l:line = getline('.')
+    let l:col_pos_in_line = getpos('.')[2]
+    let l:start = strridx(l:line,"'",l:col_pos_in_line)
+    let l:end = stridx(l:line,"'",l:col_pos_in_line)
+    if l:start != -1 && l:end != -1
+      let l:string = l:line[l:start+1 : l:end-1]
+      echo l:string
+      return l:string
+    else
+      echo "カーソル下がoptionではありません!"
+    endif
+  endfunction
 "カーソル下の変数の値を取得する
 nnoremap <expr> <f2> ':echo '.expand('<cword>').'<CR>'
-
-"settigs for windows"{{{
-"----------------------------
-if has("win32") || has("win64")
-	inoremap <silent> <esc> <esc>:set iminsert=0<CR>
-endif
-"}}}
-
-"experimental settings{{{
-"----------------------------
-
-"text-object-sample:a fold
-vnoremap af :<C-U>silent! normal! [zV]z<CR>
-omap af :normal Vaf<CR>
-
-"command range test-setting
-command! -nargs=0 -range=0 -range=% Rangetest :echo <count> <line1> <line2>
-command! -nargs=0 -count=0 Counttest :echo <count> <line1> <line2>
-
-
-"unite source created by own"{{{
-"----------------------------------------------
-let source = {
-			\ 'name' : 'sample',
-			\ 'description' : 'this is sample source',
-			\ 'action_table' : {},
-			\ 'max_candidates' : 1000,
-			\ }
-
-call unite#define_source(source)
-
-function! source.gather_candidates(args, context)
-	let candidates = []
-	"write the code that gather candidates.
-	"
-	return candidates
-endfunction"}}}
-"}}}
+  "}}}
 
 "copy path"{{{
 function! CopyPath()
@@ -452,52 +418,58 @@ nnoremap MN :MemoNew
 nnoremap ML :MemoList
 nnoremap MF :MemoFiler
 nnoremap MG :MemoGrep"}}}
+"}}}
 
-"grep
-autocmd QuickFixCmdPost *grep* cwindow
+"experimental settings{{{
+"----------------------------
+"unite source created by own
+  let source = {
+        \ 'name' : 'sample',
+        \ 'description' : 'this is sample source',
+        \ 'action_table' : {},
+        \ 'max_candidates' : 1000,
+        \ }
 
-"http://deris.hatenablog.jp/entry/2013/05/15/024932
-nnoremap /  /\v
+  call unite#define_source(source)
 
-autocmd BufEnter * silent! lcd %:p:h  "https://vi.stackexchange.com/questions/14519/how-to-run-internal-vim-terminal-at-current-files-dir
+  function! source.gather_candidates(args, context)
+    let candidates = []
+    "write the code that gather candidates.
+    "
+    return candidates
+  endfunction
 
-" tagsジャンプの時に複数ある時は一覧表示
-nnoremap <C-]> g<C-]>
+"自動CD
+"https://vi.stackexchange.com/questions/14519/how-to-run-internal-vim-terminal-at-current-files-dir
+  autocmd BufEnter * silent! lcd %:p:h
 
 " terminal setting
-set shell=zsh
-noremap <Leader>to :vertical :Tnew<CR>
-if has('nvim')
-  " Neovim 用
-  autocmd WinEnter * if &buftype ==# 'terminal' | startinsert | endif
-else
-  " Vim 用
-  autocmd WinEnter * if &buftype ==# 'terminal' | normal i | endif
-endif
+  set shell=zsh
+  noremap <Leader>to :vertical :Tnew<CR>
+  if has('nvim')
+    " Neovim 用
+    autocmd WinEnter * if &buftype ==# 'terminal' | startinsert | endif
+    tnoremap <C-n> <C-\><C-n>
+    tnoremap <C-w> <C-\><C-n><C-w>
+    set guicursor=  "ref: https://github.com/neovim/neovim/issues/6691 for terminator
+  else
+    " Vim 用
+    autocmd WinEnter * if &buftype ==# 'terminal' | normal i | endif
+  endif
 
-"neovim setting
-if has('nvim')
-  tnoremap <C-n> <C-\><C-n>
-  tnoremap <C-w> <C-\><C-n><C-w>
-  set guicursor=  "ref: https://github.com/neovim/neovim/issues/6691 for terminator
-endif
-
-"}}}
-"}}}
-
-" WSL用 setting
-if system('uname -a | grep Microsoft') != ""
 "WSLでクリップボードを共有する(https://blog.himanoa.net/entries/20)
-  let g:clipboard = {
-        \   'name': 'myClipboard',
-        \   'copy': {
-        \      '+': 'win32yank.exe -i',
-        \      '*': 'win32yank.exe -i',
-        \    },
-        \   'paste': {
-        \      '+': 'win32yank.exe -o',
-        \      '*': 'win32yank.exe -o',
-        \   },
-        \   'cache_enabled': 1,
-        \ }
-endif"}}}
+  if system('uname -a | grep Microsoft') != ""
+    let g:clipboard = {
+          \   'name': 'myClipboard',
+          \   'copy': {
+          \      '+': 'win32yank.exe -i',
+          \      '*': 'win32yank.exe -i',
+          \    },
+          \   'paste': {
+          \      '+': 'win32yank.exe -o',
+          \      '*': 'win32yank.exe -o',
+          \   },
+          \   'cache_enabled': 1,
+          \ }
+  endif
+"}}}
