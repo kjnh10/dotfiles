@@ -20,7 +20,7 @@ bindkey -e               # キーバインドをemacsモードに設定
 #bindkey -v              # キーバインドをviモードに設定
 
 setopt nolistbeep           # ビープ音を鳴らさないようにする
-setopt auto_cd           # ディレクトリ名の入力のみで移動する 
+setopt auto_cd           # ディレクトリ名の入力のみで移動する
 setopt auto_pushd        # cd時にディレクトリスタックにpushdする
 setopt correct           # コマンドのスペルを訂正する
 setopt magic_equal_subst # =以降も補完する(--prefix=/usrなど)
@@ -57,37 +57,10 @@ zle -N history-beginning-search-backward-end history-search-end
 zle -N history-beginning-search-forward-end history-search-end
 bindkey "^P" history-beginning-search-backward-end
 bindkey "^N" history-beginning-search-forward-end
-	
+
 # すべてのヒストリを表示する
 function history-all { history -E 1 }
 
-# ------------------------------
-# Look And Feel Settings
-# ------------------------------
-# ### Ls Color ###
-# # 色の設定
-# export LSCOLORS=Exfxcxdxbxegedabagacad
-# # 補完時の色の設定
-# export LS_COLORS='di=01;34:ln=01;35:so=01;32:ex=01;31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
-# # ZLS_COLORSとは？
-# export ZLS_COLORS=$LS_COLORS
-# # lsコマンド時、自動で色がつく(ls -Gのようなもの？)
-# export CLICOLOR=true
-# # 補完候補に色を付ける
-# zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
-#
-# ### Prompt ###
-# # プロンプトに色を付ける
-# autoload -U colors; colors
-#
-# GIT_PS1_SHOWCOLORHINTS=true
-# PROMPT2='[%n]> ' 
-# #gitのステータスを表示
-# #(参考)https://www.udacity.com/course/viewer#!/c-ud775/l-2980038599/m-2955818665
-# source ~/.git-prompt.sh 
-# setopt PROMPT_SUBST ; PS1='[%n@%m %c$(__git_ps1 " (%s)")]\$ '
-
-# ------------------------------
 # Other Settings
 # ------------------------------
 ### RVM ###
@@ -101,6 +74,7 @@ alias vim='nvim'
 fpath=(/usr/local/share/zsh $fpath)
 
 # SET PATH
+# ------------------------------
   case ${OSTYPE} in
       darwin*)
         #ここにMac向けの設定
@@ -128,30 +102,6 @@ fpath=(/usr/local/share/zsh $fpath)
   export RBENV_ROOT="$HOME/.rbenv"
   export PATH="$HOME/.rbenv/bin:$PATH"
   eval "$(rbenv init -)"
-
-#cygwinの設定
-if [[ $OSTYPE == cygwin* ]];then # スペース入れないとエラーになる。
-    export PATH=usr/local/sbin:/usr/local/bin:/sbin:/usr/sbin:/usr/bin:$PATH # findなどがosのものより先に来てしまっているので。
-    #railsの設定
-    #http://shiroibanana.blogspot.jp/2014/08/ruby-on-railshello-world.html
-    alias rails='rails.bat'
-    alias gem='gem.bat'
-    alias rake='rake.bat'
-    alias erb='erb.bat'
-    alias irb='irb.bat'
-    alias rdoc='rdoc.bat'
-    alias ri='ri.bat'
-    alias rspec='rspec.bat'
-    alias cucumber='cucumber.bat'
-    alias bundle='bundle.bat'
-
-    #git の文字化け対策 http://d.hatena.ne.jp/Rion778/20091107/1257623615
-    export LANG=ja_JP.UTF-8
-    export PAGER="lv -Ou8"
-
-    #ruby
-    export PATH="$HOME/.rbenv/bin:$PATH"
-fi
 
 # peco setting # {{{
 # peco source
@@ -197,7 +147,7 @@ bindkey '^x' peco-cdr
 # cdr, add-zsh-hook を有効にする
 autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
 add-zsh-hook chpwd chpwd_recent_dirs
- 
+
 # cdr の設定
 zstyle ':completion:*' recent-dirs-insert both
 zstyle ':chpwd:*' recent-dirs-max 500
