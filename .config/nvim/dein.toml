@@ -221,10 +221,6 @@ on_ft = ['snippet']
 repo = 'Shougo/deoplete.nvim'
 hook_source = '''
   let g:deoplete#enable_at_startup = 1"{{{
-  "Tab補完の設定
-  inoremap <expr><tab> pumvisible() ? "\<C-n>" :
-        \ neosnippet#expandable_or_jumpable() ?
-        \    "\<Plug>(neosnippet_expand_or_jump)" : "\<tab>"}}}
 '''
 on_i = 1
 
@@ -253,11 +249,18 @@ hook_add = '''
 repo = 'kjnh10/mysetting.vim'
 
 [[plugins]]
+repo = 'kjnh10/gcc-syntax-highlight'
+
+[[plugins]]
 repo = 'w0rp/ale'
 hook_source = '''
   let g:ale_sign_column_always = 1
   let g:ale_lint_on_save = 1
   let g:ale_lint_on_text_changed = 0
+  let g:ale_sign_error = '>>'
+  let g:ale_sign_warning = '--'
+  " highlight clear ALEErrorSign
+  highlight clear ALEWarningSign
   " flake8はうるさいのでpyflake8にしておく。
   let g:ale_linters = {
       \   'python': ['pyflakes'],
@@ -321,9 +324,6 @@ hook_source = '''
   let g:better_whitespace_enabled=0
   let g:strip_whitespace_on_save=1
 '''
-
-[[plugins]]
-repo =  'ehafib/gcc-syntax-highlight.git'
 
 # [[plugins]]
 # repo =  'airblade/vim-rooter'
