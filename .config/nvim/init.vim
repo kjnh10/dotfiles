@@ -473,3 +473,8 @@ nnoremap MG :MemoGrep"}}}
           \ }
   endif
 "}}}
+
+function MakeCquery()
+  let temp = expand('%:p')
+  echo system('echo ''[{"directory": "/home/watkoji","command": "g++  ' . temp . ' -std=c++14","file": "' . temp . '"}]'' > compile_commands.json')
+endfunction
