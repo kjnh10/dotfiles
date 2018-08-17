@@ -32,6 +32,7 @@ set undofile "undo履歴を保存
 set splitright "右に画面を開く
 set splitbelow "右に画面を開く
 set visualbell t_vb = "ビープ音を消す
+set fileencodings=utf-8,euc-jp,sjis,cp932,iso-2022-jp
 "%で対応するタグに移動
 source $VIMRUNTIME/macros/matchit.vim
 
