@@ -266,6 +266,7 @@ hook_source = '''
       \   'python': ['pyflakes'],
       \}
   let g:ale_cpp_gcc_options = "-std=c++14 -Wall -DPCM"
+  map <leader>at :ALEToggle<CR>
 '''
 
 [[plugins]]
