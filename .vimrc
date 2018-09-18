@@ -210,9 +210,7 @@ map <silent> [MoveTag]H :tabm 0<CR>
 map <silent> [MoveTag]L :tabm<CR>
 
 noremap <silent> <C-Right> :tabnext<CR>
-tnoremap <silent> <C-Right> <C-w>N:tabnext<CR>
 noremap <silent> <C-Left> :tabprevious<CR>
-tnoremap <silent> <C-Left> <C-w>N:tabprevious<CR>
 "}}}
 
 "basic keymapping setting"{{{

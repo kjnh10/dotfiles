@@ -164,6 +164,28 @@ function peco-pkill() {
   done
 }
 alias pk="peco-pkill"
+
+# peco find directory
+function peco-find() {
+  local current_buffer=$BUFFER
+  local search_root=""
+  local file_path=""
+
+  if git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
+    search_root=`git rev-parse --show-toplevel`
+  else
+    search_root=`pwd`
+  fi
+  file_path="$(find ${search_root} -maxdepth 5 | peco)"
+  BUFFER="${current_buffer} ${file_path}"
+  CURSOR=$#BUFFER
+  zle clear-screen
+}
+zle -N peco-find
+
+# bind keys
+bindkey '^p' peco-find
+
 # }}}
 
 if [[ $(uname -a) == Linux*Microsoft* ]]; then
