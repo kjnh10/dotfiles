@@ -44,6 +44,11 @@ nnoremap <C-]> g<C-]>
 autocmd QuickFixCmdPost *grep* cwindow
 "正規表現を￥前置なしで使えるようにする（http://deris.hatenablog.jp/entry/2013/05/15/024932）
 nnoremap /  /\v
+
+if has('nvim')
+  let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+end
+
 "}}}
 
 "vimrcの変更を自動で反映(.gvimrcも参照){{{
@@ -452,7 +457,7 @@ nnoremap MG :MemoGrep"}}}
     autocmd WinEnter * if &buftype ==# 'terminal' | startinsert | endif
     tnoremap <C-n> <C-\><C-n>
     tnoremap <C-w> <C-\><C-n><C-w>
-    set guicursor=  "ref: https://github.com/neovim/neovim/issues/6691 for terminator
+    " set guicursor=  "ref: https://github.com/neovim/neovim/issues/6691 for terminator
   else
     " Vim 用
     autocmd WinEnter * if &buftype ==# 'terminal' | normal i | endif
