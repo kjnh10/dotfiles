@@ -128,43 +128,6 @@ autocmd MyAutoCmd FileType help setlocal sidescroll=1
 autocmd MyAutoCmd FileType help setlocal tabstop=4
 "}}}
 
-"statusLine"{{{
-""""""""""""""""""""""""""""""
-set laststatus=2 "ステータス行を常に表示
-set statusline=%F%m%r%h%w\ [cwd\ %{fnamemodify(getcwd(),':~')}]\ [filetype=%Y]\ [FORMAT=%{&ff}]
-"change statusline color while insert mode"{{{
-""""""""""""""""""""""""""""""
-let g:hi_insert = 'highlight StatusLine guifg=darkblue guibg=darkyellow gui=none ctermfg=blue ctermbg=yellow cterm=none'
-if has('syntax')
-	augroup InsertHook
-		autocmd!
-		autocmd InsertEnter * call s:StatusLine('Enter')
-		autocmd InsertLeave * call s:StatusLine('Leave')
-	augroup END
-endif
-
-let s:slhlcmd = ''
-function! s:StatusLine(mode)
-	if a:mode == 'Enter'
-		silent! let s:slhlcmd = 'highlight ' . s:GetHighlight('StatusLine')
-		silent exec g:hi_insert
-	else
-		highlight clear StatusLine
-		silent exec s:slhlcmd
-	endif
-endfunction
-
-function! s:GetHighlight(hi)
-	redir => hl
-	exec 'highlight '.a:hi
-	redir END
-	let hl = substitute(hl, '[\r\n]', '', 'g')
-	let hl = substitute(hl, 'xxx', '', '')
-	return hl
-endfunction
-"}}}
-"}}}
-
 "move through tab"{{{
 """"""""""""""""""""""""""""""
 "Anywhere SID.

@@ -181,9 +181,6 @@ hook_source = '''
 
 [[plugins]]
 repo = 'tpope/vim-fugitive'
-hook_source = '''
-  set statusline+=%{fugitive#statusline()}
-'''
 
 [[plugins]]
 repo = 'kassio/neoterm'
@@ -334,3 +331,6 @@ repo = 'vim-scripts/ViewOutput'  #VO
 
 [[plugins]]
 repo = 'ujihisa/unite-colorscheme'
+
+[[plugins]]
+repo = 'vim-airline/vim-airline'
