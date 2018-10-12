@@ -236,6 +236,13 @@ nnoremap n nzz
 nnoremap N Nzz
 
 imap <Nul> <C-Space>
+
+"括弧の補完
+"inoremap { {}<Left>
+inoremap {<Enter> {}<Left><CR><ESC><S-o>
+"inoremap ( ()<ESC>i
+inoremap (<Enter> ()<Left><CR><ESC><S-o>
+
 "}}}
 
 "set plugins{{{
