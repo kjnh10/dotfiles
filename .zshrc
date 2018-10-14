@@ -83,6 +83,7 @@ fpath=(/usr/local/share/zsh $fpath)
         ;;
 
       linux*)
+        export PATH=$PATH:/snap/bin
         export PATH=$HOME/.nodebrew/current/bin:$PATH
         export PATH=$HOME/bin/node-v8.9.4-linux-x64/bin:$PATH
         ;;
