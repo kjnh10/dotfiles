@@ -217,7 +217,7 @@ on_ft = ['snippet']
 [[plugins]] # deoplete
 repo = 'Shougo/deoplete.nvim'
 hook_source = '''
-  let g:deoplete#enable_at_startup = 1"{{{
+  let g:deoplete#enable_at_startup = 1"
 '''
 on_i = 1
 
@@ -239,6 +239,7 @@ hook_add='''
           \ })
   endif
 '''
+
 [[plugins]]
 repo='prabirshrestha/asyncomplete.vim'
 [[plugins]]
@@ -354,3 +355,7 @@ repo = 'ujihisa/unite-colorscheme'
 
 [[plugins]]
 repo = 'vim-airline/vim-airline'
+hook_source = '''
+  let g:airline_section_c = '%-0.20{getcwd()}'
+  let g:airline_section_x = '%<%<%{airline#extensions#fugitiveline#bufname()}%m %#__accent_red#%{airline#util#wrap(airline#parts#readonly(),0)}%#__restore__#'
+'''
