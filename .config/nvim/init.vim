@@ -321,6 +321,7 @@ endfunction
 
 function! CopyFullPath()
   let res = expand('%:p')
+  echo res
   let @*=res
   let @+=res
 endfunction
