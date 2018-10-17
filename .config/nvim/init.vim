@@ -245,7 +245,7 @@ inoremap {<Enter> {}<Left><CR><ESC><S-o>
 
 "}}}
 
-"set plugins{{{
+"dein plugins{{{
 """"""""""""""""""""""""""""""
 "dein Scripts-----------------------------
   " dein自体の自動インストール
