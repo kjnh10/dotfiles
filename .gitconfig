@@ -5,7 +5,7 @@
 [alias]
 	co = checkout
   fo = fetch origin
-	g = log --graph --date=short --format=\"%C(yellow)%h%C(reset) %C(magenta)[%ad]%C(reset)%C(auto)%d%C(reset) %s %C(cyan)@%an%C(reset)\"
+	g = log --all --graph --date=short --format=\"%C(yellow)%h%C(reset) %C(magenta)[%ad]%C(reset)%C(auto)%d%C(reset) %s %C(cyan)@%an%C(reset)\"
 	s = status
 	pom = push origin master
 	unstage = reset HEAD --
