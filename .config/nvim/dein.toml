@@ -90,6 +90,8 @@ repo = 'tyru/caw.vim' # commnet toggle
 hook_source = '''
 nmap <Leader>" <Plug>(caw:hatpos:toggle)
 vmap <Leader>" <Plug>(caw:hatpos:toggle)
+nmap <c-/> <Plug>(caw:hatpos:toggle)
+vmap <c-/>" <Plug>(caw:hatpos:toggle)
 '''
 
 [[plugins]]
