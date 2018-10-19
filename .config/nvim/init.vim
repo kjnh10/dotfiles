@@ -95,7 +95,7 @@ command! -nargs=? -complete=help TH tab help <args>
 "helpをすぐに引くためのコマンド
 nnoremap - :HelpNew
 nnoremap <S-_> :TH
-nnoremap <c-_> :MYKEY
+" nnoremap <c-_> :MYKEY
 command! -nargs=+ MYKEY VO verbose <args> "自分のキーマップを調べるコマンドMYKEYの設定
   "usage
   "<args> is [n v s x o ! i l c]map [{lhs}].
