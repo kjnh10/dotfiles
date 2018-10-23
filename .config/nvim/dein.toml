@@ -370,15 +370,6 @@ hook_source = '''
 repo = 'thinca/vim-qfreplace'
 
 [[plugins]]
-repo = 'cohama/lexima.vim'
-hook_add = '''
-  "行末のときだけオートクローズ
-  call lexima#add_rule({'at': '\%#.*[-0-9a-zA-Z_,:]', 'char': '{', 'input': '{'})
-  call lexima#add_rule({'at': '\%#.*[-0-9a-zA-Z_,:]', 'char': '(', 'input': '('})
-  call lexima#add_rule({'at': '\%#.*[-0-9a-zA-Z_,:]', 'char': '[', 'input': '['})
-'''
-
-[[plugins]]
 repo = 'easymotion/vim-easymotion'
 hook_add = '''
 " <Leader>f{char} to move to {char}

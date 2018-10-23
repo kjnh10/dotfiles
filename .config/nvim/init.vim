@@ -239,10 +239,21 @@ imap <Nul> <C-Space>
 imap <F2> <Nop>
 
 "括弧の補完
-"inoremap { {}<Left>
-inoremap {<Enter> {}<Left><CR><ESC><S-o>
-"inoremap ( ()<ESC>i
-" inoremap (<Enter> ()<Left><CR><ESC><S-o>
+" {の後の改行
+function! IndentBraces()
+    let nowletter = getline(".")[col(".")-2] "直前に打った文字
+    " echom nowletter
+
+    if nowletter == "{" && (col(".")==col("$")) " {#
+        return "\n}\<ESC>\<s-o>"
+    elseif nowletter == "{" && (col(".")<col("$")) " {#....
+        return "\n\<ESC>$A\n}\<ESC>\<s-o>"
+    else
+        return "\n"
+    endif
+endfunction
+" Enterに割り当て
+inoremap <silent> <expr> <CR> IndentBraces()
 
 "}}}
 
@@ -463,4 +474,5 @@ nnoremap MG :MemoGrep"}}}
   endfunction
 
 "}}}
+
 
