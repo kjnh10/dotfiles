@@ -288,6 +288,10 @@ hook_source = '''
   let g:ale_cpp_gcc_options = "-std=c++14 -Wall -DPCM"
   map <leader>at :ALEToggle<CR>
 '''
+hook_add = '''
+  ALEToggle
+'''
+
 
 [[plugins]]
 repo =  'tmhedberg/SimpylFold.git'
