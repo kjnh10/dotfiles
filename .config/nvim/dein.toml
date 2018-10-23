@@ -378,3 +378,9 @@ hook_add = '''
   " s{char}{char} to move to {char}{char}
   nmap s <Plug>(easymotion-overwin-f2)
 " # '''
+
+[[plugins]]
+repo = 'luochen1990/rainbow.git'
+hook_add = '''
+  let g:rainbow_active = 1
+'''
