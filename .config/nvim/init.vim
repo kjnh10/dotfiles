@@ -236,6 +236,7 @@ nnoremap n nzz
 nnoremap N Nzz
 
 imap <Nul> <C-Space>
+imap <F2> <Nop>
 
 "括弧の補完
 "inoremap { {}<Left>
