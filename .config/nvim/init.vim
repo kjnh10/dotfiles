@@ -242,11 +242,14 @@ imap <F2> <Nop>
 " {の後の改行
 function! IndentBraces()
     let nowletter = getline(".")[col(".")-2] "直前に打った文字
+    let lastletter = getline(".")[col("$")-2] "行末文字
     " echom nowletter
 
-    if nowletter == "{" && (col(".")==col("$")) " {#
+    if nowletter == "{" && (col(".")==col("$")) " when {#
         return "\n}\<ESC>\<s-o>"
-    elseif nowletter == "{" && (col(".")<col("$")) " {#....
+    elseif nowletter == "{" && lastletter == "}" " when {#....}
+        return "\n\<ESC>$i\n\<ESC>k^"
+    elseif nowletter == "{" && (col(".")<col("$")) " when {#....
         return "\n\<ESC>$A\n}\<ESC>\<s-o>"
     else
         return "\n"
