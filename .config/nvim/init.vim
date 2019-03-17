@@ -273,9 +273,11 @@ inoremap <silent> <expr> <CR> IndentBraces()
   let &runtimepath = s:dein_repo_dir .",". &runtimepath
   " プラグイン読み込み＆キャッシュ作成
   let s:toml_file = fnamemodify(expand('<sfile>'), ':h').'/dein.toml'
+  let s:lazy_toml_file = fnamemodify(expand('<sfile>'), ':h').'/dein_lazy.toml'
   "if dein#load_state(s:dein_dir)
     call dein#begin(s:dein_dir)
-    call dein#load_toml(s:toml_file)
+    call dein#load_toml(s:toml_file, {'lazy':0})
+    call dein#load_toml(s:lazy_toml_file, {'lazy':1})
     call dein#end()
     call dein#save_state()
   "endif
@@ -415,21 +417,21 @@ nnoremap MG :MemoGrep"}}}
 "experimental settings{{{
 "----------------------------
 "unite source created by own
-  let source = {
-        \ 'name' : 'sample',
-        \ 'description' : 'this is sample source',
-        \ 'action_table' : {},
-        \ 'max_candidates' : 1000,
-        \ }
-
-  call unite#define_source(source)
-
-  function! source.gather_candidates(args, context)
-    let candidates = []
-    "write the code that gather candidates.
-    "
-    return candidates
-  endfunction
+  " let source = {
+  "      \ 'name' : 'sample',
+  "      \ 'description' : 'this is sample source',
+  "      \ 'action_table' : {},
+  "      \ 'max_candidates' : 1000,
+  "      \ }
+  "
+  " call unite#define_source(source)
+  "
+  " function! source.gather_candidates(args, context)
+  "   let candidates = []
+  "   "write the code that gather candidates.
+  "   "
+  "   return candidates
+  " endfunction
 
 "自動CD
 "https://vi.stackexchange.com/questions/14519/how-to-run-internal-vim-terminal-at-current-files-dir

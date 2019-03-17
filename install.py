@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 # dotfiles以下のファイル郡を~/以下にシンボリックリンクで展開する。
+# これには.config/などのフォルダ構造も含む。
 # 実行フォルダはどこでもよい。
 
 import os
