@@ -41,6 +41,7 @@ hook_post_source = '''
   nnoremap <leader>p :<C-u>Unite file_rec/async<CR>
   nnoremap <leader>c :<C-u>Unite history/yank<CR>
   nnoremap <leader>t :<C-u>Unite -start-insert tab<CR>
+  nnoremap <leader>s :<C-u>Unite -start-insert neosnippet<CR>
   nnoremap <silent> <leader>b :<C-u>Unite bookmark -start-insert<CR>
   "nnoremap <silent> <leader>bp :<C-u>Unite bookmark:project<CR>
 

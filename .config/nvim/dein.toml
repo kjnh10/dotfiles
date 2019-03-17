@@ -287,12 +287,14 @@ hook_source = '''
 
 [[plugins]]
 repo =  'airblade/vim-gitgutter'
-[[plugins]]
-repo =  'ntpeters/vim-better-whitespace.git'
-hook_source = '''
-  let g:better_whitespace_enabled=0
-  let g:strip_whitespace_on_save=1
-'''
+
+# [[plugins]]
+# repo =  'ntpeters/vim-better-whitespace.git'
+# hook_source = '''
+#   let g:better_whitespace_enabled=0
+#   let g:strip_whitespace_on_save=1
+# '''
+# <Leader>s<space>を勝手につぶしてたりするので削除
 
 # [[plugins]]
 # repo =  'airblade/vim-rooter'
