@@ -1,292 +1,350 @@
 [[plugins]]
-repo = 'Shougo/dein.vim'
+  repo = 'Shougo/dein.vim'
+
 
 [[plugins]]
-repo = 'Shougo/vimproc.vim'
-build = 'make'
+  repo = 'Shougo/vimproc.vim'
+  build = 'make'
+
 
 [[plugins]]
-repo = 'tyru/caw.vim' # commnet toggle
-hook_source = '''
-nmap <Leader>" <Plug>(caw:hatpos:toggle)
-vmap <Leader>" <Plug>(caw:hatpos:toggle)
-nmap <c-_> <Plug>(caw:hatpos:toggle)
-vmap <c-_> <Plug>(caw:hatpos:toggle)
-'''
+  repo = 'tyru/caw.vim' # commnet toggle
+  hook_source = '''
+  nmap <Leader>" <Plug>(caw:hatpos:toggle)
+  vmap <Leader>" <Plug>(caw:hatpos:toggle)
+  nmap <c-_> <Plug>(caw:hatpos:toggle)
+  vmap <c-_> <Plug>(caw:hatpos:toggle)
+  '''
+
 
 [[plugins]]
-repo = 'Shougo/neomru.vim'
+  repo = 'Shougo/neomru.vim'
+
 
 [[plugins]]
-repo = 'Shougo/vimfiler'
-hook_source = '''
-"{{{
-""""""""""""""""""""""""""""""
-let g:vimfiler_as_default_explorer = 1
-let g:vimfiler_ignore_pattern='\(^\.\|\~$\|\.pyc$\|\.[oad]$\)'
+  repo = 'Shougo/vimfiler'
+  hook_source = '''
+  "{{{
+  """"""""""""""""""""""""""""""
+  let g:vimfiler_as_default_explorer = 1
+  let g:vimfiler_ignore_pattern='\(^\.\|\~$\|\.pyc$\|\.[oad]$\)'
 
-"この変数はexecute_vimfiler_associated(enterにmapping)で何をするかコントロールする。
-let g:vimfiler_execute_file_list = {}
-let g:vimfiler_execute_file_list = {
-  \ "_" : "vim",
-  \ "xlsx" : "open",
-  \ "xlam" : "open",
-  \ "xlsm" : "open"}
+  "この変数はexecute_vimfiler_associated(enterにmapping)で何をするかコントロールする。
+  let g:vimfiler_execute_file_list = {}
+  let g:vimfiler_execute_file_list = {
+    \ "_" : "vim",
+    \ "xlsx" : "open",
+    \ "xlam" : "open",
+    \ "xlsm" : "open"}
 
-" call vimfiler#custom#profile('default', 'context', {
-"      \ 'quit' : 0,
-"      \ 'safe' : 0,
-"      \ 'winwidth' : 35,
-"      \ 'toggle' : 1,
-"      \ 'simple' : 0,
-"      \ 'split' : 1,
-"      \ })
-"
-call vimfiler#custom#profile('default', 'context', {
-     \ 'safe' : 0,
-     \ 'toggle' : 0,
-     \ 'simple' : 0,
-     \ 'split' : 0,
-     \ 'quit' : 1,
-     \ })
+  " call vimfiler#custom#profile('default', 'context', {
+  "      \ 'quit' : 0,
+  "      \ 'safe' : 0,
+  "      \ 'winwidth' : 35,
+  "      \ 'toggle' : 1,
+  "      \ 'simple' : 0,
+  "      \ 'split' : 1,
+  "      \ })
+  "
+  call vimfiler#custom#profile('default', 'context', {
+       \ 'safe' : 0,
+       \ 'toggle' : 0,
+       \ 'simple' : 0,
+       \ 'split' : 0,
+       \ 'quit' : 1,
+       \ })
 
-nnoremap <leader>f :<C-u>VimFilerBufferDir<CR>
-nnoremap <leader>F :<C-u>VimFiler -nosimple<CR>
+  nnoremap <leader>f :<C-u>VimFilerBufferDir<CR>
+  nnoremap <leader>F :<C-u>VimFiler -nosimple<CR>
 
-" vimfiler上でのキーマッピング
-autocmd MyAutoCmd FileType vimfiler call s:vimfiler_my_settings()
-function! s:vimfiler_my_settings()
-	"タブ移動,historyとかをつぶしている。
-	nmap <silent><buffer> t [tag]
-	nnoremap <silent><buffer> [tag]n :TABNEW<CR>
-	nnoremap <silent><buffer> [tag]h :tabprevious<CR>
-	nnoremap <silent><buffer> [tag]l :tabnext<CR>
-	nnoremap <silent><buffer> [tag]q :tabclose<CR>
-	nmap <silent><buffer> <c-r> <plug>(vimfiler_redraw_screen)
-	"その他
-	nmap <silent><buffer> <A-Up> <Plug>(vimfiler_smart_h)
-	nmap <silent><buffer> f <Plug>(vimfiler_toggle_mark_current_line)
-	nmap <silent><buffer> i <Plug>(vimfiler_choose_action)
-	nmap <silent><buffer> F <Plug>(vimfiler_toggle_mark_all_lines)
-	nmap <silent><buffer> vs <Plug>(vimfiler_mark_current_line)<Plug>(vimfiler_popup_shell)
-	nmap <silent><buffer> <C-CR> <Plug>(vimfiler_choose_action)tabopen<cr>
-	nmap <silent><buffer> du <Plug>(vimfiler_switch_to_another_vimfiler)
+  " vimfiler上でのキーマッピング
+  autocmd MyAutoCmd FileType vimfiler call s:vimfiler_my_settings()
+  function! s:vimfiler_my_settings()
+    "タブ移動,historyとかをつぶしている。
+    nmap <silent><buffer> t [tag]
+    nnoremap <silent><buffer> [tag]n :TABNEW<CR>
+    nnoremap <silent><buffer> [tag]h :tabprevious<CR>
+    nnoremap <silent><buffer> [tag]l :tabnext<CR>
+    nnoremap <silent><buffer> [tag]q :tabclose<CR>
+    nmap <silent><buffer> <c-r> <plug>(vimfiler_redraw_screen)
+    "その他
+    nmap <silent><buffer> <A-Up> <Plug>(vimfiler_smart_h)
+    nmap <silent><buffer> f <Plug>(vimfiler_toggle_mark_current_line)
+    nmap <silent><buffer> i <Plug>(vimfiler_choose_action)
+    nmap <silent><buffer> F <Plug>(vimfiler_toggle_mark_all_lines)
+    nmap <silent><buffer> vs <Plug>(vimfiler_mark_current_line)<Plug>(vimfiler_popup_shell)
+    nmap <silent><buffer> <C-CR> <Plug>(vimfiler_choose_action)tabopen<cr>
+    nmap <silent><buffer> du <Plug>(vimfiler_switch_to_another_vimfiler)
 
-	nmap <buffer><expr> <CR> vimfiler#smart_cursor_map(
-				\  "\<Plug>(vimfiler_cd_file)",
-				\  "\<Plug>(vimfiler_edit_file)")
+    nmap <buffer><expr> <CR> vimfiler#smart_cursor_map(
+          \  "\<Plug>(vimfiler_cd_file)",
+          \  "\<Plug>(vimfiler_edit_file)")
 
-	nmap <buffer> yy
-	\ <Plug>(vimfiler_mark_current_line)<Plug>(vimfiler_clipboard_copy_file)
-	nmap <buffer> p
-	\ <Plug>(vimfiler_mark_current_line)<Plug>(vimfiler_clipboard_paste)
-	nmap <buffer> m
-	\ <Plug>(vimfiler_mark_current_line)<Plug>(vimfiler_clipboard_move_file)
+    nmap <buffer> yy
+    \ <Plug>(vimfiler_mark_current_line)<Plug>(vimfiler_clipboard_copy_file)
+    nmap <buffer> p
+    \ <Plug>(vimfiler_mark_current_line)<Plug>(vimfiler_clipboard_paste)
+    nmap <buffer> m
+    \ <Plug>(vimfiler_mark_current_line)<Plug>(vimfiler_clipboard_move_file)
 
-endfunction
-
-"}}}
-'''
-
-[[plugins]]
-repo = 'tyru/vim-altercmd' #http://qiita.com/kentaro/items/c3f7fc1d1be0e106735b
-hook_source = '''
-  "カスタムコマンドの先頭を小文字にする。
-  call altercmd#load()
-    AlterCommand unite Unite
-    AlterCommand gstatus Gstatus
-    AlterCommand path Path
-    AlterCommand fpath FullPath
-    AlterCommand vo VO
-  cd ~/
-'''
-
-[[plugins]]
-repo = 'tpope/vim-fugitive'
-
-[[plugins]]
-repo = 'kassio/neoterm'
-hook_source = '''
-  let g:neoterm_default_mod='vertical'
-  let g:neoterm_autoinsert = 1
-  let g:neoterm_autoscroll = 1
-'''
-
-[[plugins]] # カーソル位置のコンテキストに合わせてftを切り替える
-repo = 'osyo-manga/vim-precious'
-depends = ['context_filetype.vim']
-
-[[plugins]] # neosnippet
-repo = 'Shougo/neosnippet'
-hook_source = '''
-  "Ctrl+Kにターゲットジャンプ割当{{{
-  imap <C-k> <Plug>(neosnippet_expand_or_jump)
-  smap <C-k> <Plug>(neosnippet_expand_or_jump)
-  xmap <C-k> <Plug>(neosnippet_expand_target)
-  if has('conceal')
-    set conceallevel=2 concealcursor=niv
-  endif
-	let g:neosnippet#enable_snipmate_compatibility = 1
-	let g:neosnippet#disable_runtime_snippets = {'_' : 1}
-	let g:neosnippet#snippets_directory = ['~/.cache/dein/.cache/init.vim/.dein/neosnippets']
-	let g:neosnippet#snippets_directory += ['~/.cache/dein/.cache/init.vim/.dein/snippets']
+  endfunction
 
   "}}}
-'''
-on_i  = 1
-on_ft = ['snippet']
-on_source = ['unite.vim']
+  '''
+
+
+[[plugins]]
+  repo = 'tyru/vim-altercmd' #http://qiita.com/kentaro/items/c3f7fc1d1be0e106735b
+  hook_source = '''
+    "カスタムコマンドの先頭を小文字にする。
+    call altercmd#load()
+      AlterCommand unite Unite
+      AlterCommand gstatus Gstatus
+      AlterCommand path Path
+      AlterCommand fpath FullPath
+      AlterCommand vo VO
+    cd ~/
+  '''
+
+
+[[plugins]]
+  repo = 'tpope/vim-fugitive'
+
+
+[[plugins]]
+  repo = 'kassio/neoterm'
+  hook_source = '''
+    let g:neoterm_default_mod='vertical'
+    let g:neoterm_autoinsert = 1
+    let g:neoterm_autoscroll = 1
+  '''
+
+
+[[plugins]] # カーソル位置のコンテキストに合わせてftを切り替える
+  repo = 'osyo-manga/vim-precious'
+  depends = ['context_filetype.vim']
+
+
+[[plugins]] # neosnippet
+  repo = 'Shougo/neosnippet'
+  hook_source = '''
+    "Ctrl+Kにターゲットジャンプ割当{{{
+    imap <C-k> <Plug>(neosnippet_expand_or_jump)
+    smap <C-k> <Plug>(neosnippet_expand_or_jump)
+    xmap <C-k> <Plug>(neosnippet_expand_target)
+    if has('conceal')
+      set conceallevel=2 concealcursor=niv
+    endif
+    let g:neosnippet#enable_snipmate_compatibility = 1
+    let g:neosnippet#disable_runtime_snippets = {'_' : 1}
+    let g:neosnippet#snippets_directory = ['~/.cache/dein/.cache/init.vim/.dein/neosnippets']
+    let g:neosnippet#snippets_directory += ['~/.cache/dein/.cache/init.vim/.dein/snippets']
+
+    "}}}
+  '''
+  on_i  = 1
+  on_ft = ['snippet']
+  on_source = ['unite.vim']
+
 
 [[plugins]] # deoplete
-repo = 'Shougo/deoplete.nvim'
-hook_source = '''
-  let g:deoplete#enable_at_startup = 1"
-'''
-on_i = 1
+  repo = 'Shougo/deoplete.nvim'
+  hook_source = '''
+    let g:deoplete#enable_at_startup = 1"
+  '''
+  on_i = 1
+
 
 [[plugins]]
-repo = 'prabirshrestha/async.vim'
-[[plugins]]
-repo = 'prabirshrestha/vim-lsp'
-hook_add='''
-  augroup MyLSP
-  autocmd!
-    let g:lsp_signs_enabled = 0         " enable signs
-    let g:lsp_diagnostics_echo_cursor = 1 " enable echo under cursor when in normal mode
-    let g:lsp_signs_error = {'text': '✗'}
-    let g:lsp_signs_warning = {'text': '-'}
-    let g:lsp_diagnostics_enabled = 0  " 警告やエラーの表示はALEに任せるのでOFFにする
-    if executable('pyls')
-        " pip install python-language-server
-        autocmd User lsp_setup call lsp#register_server({
-            \ 'name': 'pyls',
-            \ 'cmd': {server_info->['pyls']},
-            \ 'whitelist': ['python'],
-            \ 'workspace_config': {'pyls': {'plugins': {
-            \   'pycodestyle': {'enabled': v:false},
-            \   'jedi_definition': {'follow_imports': v:true, 'follow_builtin_imports': v:true},}}}
-            \ })
-        autocmd FileType python call s:configure_lsp()
-    endif
-  augroup END
+  repo = 'prabirshrestha/async.vim'
 
-  function! s:configure_lsp() abort
-    setlocal omnifunc=lsp#complete   " オムニ補完を有効化
-    " LSP用にマッピング
-    nnoremap <buffer> <C-]> :<C-u>LspDefinition<CR>
-    nnoremap <buffer> gd :<C-u>LspDefinition<CR>
-    nnoremap <buffer> gD :<C-u>LspReferences<CR>
-    nnoremap <buffer> gs :<C-u>LspDocumentSymbol<CR>
-    nnoremap <buffer> gS :<C-u>LspWorkspaceSymbol<CR>
-    nnoremap <buffer> gQ :<C-u>LspDocumentFormat<CR>
-    vnoremap <buffer> gQ :LspDocumentRangeFormat<CR>
-    nnoremap <buffer> K :<C-u>LspHover<CR>
-    nnoremap <buffer> <F1> :<C-u>LspImplementation<CR>
-    nnoremap <buffer> <F2> :<C-u>LspRename<CR>
-  endfunction
-'''
 
 [[plugins]]
-repo='prabirshrestha/asyncomplete.vim'
+  repo = 'prabirshrestha/vim-lsp'
+  hook_add='''
+    augroup MyLSP
+    autocmd!
+      let g:lsp_signs_enabled = 0         " enable signs
+      let g:lsp_diagnostics_echo_cursor = 1 " enable echo under cursor when in normal mode
+      let g:lsp_signs_error = {'text': '✗'}
+      let g:lsp_signs_warning = {'text': '-'}
+      let g:lsp_diagnostics_enabled = 0  " 警告やエラーの表示はALEに任せるのでOFFにする
+      if executable('pyls')
+          " pip install python-language-server
+          autocmd User lsp_setup call lsp#register_server({
+              \ 'name': 'pyls',
+              \ 'cmd': {server_info->['pyls']},
+              \ 'whitelist': ['python'],
+              \ 'workspace_config': {'pyls': {'plugins': {
+              \   'pycodestyle': {'enabled': v:false},
+              \   'jedi_definition': {'follow_imports': v:true, 'follow_builtin_imports': v:true},}}}
+              \ })
+          autocmd FileType python call s:configure_lsp()
+      endif
+    augroup END
+
+    function! s:configure_lsp() abort
+      setlocal omnifunc=lsp#complete   " オムニ補完を有効化
+      " LSP用にマッピング
+      nnoremap <buffer> <C-]> :<C-u>LspDefinition<CR>
+      nnoremap <buffer> gd :<C-u>LspDefinition<CR>
+      nnoremap <buffer> gD :<C-u>LspReferences<CR>
+      nnoremap <buffer> gs :<C-u>LspDocumentSymbol<CR>
+      nnoremap <buffer> gS :<C-u>LspWorkspaceSymbol<CR>
+      nnoremap <buffer> gQ :<C-u>LspDocumentFormat<CR>
+      vnoremap <buffer> gQ :LspDocumentRangeFormat<CR>
+      nnoremap <buffer> K :<C-u>LspHover<CR>
+      nnoremap <buffer> <F1> :<C-u>LspImplementation<CR>
+      nnoremap <buffer> <F2> :<C-u>LspRename<CR>
+    endfunction
+  '''
+
 [[plugins]]
-repo='prabirshrestha/asyncomplete-lsp.vim'
+  repo='prabirshrestha/asyncomplete.vim'
+
+
+[[plugins]]
+  repo='prabirshrestha/asyncomplete-lsp.vim'
+
 
 [[plugins]] # カーソル位置のコンテキストのftを判定するライブラリ
-repo = 'Shougo/context_filetype.vim'
+  repo = 'Shougo/context_filetype.vim'
+
 
 [[plugins]] # toml syntax
-repo = 'cespare/vim-toml'
-on_ft = 'toml'
+  repo = 'cespare/vim-toml'
+  on_ft = 'toml'
+
 
 [[plugins]] # カラースキーマ
 # repo = 'w0ng/vim-hybrid'
-repo = 'mrkn/mrkn256.vim'
-hook_add = '''
-  set background=dark"{{{
-  " colorscheme 設定は source 後に行う必要があるので VimEnter で行う。
-  " 但し Colorscheme イベントの発生が抑制されないよう nented を付ける。
-  au MyAutoCmd VimEnter * nested colorscheme mrkn256"}}}
-'''
-
-[[plugins]]
-repo = 'kjnh10/mysetting.vim'
-
-[[plugins]]
-repo = 'kjnh10/gcc-syntax-highlight'
-
-[[plugins]]
-repo = 'w0rp/ale'
-hook_source = '''
-  let g:ale_sign_column_always = 1
-  let g:ale_lint_on_save = 1
-  let g:ale_lint_on_text_changed = 0
-  let g:ale_sign_error = '>>'
-  let g:ale_sign_warning = '--'
-  " highlight clear ALEErrorSign
-  highlight clear ALEWarningSign
-  " flake8はうるさいのでpyflake8にしておく。
-  let g:ale_linters = {
-      \   'python': ['pyls'],
-      \   'cpp': ['gcc'],
-      \}
-  let g:ale_cpp_gcc_options = "-std=c++14 -Wall -DPCM"
-  map <leader>at :ALEToggle<CR>
-'''
-hook_add = '''
-  ALEToggle
-'''
+  repo = 'mrkn/mrkn256.vim'
+  hook_add = '''
+    set background=dark"{{{
+    " colorscheme 設定は source 後に行う必要があるので VimEnter で行う。
+    " 但し Colorscheme イベントの発生が抑制されないよう nented を付ける。
+    au MyAutoCmd VimEnter * nested colorscheme mrkn256"}}}
+  '''
 
 
 [[plugins]]
-repo =  'tmhedberg/SimpylFold.git'
-hook_source = '''
-  let g:SimpylFold_docstring_preview = 1
-'''
+  repo = 'kjnh10/mysetting.vim'
+
 
 [[plugins]]
-repo =  'thinca/vim-quickrun'
-hook_source = '''
-  " 設定{{{
-  if !exists("g:quickrun_config")
-    let g:quickrun_config={}
-  endif
-  " デフォルトの設定
-  let g:quickrun_config._ = {
-        \ 'runner'    : 'vimproc',
-        \ 'runner/vimproc/updatetime' : 60,
-        \ 'outputter' : 'error',
-        \ 'outputter/error/success' : 'buffer',
-        \ 'outputter/error/error'   : 'quickfix',
-        \ 'outputter/buffer/close_on_empty' : 1,
-        \ }
-  let g:quickrun_config.python = {
-        \ "hook/eval/template" : "",
-        \ 'command': 'python',
-        \ "hook/output_encode/encoding" : "utf-8",
+  repo = 'kjnh10/gcc-syntax-highlight'
+
+
+[[plugins]]
+  repo = 'w0rp/ale'
+  hook_source = '''
+    let g:ale_sign_column_always = 1
+    let g:ale_lint_on_save = 1
+    let g:ale_lint_on_text_changed = 0
+    let g:ale_sign_error = '>>'
+    let g:ale_sign_warning = '--'
+    " highlight clear ALEErrorSign
+    highlight clear ALEWarningSign
+    " flake8はうるさいのでpyflake8にしておく。
+    let g:ale_linters = {
+        \   'python': ['pyls'],
+        \   'cpp': ['gcc'],
         \}
-  let g:quickrun_config.cpp = {
-        \ 'command': 'g++',
-        \ 'cmdopt' : "-std=c++14 -DINPUT_FROM_FILE",
-        \}
-  let g:quickrun_config.markdown = {
-        \ 'outputter' : 'browser',
-        \ 'command' : 'pandoc',
-        \ 'cmdopt' : '-s -f markdown',
-        \ }
-  command! -nargs=0 Pyver let g:quickrun_config.python.command = "python"
-  command! -nargs=0 Pyver3 let g:quickrun_config.python.command = "python3"
+    let g:ale_cpp_gcc_options = "-std=c++14 -Wall -DPCM"
+    map <leader>at :ALEToggle<CR>
+  '''
+  hook_add = '''
+    ALEToggle
+  '''
 
-  nnoremap <Leader>ll :write<CR>:cclose<CR>:QuickRun -mode n<CR>
-  vnoremap <Leader>ll :QuickRun -mode v<CR>
-
-  "quickrunのために設定. 下では解決しなかったので暫定的に
-  let $PATH= $HOME."/.pyenv/shims:" . $PATH
-  "http://stackoverflow.com/questions/9853584/how-to-use-correct-ruby-in-vim-how-to-modify-path-in-vim/12146694#12146694
-  "}}}
-'''
 
 [[plugins]]
-repo =  'airblade/vim-gitgutter'
+  repo =  'tmhedberg/SimpylFold.git'
+  hook_source = '''
+    let g:SimpylFold_docstring_preview = 1
+  '''
+
+
+[[plugins]]
+  repo =  'thinca/vim-quickrun'
+  hook_source = '''
+    " 設定{{{
+    if !exists("g:quickrun_config")
+      let g:quickrun_config={}
+    endif
+    " デフォルトの設定
+    let g:quickrun_config._ = {
+          \ 'runner'    : 'vimproc',
+          \ 'runner/vimproc/updatetime' : 60,
+          \ 'outputter' : 'error',
+          \ 'outputter/error/success' : 'buffer',
+          \ 'outputter/error/error'   : 'quickfix',
+          \ 'outputter/buffer/close_on_empty' : 1,
+          \ }
+    let g:quickrun_config.python = {
+          \ "hook/eval/template" : "",
+          \ 'command': 'python',
+          \ "hook/output_encode/encoding" : "utf-8",
+          \}
+    let g:quickrun_config.cpp = {
+          \ 'command': 'g++',
+          \ 'cmdopt' : "-std=c++14 -DINPUT_FROM_FILE",
+          \}
+    let g:quickrun_config.markdown = {
+          \ 'outputter' : 'browser',
+          \ 'command' : 'pandoc',
+          \ 'cmdopt' : '-s -f markdown',
+          \ }
+    command! -nargs=0 Pyver let g:quickrun_config.python.command = "python"
+    command! -nargs=0 Pyver3 let g:quickrun_config.python.command = "python3"
+
+    nnoremap <Leader>ll :write<CR>:cclose<CR>:QuickRun -mode n<CR>
+    vnoremap <Leader>ll :QuickRun -mode v<CR>
+
+    "quickrunのために設定. 下では解決しなかったので暫定的に
+    let $PATH= $HOME."/.pyenv/shims:" . $PATH
+    "http://stackoverflow.com/questions/9853584/how-to-use-correct-ruby-in-vim-how-to-modify-path-in-vim/12146694#12146694
+    "}}}
+  '''
+
+
+[[plugins]]
+  repo =  'airblade/vim-gitgutter'
+
+
+[[plugins]]
+  repo = 'vim-scripts/ViewOutput'  #VO
+
+
+[[plugins]]
+  repo = 'vim-airline/vim-airline'
+  hook_source = '''
+    let g:airline_section_c = '%-0.20{getcwd()}'
+    let g:airline_section_x = '%<%<%{airline#extensions#fugitiveline#bufname()}%m %#__accent_red#%{airline#util#wrap(airline#parts#readonly(),0)}%#__restore__#'
+  '''
+
+
+[[plugins]]
+  repo = 'thinca/vim-qfreplace'
+
+
+[[plugins]]
+  repo = 'easymotion/vim-easymotion'
+  hook_add = '''
+  " <Leader>f{char} to move to {char}
+    map  f <Plug>(easymotion-bd-f)
+    nmap f <Plug>(easymotion-overwin-f)
+
+    " s{char}{char} to move to {char}{char}
+    nmap s <Plug>(easymotion-overwin-f2)
+  " # '''
+
+
+[[plugins]]
+  repo = 'luochen1990/rainbow.git'
+  hook_add = '''
+  '''
+
 
 # [[plugins]]
 # repo =  'ntpeters/vim-better-whitespace.git'
@@ -298,34 +356,3 @@ repo =  'airblade/vim-gitgutter'
 
 # [[plugins]]
 # repo =  'airblade/vim-rooter'
-
-[[plugins]]
-repo = 'vim-scripts/ViewOutput'  #VO
-
-
-[[plugins]]
-repo = 'vim-airline/vim-airline'
-hook_source = '''
-  let g:airline_section_c = '%-0.20{getcwd()}'
-  let g:airline_section_x = '%<%<%{airline#extensions#fugitiveline#bufname()}%m %#__accent_red#%{airline#util#wrap(airline#parts#readonly(),0)}%#__restore__#'
-'''
-
-[[plugins]]
-repo = 'thinca/vim-qfreplace'
-
-[[plugins]]
-repo = 'easymotion/vim-easymotion'
-hook_add = '''
-" <Leader>f{char} to move to {char}
-  map  f <Plug>(easymotion-bd-f)
-  nmap f <Plug>(easymotion-overwin-f)
-
-  " s{char}{char} to move to {char}{char}
-  nmap s <Plug>(easymotion-overwin-f2)
-" # '''
-
-[[plugins]]
-repo = 'luochen1990/rainbow.git'
-hook_add = '''
-  let g:rainbow_active = 1
-'''
