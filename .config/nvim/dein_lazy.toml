@@ -13,73 +13,75 @@ hook_post_source = '''
   let g:unite_source_history_yank_enable = 1
   "let g:unite_source_rec_max_cache_files = 50000
   "call unite#filters#matcher_default#use(['matcher_fuzzy'])
-  "
-  call unite#custom_default_action('source/bookmark/directory' , 'vimfiler') "bookmarkはvimfilerと連携
-
-  if has("win32") || has("win64")
-    " let g:unite_source_find_command = "C:/cygwin64/bin/find.exe"
-  endif
-  " Using ag as recursive command.
-  " unite grep に pt(The Silver Searcher) を使う
-  if executable('pt')
-    let g:unite_source_grep_command = 'pt'
-    let g:unite_source_grep_default_opts = '--nogroup --nocolor --smart-case'
-    let g:unite_source_grep_recursive_opt = ''
-    let g:unite_source_grep_encoding = 'utf-8'
-  endif
-  " grep検索
-  nnoremap <silent> <Leader>ug  :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
-  " カーソル位置の単語をgrep検索
-  nnoremap <silent> <Leader>cg :<C-u>Unite grep:. -buffer-name=search-buffer<CR><C-R><C-W>
-  " grep検索結果の再呼出
-  nnoremap <silent> <Leader>urg  :<C-u>UniteResume search-buffer<CR>
-
-  "開始キーの設定
-  nnoremap <leader>uf :<C-u>Unite -start-insert file<CR>
-  nnoremap <leader>ur :<C-u>Unite -start-insert file_rec<CR>
-  nnoremap <leader>m :<C-u>Unite -start-insert file_mru bookmark file<CR>
-  nnoremap <leader>p :<C-u>Unite file_rec/async<CR>
-  nnoremap <leader>c :<C-u>Unite history/yank<CR>
-  nnoremap <leader>t :<C-u>Unite -start-insert tab<CR>
-  nnoremap <leader>s :<C-u>Unite -start-insert neosnippet<CR>
-  nnoremap <silent> <leader>b :<C-u>Unite bookmark -start-insert<CR>
-  "nnoremap <silent> <leader>bp :<C-u>Unite bookmark:project<CR>
-
-
-  " unite.vim上でのキーマッピング
-  autocmd MyAutoCmd FileType unite call s:unite_my_settings()
-  function! s:unite_my_settings()
-    "buffer local map は優先度が高いので、<buffer>を付けないとunite defualt mappingを上書き出来ない事に注意
-    " nmap <silent><buffer> i <Plug>(unite_loop_cursor_up)
-    " nmap <silent><buffer> k <Plug>(unite_loop_cursor_down)
-    nmap <silent><buffer> a <Plug>(unite_insert_enter)
-    nmap <silent><buffer> <esc> q
-    imap <silent><buffer> <Down> <Plug>(unite_select_next_line)
-    imap <silent><buffer> <Up> <Plug>(unite_select_previous_line)
-    nnoremap <silent><buffer><expr> vf unite#do_action('vimfiler')
-    nmap <silent><buffer> t [Tag]
-    nmap <silent><buffer> <c-l> :tabnext<cr>
-
-    "unmapしようとするとマップがないと言われる。>> unmap <buffer>でglobalに設定されているmapを削除する事は出来ない
-    "これでは改善できない。なぜ？
-    "let s:loaded_unmap_escesc = 0
-    "if s:loaded_unmap_escesc != 1
-    "	 nunmap <buffer> <ESC><ESC>
-    "	 let s:loaded_unmap_escesc = 1
-    "endif
-  endfunction
-  "au MyAutoCmd BufEnter *[unite]* nunmap <esc><esc>
-  "au MyAutoCmd BufLeave *[unite]* nmap <esc><esc> :nohlsearch<CR>
-  "au MyAutoCmd BufEnter *.py nunmap <esc><esc>
-  "
-  noremap [unite] <Nop>
-  map     <Leader>u [unite]
-  nnoremap <silent>[unite]p         :<C-u>Unite file_rec/async<CR>
-  nnoremap <silent>[unite]g         :<C-u>Unite ghq<CR>
-"}}}
-'''
-on_event = "VimEnter"
-
 [[plugins]]
-repo = 'ujihisa/unite-colorscheme'
-depends = ['unite.vim']
+  repo = 'Shougo/vimfiler'
+  hook_source = '''
+  "{{{
+  """"""""""""""""""""""""""""""
+  let g:vimfiler_as_default_explorer = 1
+  let g:vimfiler_ignore_pattern='\(^\.\|\~$\|\.pyc$\|\.[oad]$\)'
+
+  "この変数はexecute_vimfiler_associated(enterにmapping)で何をするかコントロールする。
+  let g:vimfiler_execute_file_list = {}
+  let g:vimfiler_execute_file_list = {
+    \ "_" : "vim",
+    \ "xlsx" : "open",
+    \ "xlam" : "open",
+    \ "xlsm" : "open"}
+
+  " call vimfiler#custom#profile('default', 'context', {
+  "      \ 'quit' : 0,
+  "      \ 'safe' : 0,
+  "      \ 'winwidth' : 35,
+  "      \ 'toggle' : 1,
+  "      \ 'simple' : 0,
+  "      \ 'split' : 1,
+  "      \ })
+  "
+  call vimfiler#custom#profile('default', 'context', {
+       \ 'safe' : 0,
+       \ 'toggle' : 0,
+       \ 'simple' : 0,
+       \ 'split' : 0,
+       \ 'quit' : 1,
+       \ })
+
+  nnoremap <leader>f :<C-u>VimFilerBufferDir<CR>
+  nnoremap <leader>F :<C-u>VimFiler -nosimple<CR>
+
+  " vimfiler上でのキーマッピング
+  autocmd MyAutoCmd FileType vimfiler call s:vimfiler_my_settings()
+  function! s:vimfiler_my_settings()
+    "タブ移動,historyとかをつぶしている。
+    nmap <silent><buffer> t [tag]
+    nnoremap <silent><buffer> [tag]n :TABNEW<CR>
+    nnoremap <silent><buffer> [tag]h :tabprevious<CR>
+    nnoremap <silent><buffer> [tag]l :tabnext<CR>
+    nnoremap <silent><buffer> [tag]q :tabclose<CR>
+    nmap <silent><buffer> <c-r> <plug>(vimfiler_redraw_screen)
+    "その他
+    nmap <silent><buffer> <A-Up> <Plug>(vimfiler_smart_h)
+    nmap <silent><buffer> f <Plug>(vimfiler_toggle_mark_current_line)
+    nmap <silent><buffer> i <Plug>(vimfiler_choose_action)
+    nmap <silent><buffer> F <Plug>(vimfiler_toggle_mark_all_lines)
+    nmap <silent><buffer> vs <Plug>(vimfiler_mark_current_line)<Plug>(vimfiler_popup_shell)
+    nmap <silent><buffer> <C-CR> <Plug>(vimfiler_choose_action)tabopen<cr>
+    nmap <silent><buffer> du <Plug>(vimfiler_switch_to_another_vimfiler)
+
+    nmap <buffer><expr> <CR> vimfiler#smart_cursor_map(
+          \  "\<Plug>(vimfiler_cd_file)",
+          \  "\<Plug>(vimfiler_edit_file)")
+
+    nmap <buffer> yy
+    \ <Plug>(vimfiler_mark_current_line)<Plug>(vimfiler_clipboard_copy_file)
+    nmap <buffer> p
+    \ <Plug>(vimfiler_mark_current_line)<Plug>(vimfiler_clipboard_paste)
+    nmap <buffer> m
+    \ <Plug>(vimfiler_mark_current_line)<Plug>(vimfiler_clipboard_move_file)
+
+  endfunction
+
+  "}}}
+  '''
+  on_event = "VimEnter"
+  depends = ['unite.vim']
