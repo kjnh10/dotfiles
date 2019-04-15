@@ -272,6 +272,7 @@
 [[plugins]]
   repo = 'luochen1990/rainbow.git'
   hook_add = '''
+  let g:rainbow_active=1
   '''
 
 
