@@ -83,6 +83,7 @@
 
 [[plugins]]
   repo = 'ujihisa/unite-colorscheme'
+  on_event = 'VimEnter'
   depends = ['unite.vim']
 
 
