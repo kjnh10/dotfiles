@@ -275,6 +275,9 @@
   let g:rainbow_active=1
   '''
 
+[[plugins]]
+  repo = 'Yggdroot/indentLine'
+
 
 # [[plugins]]
 # repo =  'ntpeters/vim-better-whitespace.git'
