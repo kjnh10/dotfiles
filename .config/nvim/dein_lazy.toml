@@ -159,3 +159,11 @@
   '''
   on_event = "VimEnter"
   depends = ['unite.vim']
+
+[[plugins]]
+  repo = 'miyakogi/seiya.vim'
+  hook_source = '''
+  let g:seiya_auto_enable=1
+  '''
+  on_event = "VimEnter"
+
