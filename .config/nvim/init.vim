@@ -484,3 +484,10 @@ function MakeCquery()
   let temp = expand('%:p')
   echo system('echo ''[{"directory": "/home/kutimoti/contest","command": "/usr/bin/c++  ' . temp . ' -std=c++11","file": "' . temp . '"}]'' > compile_commands.json')
 endfunction
+
+command! -nargs=? Sandbox call s:Sandbox(<f-args>)
+function! s:Sandbox(...)
+  :tabnew
+  :set filetype=cpp
+  :r /home/koji0708/go/src/github.com/kjnh10/pcl/codes/cpp/template.cpp
+endfunction
