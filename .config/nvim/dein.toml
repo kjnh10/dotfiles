@@ -31,6 +31,7 @@
       AlterCommand path Path
       AlterCommand fpath FullPath
       AlterCommand vo VO
+      AlterCommand sandbox Sandbox
     cd ~/
   '''
 
@@ -100,13 +101,13 @@
       if executable('pyls')
           " pip install python-language-server
           autocmd User lsp_setup call lsp#register_server({
-              \ 'name': 'pyls',
-              \ 'cmd': {server_info->['pyls']},
-              \ 'whitelist': ['python'],
-              \ 'workspace_config': {'pyls': {'plugins': {
-              \   'pycodestyle': {'enabled': v:false},
-              \   'jedi_definition': {'follow_imports': v:true, 'follow_builtin_imports': v:true},}}}
-              \ })
+             \ 'name': 'pyls',
+             \ 'cmd': {server_info->['pyls']},
+             \ 'whitelist': ['python'],
+             \ 'workspace_config': {'pyls': {'plugins': {
+             \   'pycodestyle': {'enabled': v:false},
+             \   'jedi_definition': {'follow_imports': v:true, 'follow_builtin_imports': v:true},}}}
+             \ })
           autocmd FileType python call s:configure_lsp()
       endif
     augroup END
@@ -216,8 +217,9 @@
           \ "hook/output_encode/encoding" : "utf-8",
           \}
     let g:quickrun_config.cpp = {
+          "\ 'command': 'clang',
           \ 'command': 'g++',
-          \ 'cmdopt' : "-std=c++14 -DINPUT_FROM_FILE",
+          \ 'cmdopt' : "-std=c++14 -DINPUT_FROM_FILE -DLOCAL",
           \}
     let g:quickrun_config.markdown = {
           \ 'outputter' : 'browser',
