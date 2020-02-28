@@ -65,9 +65,9 @@ end
 """"""""""""""""""""""""""""""
 "(参考)http://nort-wmli.blogspot.jp/2013/05/vim.html
 set expandtab "タブを押した時に空白が挿入される。何文字分の空白になるかはsofttabstopの値が使われる。
-set tabstop=2 "<TAB>を含むファイルの表示において、タブ文字の表示幅を何文字の空白分にして表示するか.またretabもこの値を利用する。何故か規定のlocal値が4になっている？
-set softtabstop=2 "tab を入力するとこの値の分だけ表示が動く様に自動的にtabか空白が挿入される。常に空白が最小 0に設定するとtabstopは無効
-set shiftwidth=2 "vimが自動でインデントを行った際、設定する空白数
+set tabstop=4 "<TAB>を含むファイルの表示において、タブ文字の表示幅を何文字の空白分にして表示するか.またretabもこの値を利用する。何故か規定のlocal値が4になっている？
+set softtabstop=4 "tab を入力するとこの値の分だけ表示が動く様に自動的にtabか空白が挿入される。常に空白が最小 0に設定するとtabstopは無効
+set shiftwidth=4 "vimが自動でインデントを行った際、設定する空白数
 set autoindent
 "set smartindent "flustrating when commenting in python
 set cindent
