@@ -11,6 +11,7 @@
 	unstage = reset HEAD --
 [core]
 	autocrlf = input
+	editor = nvim
 [ghq]
 	root = ~/go/src
 [user]
