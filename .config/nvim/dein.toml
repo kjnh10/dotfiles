@@ -180,7 +180,7 @@
         \   'python': ['pyls'],
         \   'cpp': ['gcc'],
         \}
-    let g:ale_cpp_gcc_options = "-std=c++17 -Wall -DPCM -include /home/koji0708/go/src/github.com/kjnh10/pcl/library/cpp/debug/dump.hpp"
+    let g:ale_cpp_gcc_options = "-std=c++17 -Wall"
     map <leader>at :ALEToggle<CR>
   '''
   hook_add = '''
