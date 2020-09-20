@@ -195,4 +195,7 @@ if [[ $(uname -a) == Linux*Microsoft* ]]; then
   export DISPLAY=localhost:0.0 ;
 fi
 
+export YUKICODER_TOKEN="JDJhJDEwJEJWZk1WUE5adDVaUlgxNVh0ZmFFSWVwc1VTci9RQmdpbmkwN1plSjFKSWRRaXVXcmdBTE1p"
+export NVIM_LISTEN_ADDRESS="/tmp/nvimsocket"
+
 echo "ended source .zshrc"
