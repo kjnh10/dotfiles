@@ -480,4 +480,6 @@ nnoremap MG :MemoGrep"}}}
 
 "}}}
 
+" change variable names
+nnoremap <F8> :%s/\<<C-r><C-w>\>//g<Left><Left>
 

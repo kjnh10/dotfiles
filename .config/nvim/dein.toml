@@ -97,7 +97,7 @@
       let g:lsp_diagnostics_echo_cursor = 1 " enable echo under cursor when in normal mode
       let g:lsp_signs_error = {'text': '✗'}
       let g:lsp_signs_warning = {'text': '-'}
-      let g:lsp_diagnostics_enabled = 1  " 警告やエラーの表示はALEに任せるのでOFFにする
+      let g:lsp_diagnostics_enabled = 0  " 警告やエラーの表示はALEに任せるのでOFFにする
       if executable('pyls')
           " pip install python-language-server
           autocmd User lsp_setup call lsp#register_server({
@@ -183,7 +183,7 @@
         \}
     let g:ale_cpp_cc_executable = 'gcc'
     let g:ale_linters_explicit = 1
-    let g:ale_cpp_cc_options = '-std=c++17 -Wall -I /home/koji0708/go/src/github.com/kjnh10/pcm/pcm/lang_library/cplusplus/ac-library'
+    let g:ale_cpp_cc_options = '-std=c++17 -Wall -I /home/koji0708/go/src/github.com/kjnh10/pcm/pcm/lang_library/cplusplus/ac-library -I /home/koji0708/go/src/github.com/kjnh10/pcl/library/cpp/include'
     map <leader>at :ALEToggle<CR>
   '''
 
@@ -293,13 +293,14 @@
   let g:cpp_class_decl_highlight = 1
   '''
 
-# [[plugins]]
-# repo =  'ntpeters/vim-better-whitespace.git'
-# hook_source = '''
-#   let g:better_whitespace_enabled=0
-#   let g:strip_whitespace_on_save=1
-# '''
-# <Leader>s<space>を勝手につぶしてたりするので削除
+[[plugins]]
+  repo = 'haya14busa/vim-asterisk'
+  hook_add = '''
+  map *  <Plug>(asterisk-z*)
+  map #  <Plug>(asterisk-z#)
+  map g* <Plug>(asterisk-gz*)
+  map g# <Plug>(asterisk-gz#)
+  '''
 
 # [[plugins]]
 # repo =  'airblade/vim-rooter'
