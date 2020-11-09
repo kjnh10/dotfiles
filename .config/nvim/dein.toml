@@ -282,10 +282,6 @@
 
 
 [[plugins]]
-  repo = 'ujihisa/unite-colorscheme'
-
-
-[[plugins]]
   repo = 'octol/vim-cpp-enhanced-highlight'
   hook_add = '''
   let g:cpp_class_scope_highlight = 1
