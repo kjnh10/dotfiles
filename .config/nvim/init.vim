@@ -483,3 +483,9 @@ nnoremap MG :MemoGrep"}}}
 " change variable names
 nnoremap <F8> :%s/\<<C-r><C-w>\>//g<Left><Left>
 
+if executable('fcitx')
+    inoremap <silent><Esc> <Esc>:silent call system('fcitx-remote -c')<CR>
+    " autocmd InsertLeave * :call system('fcitx-remote -c') " これはなぜかばぐる
+    " fcitx -> vim -> mozcのような順番で権力を持っている。
+    " fcitxでctrl+spaceでmozcのon-off, 無変換でoffを設定しているのでfcitxに処理を任せるようにする。
+endif
